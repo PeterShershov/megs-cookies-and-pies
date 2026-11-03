@@ -333,6 +333,7 @@ html[lang="he"] .cat-head { font-weight: 800; }
 html[lang="he"] .desc, html[lang="he"] .note p { line-height: 1.65; }
 html[lang="he"] body * { letter-spacing: normal !important; }
 .soon-script { direction: ltr; }
+html[lang="he"] body .bar h3 { letter-spacing: .12em !important; }
 html[lang="he"] body .arc text { letter-spacing: 0; }
 html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
 
@@ -525,38 +526,38 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
   ];
   // Hebrew text for each item. The meta lines match the English ones one for one.
   const HE_ITEMS = {
-    pecan: { name: "פאי פקאן", alt: "פאי פקאן בבצק מקופל",
+    pecan: { alt: "פאי פקאן בבצק מקופל",
       desc: "אגוזי פקאן קלויים במילוי סוכר חום כהה עם סירופ זהוב ומולסה שחורה, בתוך בצק חמאה פריך ושכבתי.",
       meta: ["פאי 9 אינץ׳", "מכיל אגוזים", "לשמור במקרר, עד 4 ימים"] },
-    pumpkin: { name: "פאי דלעת", alt: "פאי דלעת עם שולי בצק מעוצבים",
+    pumpkin: { alt: "פאי דלעת עם שולי בצק מעוצבים",
       desc: "קסטרד דלעת חלק עם קרמל חמאה חומה, קינמון, ג׳ינג׳ר, פלפל אנגלי וקצת ציפורן, בתוך בצק חמאה פריך ושכבתי. מגישים קר או בטמפרטורת החדר.",
       meta: ["פאי 9 אינץ׳", "לשמור במקרר, עד 4 ימים"] },
-    apple: { name: "פאי תפוחים", alt: "פאי תפוחים בבצק כפול עם סוכר מעל",
+    apple: { alt: "פאי תפוחים בבצק כפול עם סוכר מעל",
       desc: "תפוחי גרנד סמית עם סוכר חום ותבלינים חמימים. המיצים שלהם מתבשלים לרוטב קרמל, ואז נאפים בבצק כפול פריך ומלוח עם סוכר מעל. מגישים חם עם גלידת וניל.",
       meta: ["פאי 9 אינץ׳ בבצק כפול", "יומיים בטמפרטורת החדר, 5 ימים במקרר"] },
-    cookies: { name: "עוגיות שוקולד חלב וטופי", alt: "עוגיות שוקולד חלב וטופי עם פתיתי מלח, נשפכות משקית נייר",
-      desc: "בצק חמאה חומה עם שוקולד חלב של Cacao Barry וטופי תוצרת בית, עם מלח מלדון מעל. נאפות ביום האיסוף.",
+    cookies: { alt: "עוגיות שוקולד חלב וטופי עם פתיתי מלח, נשפכות משקית נייר",
+      desc: "בצק חמאה חומה עם שוקולד חלב של Cacao Barry וטופי תוצרת בית, עם מלח מלדון מעל. נאפה ביום האיסוף.",
       meta: ["שקית של 10 עוגיות", "לשמור בטמפרטורת החדר"] },
-    walnut: { name: "עוגיות שוקולד מריר ואגוזי מלך", alt: "",
-      desc: "בצק חמאה חומה עם שוקולד מריר 64% של Cacao Barry ואגוזי מלך בטופי תוצרת בית. נאפות ביום האיסוף.",
+    walnut: { alt: "",
+      desc: "בצק חמאה חומה עם שוקולד מריר 64% של Cacao Barry ואגוזי מלך בטופי תוצרת בית. נאפה ביום האיסוף.",
       meta: ["שקית של 10 עוגיות", "מכיל אגוזי מלך", "לשמור בטמפרטורת החדר"] },
-    smores: { name: "בארק סמורס", alt: "בארק שוקולד חלב סמורס עם מרשמלו קלוי ועוגיות גרהם",
+    smores: { alt: "בארק שוקולד חלב סמורס עם מרשמלו קלוי ועוגיות גרהם",
       desc: "שוקולד חלב עם מרשמלו ועוגיות גרהם תוצרת בית.",
       meta: ["מארז 100 גרם", "לשמור במקום קריר, לא במקרר"] },
-    cinnamon: { name: "בארק טוסט קינמון", alt: "",
+    cinnamon: { alt: "",
       desc: "שוקולד לבן עם אבקת חלב קלויה ודגני בוקר בטעם קינמון תוצרת בית.",
       meta: ["מארז 100 גרם", "לשמור במקום קריר, לא במקרר"] },
-    birthday: { name: "בארק עוגת יום הולדת", alt: "בארק שוקולד חלב עם אורז פריך ופתיתי סוכר צבעוניים",
+    birthday: { alt: "בארק שוקולד חלב עם אורז פריך ופתיתי סוכר צבעוניים",
       desc: "אורז פריך ופתיתי סוכר צבעוניים, בשוקולד חלב או בשוקולד לבן.",
       meta: ["מארז 100 גרם", "לשמור במקום קריר, לא במקרר"] },
-    cornflake: { name: "בארק קורנפלקס מקורמל", alt: "רסיסי בארק שוקולד חלב עם קורנפלקס מקורמל",
+    cornflake: { alt: "רסיסי בארק שוקולד חלב עם קורנפלקס מקורמל",
       desc: "בארק שוקולד חלב עמוס בקורנפלקס מקורמל.",
       meta: ["מארז 100 גרם", "לשמור במקום קריר, לא במקרר"] },
-    strawberry: { name: "אשכולות קראנץ׳ תות", alt: "",
-      desc: "אשכולות שוקולד לבן עם תות מיובש בהקפאה וקורנפלקס.",
+    strawberry: { alt: "",
+      desc: "קלאסטר שוקולד לבן עם תות מיובש בהקפאה וקורנפלקס.",
       meta: ["מארז 100 גרם", "לשמור במקום קריר, לא במקרר"] },
-    bamba: { name: "רוקי רואד במבה", alt: "אשכולות שוקולד חלב עם במבה ומרשמלו",
-      desc: "אשכולות שוקולד חלב עם במבה מקורמלת ומרשמלו.",
+    bamba: { alt: "קלאסטר שוקולד חלב עם במבה ומרשמלו",
+      desc: "קלאסטר שוקולד חלב עם במבה מקורמלת ומרשמלו.",
       meta: ["מארז 100 גרם", "מכיל בוטנים", "לשמור במקום קריר, לא במקרר"] }
   };
   const CATS = [
@@ -623,7 +624,7 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
     soon_new: "New!", soon_label: "תמונה בקרוב",
     choose: "בחרו שוקולד", opt_milk: "שוקולד חלב", opt_white: "שוקולד לבן",
     u_pie: "פאים", u_bag: "שקיות", u_pack: "מארזים",
-    how_many: (n) => `כמה: ${n}`, fewer: "אחד פחות", more: "אחד יותר",
+    how_many: (n) => `כמות: ${n}`, fewer: "אחד פחות", more: "אחד יותר",
     other: "בחירת תאריך · 3 ימים מראש",
     hint_tg: "בחרו תאריך לפחות 3 ימים מהיום, או אחד ממועדי האיסוף של Thanksgiving (להזמין עד יום חמישי, 19.11). המקום המדויק לאיסוף נשלח בוואטסאפ.",
     hint: "בחרו תאריך לפחות 3 ימים מהיום. המקום המדויק לאיסוף נשלח בוואטסאפ.",
@@ -649,7 +650,7 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
   const qty = Object.fromEntries(ITEMS.map(i => [i.id, 0]));
   const optSel = { birthday: 0 };
   const optLabel = (it) => { const l = t("opt_" + CHOCOLATES[optSel[it.id]].key); return lang === "he" ? l : l.toLowerCase(); };
-  const slipName = (it) => it.options ? `${loc(it).name}, ${optLabel(it)}` : loc(it).name;
+  const slipName = (it) => it.options ? `<bdi>${it.name}</bdi>, ${optLabel(it)}` : `<bdi>${it.name}</bdi>`;
   const msgName = (it) => it.options ? `${it.name}, ${CHOCOLATES[optSel[it.id]].msg}` : it.name;
 
   // Thanksgiving extras show only before Nov 20, 2026.
@@ -700,12 +701,12 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
       art.innerHTML = `
         ${it.img ? `<img src="${it.img}" alt="${L.alt}" loading="lazy">` : `<div class="soon" role="img" aria-label="${t("soon_label")}"><span class="soon-script">${t("soon_new")}</span><span class="soon-label">${t("soon_label")}</span></div>`}
         <div class="item-body">
-          <div class="bar"><h3>${L.name}</h3><span class="price">₪${it.price}</span></div>
+          <div class="bar"><h3><bdi>${it.name}</bdi></h3><span class="price">₪${it.price}</span></div>
           <p class="desc">${L.desc}</p>
           <div class="meta">${L.meta.map(m => `<span>${m}</span>`).join("")}</div>
           ${it.options ? `<fieldset class="variant"><legend class="qty-label" style="margin-inline-start:0">${t("choose")}</legend><div class="opts">${CHOCOLATES.map((o, k) => `<label><input type="radio" name="opt-${it.id}" id="opt-${it.id}-${k}" value="${o.msg}"${k === optSel[it.id] ? " checked" : ""}><span>${t("opt_" + o.key)}</span></label>`).join("")}</div></fieldset>` : ""}
           <div>
-            <div class="qty" role="group" aria-label="${t("how_many")(L.name)}">
+            <div class="qty" role="group" aria-label="${t("how_many")(it.name)}">
               <button type="button" id="minus-${it.id}" aria-label="${t("fewer")}">&minus;</button>
               <output id="q-${it.id}" aria-live="polite">${qty[it.id]}</output>
               <button type="button" id="plus-${it.id}" aria-label="${t("more")}">+</button>
