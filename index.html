@@ -81,10 +81,6 @@ a { color: var(--red-deep); }
 }
 .frame-bottom a { color: var(--red); text-decoration: none; }
 .hero-body { text-align: center; padding-block: clamp(44px, 9vw, 96px); }
-.kicker {
-  font-family: var(--font-wide); font-stretch: 125%; font-weight: 800;
-  font-size: .82rem; letter-spacing: .24em; text-transform: uppercase; color: var(--red);
-}
 .mark { margin-top: 14px; color: var(--red); }
 .mark-script {
   display: block; font-family: var(--font-script); font-weight: 400;
@@ -319,7 +315,7 @@ footer a { color: var(--white); }
 
 @media (max-width: 720px) {
   .tags, .tags.three { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .frame-top span:nth-child(2), .frame-bottom span:nth-child(2) { display: none; }
+  .frame-top span:nth-child(2) { display: none; }
   .item { grid-template-columns: 1fr; }
   .item img { width: 62%; margin: 0 auto; }
   .item.cookie img, .item .soon { width: 100%; aspect-ratio: 4 / 3; }
@@ -340,7 +336,6 @@ footer a { color: var(--white); }
     <div class="frame">
       <div class="frame-top"><span>Est. 2022</span><span>Made to order</span><span>Ra'anana</span></div>
       <div class="hero-body">
-        <p class="kicker">Orders open all year</p>
         <h1 class="mark"><span class="mark-script">Meg's</span><span class="mark-wide">Cookies &amp; Pies</span></h1>
         <svg class="arc" viewBox="0 0 400 64" aria-hidden="true">
           <path id="arcpath" d="M24,14 Q200,74 376,14" fill="none"/>
@@ -349,7 +344,7 @@ footer a { color: var(--white); }
         <p class="lede">American pies, brown butter cookies and handmade chocolate, made to order in small batches. Order at least three days ahead for pickup in Ra&rsquo;anana.</p>
         <a class="cta" href="#menu">See the menu</a>
       </div>
-      <div class="frame-bottom"><span>050-242-3303</span><span>@megangeyers</span><span>Order 3 days ahead</span></div>
+      <div class="frame-bottom"><span>050-242-3303</span><span>@megangeyers</span></div>
     </div>
     <div class="tags">
       <div class="tag"><div class="tag-head">Order</div><div class="tag-value">3 days ahead</div><p class="tag-note">Pick your day when you order</p></div>
@@ -431,7 +426,7 @@ footer a { color: var(--white); }
 
   <div class="section-head"><h2>Good to Know</h2></div>
   <div class="notes">
-    <div class="note"><h3>Storage &amp; serving</h3><p>Pecan and pumpkin have egg custard fillings, so keep them in the fridge (up to 4 days) and take them out an hour before serving. Serve them at room temperature. In the fridge, cover any pie with plastic wrap, and once it&rsquo;s cut, press the wrap against the cut edges so the filling doesn&rsquo;t dry out. Apple keeps 2 days at room temperature or 5 in the fridge, and is best warm: heat your pie at 170&deg;C for 10&ndash;15 minutes to crisp the crust. Serve with vanilla ice cream or whipped cream, and never skip the ice cream with apple. Cookies stay at room temperature. Keep chocolate somewhere cool and dry, out of the sun; it melts quickly in a warm car.</p></div>
+    <div class="note"><h3>Storage &amp; serving</h3><p>Pecan and pumpkin have egg custard fillings, so keep them in the fridge (up to 4 days) and take them out an hour before serving. Serve them at room temperature. In the fridge, cover any pie with plastic wrap, and once it&rsquo;s cut, press the wrap against the cut edges so the filling doesn&rsquo;t dry out. Apple keeps 2 days at room temperature or 5 in the fridge, and is best warm: heat your pie at 170&deg;C for 10&ndash;15 minutes to crisp the crust. Serve with vanilla ice cream or whipped cream, and never skip the ice cream with apple. Cookies stay at room temperature. Store chocolate in a cool, dry place out of the sun, but not in the fridge, because moisture can make it sweat and go dull. It melts quickly in a warm car.</p></div>
     <div class="note"><h3>Allergens</h3><p>Pies and cookies are made with butter, wheat and eggs, and all the chocolate contains milk, so nothing is parve. The pecan pie and the walnut cookies contain tree nuts, and the Bamba Rocky Road contains peanuts. Everything is made in a home kitchen that uses tree nuts and peanuts, and the kitchen is not kosher.</p></div>
     <div class="note"><h3>Pickup times</h3><p>Any day: pickup in Ra&rsquo;anana with at least 3 days&rsquo; notice, and Meg confirms the time on WhatsApp. <span class="tg-only">Thanksgiving (order by Nov 19): Ra'anana on Wed Nov 25, 17:00&ndash;19:00, Thu Nov 26, 12:30&ndash;14:00, or Fri Nov 27, 8:30&ndash;11:30; AIS, Even Yehuda on Wed Nov 25, 15:00&ndash;16:00.</span></p></div>
   </div>
@@ -473,23 +468,23 @@ footer a { color: var(--white); }
       meta: ["Bag of 10 cookies", "Contains walnuts", "Keep at room temperature"] },
     { id: "smores", cat: "chocolate", name: "S'mores Bark", price: 35, unit: "pack", img: "img/smores.jpg", cls: "cookie", alt: "Milk chocolate s'mores bark with toasted marshmallows and graham cracker",
       desc: "Milk chocolate with homemade marshmallows and homemade graham crackers.",
-      meta: ["100 g pack", "Keep cool and dry"] },
+      meta: ["100 g pack", "Store cool, not in the fridge"] },
     { id: "cinnamon", cat: "chocolate", name: "Cinnamon Toast Bark", price: 35, unit: "pack", img: "", cls: "cookie", alt: "",
       desc: "White chocolate with toasted milk powder and homemade cinnamon cereal.",
-      meta: ["100 g pack", "Keep cool and dry"] },
+      meta: ["100 g pack", "Store cool, not in the fridge"] },
     { id: "birthday", cat: "chocolate", name: "Birthday Cake Bark", price: 35, unit: "pack", img: "img/birthday.jpg", cls: "cookie", alt: "Milk chocolate bark with crispy rice and rainbow sprinkles",
       desc: "Crispy rice and rainbow sprinkles, in milk or white chocolate.",
-      meta: ["100 g pack", "Keep cool and dry"],
+      meta: ["100 g pack", "Store cool, not in the fridge"],
       options: ["Milk chocolate", "White chocolate"] },
     { id: "cornflake", cat: "chocolate", name: "Caramel Cornflake Bark", price: 35, unit: "pack", img: "img/cornflake.jpg", cls: "cookie", alt: "Shards of milk chocolate bark with caramelized cornflakes",
       desc: "Milk chocolate bark packed with caramelized cornflakes.",
-      meta: ["100 g pack", "Keep cool and dry"] },
+      meta: ["100 g pack", "Store cool, not in the fridge"] },
     { id: "strawberry", cat: "chocolate", name: "Strawberry Crunch Clusters", price: 35, unit: "pack", img: "", cls: "cookie", alt: "",
       desc: "White chocolate clusters with freeze-dried strawberries and cornflakes.",
-      meta: ["100 g pack", "Keep cool and dry"] },
+      meta: ["100 g pack", "Store cool, not in the fridge"] },
     { id: "bamba", cat: "chocolate", name: "Bamba Rocky Road", price: 35, unit: "pack", img: "img/bamba.jpg", cls: "cookie", alt: "Milk chocolate clusters with Bamba and marshmallows",
       desc: "Milk chocolate clusters with caramelized Bamba and marshmallows.",
-      meta: ["100 g pack", "Contains peanuts", "Keep cool and dry"] }
+      meta: ["100 g pack", "Contains peanuts", "Store cool, not in the fridge"] }
   ];
   const CATS = [
     { id: "pies", name: "Pies", note: "9 inch, serves 8–10" },
