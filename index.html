@@ -187,7 +187,8 @@ a { color: var(--red-deep); }
   margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px 16px;
   font-size: .92rem; color: var(--ink-soft);
 }
-.meta span::before { content: "\2605 "; color: var(--red); font-size: .8em; }
+.meta span { display: inline-flex; align-items: center; gap: .45em; }
+.meta span::before { content: "\2605"; color: var(--red); font-size: .8em; line-height: 1; flex: none; }
 .qty {
   margin-top: 14px; display: inline-flex; align-items: center;
   border: 2px solid var(--ink); border-radius: 999px; background: var(--white);
@@ -534,7 +535,7 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
       desc: "תפוחי גרנד סמית עם סוכר חום ותבלינים חמימים. המיצים שלהם מתבשלים לרוטב קרמל, ואז נאפים בבצק כפול פריך ומלוח עם סוכר מעל. מגישים חם עם גלידת וניל.",
       meta: ["פאי 9 אינץ׳ בבצק כפול", "יומיים בטמפרטורת החדר, 5 ימים במקרר"] },
     cookies: { name: "עוגיות שוקולד חלב וטופי", alt: "עוגיות שוקולד חלב וטופי עם פתיתי מלח, נשפכות משקית נייר",
-      desc: "בצק חמאה חומה עם שוקולד חלב של Cacao Barry וטופי תוצרת בית, עם מלח מלדון בסיום. נאפות ביום האיסוף.",
+      desc: "בצק חמאה חומה עם שוקולד חלב של Cacao Barry וטופי תוצרת בית, עם מלח מלדון מעל. נאפות ביום האיסוף.",
       meta: ["שקית של 10 עוגיות", "לשמור בטמפרטורת החדר"] },
     walnut: { name: "עוגיות שוקולד מריר ואגוזי מלך", alt: "",
       desc: "בצק חמאה חומה עם שוקולד מריר 64% של Cacao Barry ואגוזי מלך בטופי תוצרת בית. נאפות ביום האיסוף.",
