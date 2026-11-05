@@ -511,6 +511,7 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
       desc: "White chocolate with toasted milk powder and homemade cinnamon cereal.",
       meta: ["100 g pack", "Store cool, not in the fridge"] },
     { id: "birthday", cat: "chocolate", name: "Birthday Cake Bark", price: 35, unit: "pack", img: "img/birthday.jpg", cls: "cookie", alt: "Milk chocolate bark with crispy rice and rainbow sprinkles",
+      img2: "img/birthday-white.jpg", alt2: "White chocolate bark with crispy rice and rainbow sprinkles",
       desc: "Crispy rice and rainbow sprinkles, in milk or white chocolate.",
       meta: ["100 g pack", "Store cool, not in the fridge"],
       options: true },
@@ -547,7 +548,7 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
     cinnamon: { alt: "רסיסי בארק שוקולד לבן עם קינמון ודגני בוקר בטעם קינמון",
       desc: "שוקולד לבן עם דגני בוקר בטעם קינמון תוצרת בית.",
       meta: ["מארז 100 גרם", "לשמור במקום קריר ויבש (לא מקרר)"] },
-    birthday: { alt: "בארק שוקולד חלב עם אורז פריך וסוכריות צבעוניות",
+    birthday: { alt: "בארק שוקולד חלב עם אורז פריך וסוכריות צבעוניות", alt2: "בארק שוקולד לבן עם אורז פריך וסוכריות צבעוניות",
       desc: "אורז פריך וסוכריות צבעוניות, בשוקולד חלב או בשוקולד לבן.",
       meta: ["מארז 100 גרם", "לשמור במקום קריר ויבש (לא מקרר)"] },
     cornflake: { alt: "רסיסי בארק שוקולד חלב עם קורנפלקס מקורמל",
@@ -650,6 +651,8 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
   const qty = Object.fromEntries(ITEMS.map(i => [i.id, 0]));
   const optSel = { birthday: 0 };
   const optLabel = (it) => { const l = t("opt_" + CHOCOLATES[optSel[it.id]].key); return lang === "he" ? l : l.toLowerCase(); };
+  // Items with a second photo (img2) show it when the second chocolate choice is picked.
+  const photo = (it) => (it.img2 && optSel[it.id] === 1) ? { src: it.img2, alt: loc(it).alt2 } : { src: it.img, alt: loc(it).alt };
   const slipName = (it) => it.options ? `<bdi>${it.name}</bdi>, ${optLabel(it)}` : `<bdi>${it.name}</bdi>`;
   const msgName = (it) => it.options ? `${it.name}, ${CHOCOLATES[optSel[it.id]].msg}` : it.name;
 
@@ -683,6 +686,7 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
   const menu = document.getElementById("menu");
   function buildMenu() {
     menu.innerHTML = "";
+    ITEMS.forEach(it => { if (it.img2) new Image().src = it.img2; });
     let lastCat = null;
     for (const it of ITEMS) {
       const L = loc(it);
@@ -699,7 +703,7 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
       art.className = "item " + it.cls + (qty[it.id] > 0 ? " picked" : "");
       art.id = "item-" + it.id;
       art.innerHTML = `
-        ${it.img ? `<img src="${it.img}" alt="${L.alt}" loading="lazy">` : `<div class="soon" role="img" aria-label="${t("soon_label")}"><span class="soon-script">${t("soon_new")}</span><span class="soon-label">${t("soon_label")}</span></div>`}
+        ${it.img ? `<img src="${photo(it).src}" alt="${photo(it).alt}" loading="lazy">` : `<div class="soon" role="img" aria-label="${t("soon_label")}"><span class="soon-script">${t("soon_new")}</span><span class="soon-label">${t("soon_label")}</span></div>`}
         <div class="item-body">
           <div class="bar"><h3><bdi>${it.name}</bdi></h3><span class="price">₪${it.price}</span></div>
           <p class="desc">${L.desc}</p>
@@ -717,7 +721,12 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
       menu.appendChild(art);
       art.querySelector("#minus-" + it.id).addEventListener("click", () => setQty(it.id, qty[it.id] - 1));
       art.querySelector("#plus-" + it.id).addEventListener("click", () => setQty(it.id, qty[it.id] + 1));
-      art.querySelectorAll(`[name="opt-${it.id}"]`).forEach((r, k) => r.addEventListener("change", () => { optSel[it.id] = k; render(); }));
+      art.querySelectorAll(`[name="opt-${it.id}"]`).forEach((r, k) => r.addEventListener("change", () => {
+        optSel[it.id] = k;
+        const im = art.querySelector("img");
+        if (im) { const p = photo(it); im.src = p.src; im.alt = p.alt; }
+        render();
+      }));
     }
   }
 
