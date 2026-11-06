@@ -364,7 +364,8 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
         <h1 class="mark"><span class="mark-script">Meg's</span><span class="mark-wide">Cookies &amp; Pies</span></h1>
         <svg class="arc" viewBox="0 0 400 64" aria-hidden="true">
           <path id="arcpath" d="M24,14 Q200,74 376,14" fill="none"/>
-          <text><textPath href="#arcpath" startOffset="50%" text-anchor="middle" data-t="arc">HOMEMADE &#183; SMALL BATCH</textPath></text>
+          <text id="arc-text"><textPath href="#arcpath" startOffset="50%" text-anchor="middle" data-t="arc">HOMEMADE &#183; SMALL BATCH</textPath></text>
+          <g id="arc-glyphs"></g>
         </svg>
         <p class="lede" data-t="lede">American pies, brown butter cookies and handmade chocolate, made to order in small batches. Order at least three days ahead for pickup in Ra&rsquo;anana.</p>
         <a class="cta" href="#menu" data-t="cta">See the menu</a>
@@ -823,6 +824,40 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
   });
 
   const langBtn = document.getElementById("lang-toggle");
+  // Safari reverses right-to-left text on a curved path. In Hebrew each letter is placed on the
+  // curve by hand, in visual order (right to left reads as the string reversed).
+  const arcPath = document.getElementById("arcpath");
+  const arcText = document.getElementById("arc-text");
+  const arcGlyphs = document.getElementById("arc-glyphs");
+  const SVGNS = "http://www.w3.org/2000/svg";
+  function drawArc() {
+    const he = lang === "he";
+    arcText.style.display = he ? "none" : "";
+    arcGlyphs.style.display = he ? "" : "none";
+    arcGlyphs.textContent = "";
+    if (!he) return;
+    const chars = [...t("arc")].map(c => (c === " " ? "\u00A0" : c)).reverse();
+    const gap = 1.5;
+    const els = chars.map(c => {
+      const el = document.createElementNS(SVGNS, "text");
+      el.setAttribute("text-anchor", "middle");
+      el.textContent = c;
+      arcGlyphs.appendChild(el);
+      return { el, w: el.getComputedTextLength() };
+    });
+    const total = els.reduce((n, g) => n + g.w, 0) + gap * (els.length - 1);
+    let pos = arcPath.getTotalLength() / 2 - total / 2;
+    for (const g of els) {
+      const mid = pos + g.w / 2;
+      const p = arcPath.getPointAtLength(mid);
+      const a = arcPath.getPointAtLength(Math.max(0, mid - 1));
+      const b = arcPath.getPointAtLength(mid + 1);
+      const deg = Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI;
+      g.el.setAttribute("transform", `translate(${p.x} ${p.y}) rotate(${deg})`);
+      pos += g.w + gap;
+    }
+  }
+
   function applyLang() {
     const he = lang === "he";
     const root = document.documentElement;
@@ -834,6 +869,8 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
     langBtn.lang = he ? "en" : "he";
     buildMenu();
     render();
+    drawArc();
+    if (lang === "he" && document.fonts && document.fonts.load) document.fonts.load("800 15px Rubik", t("arc")).then(drawArc, () => {});
     if (!err.hidden && errKey) err.textContent = t(errKey);
   }
   langBtn.addEventListener("click", () => {
