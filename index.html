@@ -124,6 +124,8 @@ a { color: var(--red-deep); }
   font-size: clamp(1.35rem, 3vw, 1.75rem); line-height: 1.05; margin-top: 10px; letter-spacing: .02em;
 }
 .tag-note { font-size: .86rem; color: var(--ink-soft); margin-top: 4px; }
+main .tags { margin-top: 48px; }
+main .tag { background: var(--white); }
 
 /* ---------- Menu board ---------- */
 .section-head {
@@ -372,18 +374,19 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
       </div>
       <div class="frame-bottom"><span dir="ltr">050-242-3303</span><a href="https://www.instagram.com/megangeyers/" target="_blank" rel="noopener" dir="ltr">@megangeyers</a></div>
     </div>
-    <div class="tags">
-      <div class="tag"><div class="tag-head" data-t="t1_h">Order</div><div class="tag-value" data-t="t1_v">3 days ahead</div><p class="tag-note" data-t="t1_n">Pick your day when you order</p></div>
-      <div class="tag"><div class="tag-head" data-t="t2_h">Pickup</div><div class="tag-value" data-t="t2_v">Ra'anana</div><p class="tag-note" data-t="t2_n">Meg sends the spot on WhatsApp</p></div>
-      <div class="tag tg-only"><div class="tag-head" data-t="t3_h">Thanksgiving</div><div class="tag-value" data-t="t3_v">Order by Nov 19</div><p class="tag-note" data-t="t3_n">Pickup Nov 25&ndash;27, in Ra'anana or in Even Yehuda</p></div>
-      <div class="tag"><div class="tag-head" data-t="t4_h">Payment</div><div class="tag-value" data-t="t4_v">Bit or Cash</div><p class="tag-note" data-t="t4_n">Bit once confirmed, or cash on pickup</p></div>
-    </div>
   </div>
 </header>
 
 <main class="wrap">
   <div class="section-head"><h2 data-t="h_menu">The Menu</h2></div>
   <div class="menu" id="menu"></div>
+
+  <div class="tags">
+    <div class="tag"><div class="tag-head" data-t="t1_h">Order</div><div class="tag-value" data-t="t1_v">3 days ahead</div><p class="tag-note" data-t="t1_n">Pick your day when you order</p></div>
+    <div class="tag"><div class="tag-head" data-t="t2_h">Pickup</div><div class="tag-value" data-t="t2_v">Ra'anana</div><p class="tag-note" data-t="t2_n">Meg sends the spot on WhatsApp</p></div>
+    <div class="tag tg-only"><div class="tag-head" data-t="t3_h">Thanksgiving</div><div class="tag-value" data-t="t3_v">Order by Nov 19</div><p class="tag-note" data-t="t3_n">Pickup Nov 25&ndash;27, in Ra'anana or in Even Yehuda</p></div>
+    <div class="tag"><div class="tag-head" data-t="t4_h">Payment</div><div class="tag-value" data-t="t4_v">Bit or Cash</div><p class="tag-note" data-t="t4_n">Bit once confirmed, or cash on pickup</p></div>
+  </div>
 
   <div class="section-head" id="order"><h2 data-t="h_order">Your Order</h2></div>
   <form class="slip" id="slip" novalidate>
