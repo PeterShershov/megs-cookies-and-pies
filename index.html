@@ -670,7 +670,7 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
   const optLabel = (it) => { const l = t("opt_" + CHOCOLATES[optSel[it.id]].key); return lang === "he" ? l : l.toLowerCase(); };
   // Items with a second photo (img2) show it when the second chocolate choice is picked.
   // Local photos get a version so browsers fetch a changed photo at once. Raise IMG_V when a photo changes.
-  const IMG_V = "20261108";
+  const IMG_V = "20261108b";
   const imgUrl = (u) => u.startsWith("data:") ? u : `${u}?v=${IMG_V}`;
   const photo = (it) => (it.img2 && optSel[it.id] === 1) ? { src: imgUrl(it.img2), alt: loc(it).alt2 } : { src: imgUrl(it.img), alt: loc(it).alt };
   const slipName = (it) => it.options ? `<bdi>${it.name}</bdi>, ${optLabel(it)}` : `<bdi>${it.name}</bdi>`;
