@@ -456,7 +456,7 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
   <div class="section-head"><h2 data-t="h_good">Good to Know</h2></div>
   <div class="notes">
     <div class="note"><h3 data-t="n1_h">Storage &amp; serving</h3><p data-t="n1_p">Pecan and pumpkin have egg custard fillings, so keep them in the fridge (up to 4 days) and take them out an hour before serving. Serve them at room temperature. In the fridge, cover any pie with plastic wrap, and once it&rsquo;s cut, press the wrap against the cut edges so the filling doesn&rsquo;t dry out. Apple keeps 2 days at room temperature or 5 in the fridge, and is best warm: heat your pie at 170&deg;C for 10&ndash;15 minutes to crisp the crust. Serve with vanilla ice cream or whipped cream, and never skip the ice cream with apple. Cookies stay at room temperature. Store chocolate in a cool, dry place out of the sun, but not in the fridge, because moisture can make it sweat and go dull. It melts quickly in a warm car.</p></div>
-    <div class="note"><h3 data-t="n2_h">Allergens</h3><p data-t="n2_p">Pies and cookies are made with butter, wheat and eggs, and all the chocolate contains milk, so nothing is parve. The pecan pie and the walnut cookies contain tree nuts, and the Bamba Rocky Road contains peanuts. Everything is made in a home kitchen that uses tree nuts and peanuts, and the kitchen is not kosher.</p></div>
+    <div class="note"><h3 data-t="n2_h">Allergens</h3><p data-t="n2_p">Pies and cookies are made with butter, wheat and eggs, and all the chocolate contains milk, so nothing is parve. The pecan pie and the walnut cookies contain tree nuts. The Bamba Rocky Road and the Peanut Butter Pretzel Bark contain peanuts, and the pretzel bark also contains wheat. Everything is made in a home kitchen that uses tree nuts and peanuts, and the kitchen is not kosher.</p></div>
     <div class="note"><h3 data-t="n3_h">Pickup times</h3><p><span data-t="n3_p1">Any day: pickup in Ra&rsquo;anana with at least 3 days&rsquo; notice, and Meg confirms the time on WhatsApp.</span> <span class="tg-only" data-t="n3_p2">Thanksgiving (order by Nov 19): Ra'anana on Wed Nov 25, 17:00&ndash;19:00, Thu Nov 26, 12:30&ndash;14:00, or Fri Nov 27, 8:30&ndash;11:30; Even Yehuda on Wed Nov 25, 15:00&ndash;16:00.</span></p></div>
   </div>
 </main>
@@ -527,6 +527,9 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
       meta: ["100 g pack", "Store cool, not in the fridge"] },
     { id: "bamba", cat: "chocolate", name: "Bamba Rocky Road", price: 35, unit: "pack", img: "img/bamba.jpg", cls: "cookie", alt: "Milk chocolate clusters with Bamba and marshmallows",
       desc: "Milk chocolate clusters with caramelized Bamba and marshmallows.",
+      meta: ["100 g pack", "Contains peanuts", "Store cool, not in the fridge"] },
+    { id: "pretzel", cat: "chocolate", name: "Peanut Butter Pretzel Bark", price: 35, unit: "pack", img: "img/pretzel.jpg", cls: "cookie", alt: "Pieces of milk chocolate bark with a white peanut butter center and pretzels",
+      desc: "Peanut butter filling with caramelized pretzels and roasted peanuts, coated in milk chocolate.",
       meta: ["100 g pack", "Contains peanuts", "Store cool, not in the fridge"] }
   ];
   // Hebrew text for each item. The meta lines match the English ones one for one.
@@ -563,6 +566,9 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
       meta: ["מארז 100 גרם", "לשמור במקום קריר ויבש (לא מקרר)"] },
     bamba: { alt: "קלאסטר שוקולד חלב עם במבה ומרשמלו",
       desc: "קלאסטר שוקולד חלב עם במבה מקורמלת ומרשמלו.",
+      meta: ["מארז 100 גרם", "מכיל בוטנים", "לשמור במקום קריר ויבש (לא מקרר)"] },
+    pretzel: { alt: "חתיכות בארק שוקולד חלב עם מילוי חמאת בוטנים לבן ובייגלה",
+      desc: "מילוי חמאת בוטנים עם בייגלה מקורמל ובוטנים קלויים, בציפוי שוקולד חלב.",
       meta: ["מארז 100 גרם", "מכיל בוטנים", "לשמור במקום קריר ויבש (לא מקרר)"] }
   };
   const CATS = [
@@ -622,7 +628,7 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
     n1_h: "אחסון והגשה",
     n1_p: "במילוי של פאי הפקאן ופאי הדלעת יש קסטרד על בסיס ביצים, ולכן שומרים אותם במקרר (עד 4 ימים) ומוציאים שעה לפני ההגשה. מגישים בטמפרטורת החדר. במקרר מכסים כל פאי בניילון נצמד, ולאחר החיתוך מצמידים את הניילון לשולי החיתוך כדי שהמילוי לא יתייבש. פאי התפוחים נשמר יומיים בטמפרטורת החדר או 5 ימים במקרר, ומומלץ להגיש אותו חמים: מחממים ב-170 מעלות למשך 10-15 דקות כדי להחזיר לבצק את הפריכות. מגישים עם גלידת וניל או שמנת מוקצפת, ואל תוותרו על הגלידה עם פאי התפוחים. העוגיות נשמרות בטמפרטורת החדר. את השוקולד שומרים במקום קריר ויבש, הרחק מהשמש, אבל לא במקרר, כי לחות עלולה לגרום לו להזיע ולאבד את הברק. הוא נמס מהר ברכב חם.",
     n2_h: "אלרגנים",
-    n2_p: "הפאים והעוגיות מכילים חמאה, חיטה וביצים, וכל השוקולד מכיל חלב, ולכן אין כאן מוצרים פרווה. פאי הפקאן ועוגיות אגוזי המלך מכילים אגוזי עץ, והרוקי רואד במבה מכיל בוטנים. הכול מוכן במטבח ביתי שבו משתמשים באגוזי עץ ובבוטנים, והמטבח אינו כשר.",
+    n2_p: "הפאים והעוגיות מכילים חמאה, חיטה וביצים, וכל השוקולד מכיל חלב, ולכן אין כאן מוצרים פרווה. פאי הפקאן ועוגיות אגוזי המלך מכילים אגוזי עץ. הרוקי רואד במבה והבארק חמאת בוטנים ובייגלה מכילים בוטנים, והבארק גם מכיל חיטה. הכול מוכן במטבח ביתי שבו משתמשים באגוזי עץ ובבוטנים, והמטבח אינו כשר.",
     n3_h: "מועדי איסוף",
     n3_p1: "בכל יום: איסוף ברעננה בהתראה של 3 ימים לפחות, והשעה מתואמת בוואטסאפ.",
     n3_p2: "Thanksgiving (להזמין עד 19.11): ברעננה ביום רביעי 25.11 בין 17:00 ל-19:00, ביום חמישי 26.11 בין 12:30 ל-14:00, או ביום שישי 27.11 בין 8:30 ל-11:30; באבן יהודה ביום רביעי 25.11 בין 15:00 ל-16:00.",
