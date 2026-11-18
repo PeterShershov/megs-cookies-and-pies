@@ -384,7 +384,7 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
   <div class="tags">
     <div class="tag"><div class="tag-head" data-t="t1_h">Order</div><div class="tag-value" data-t="t1_v">3 days ahead</div><p class="tag-note" data-t="t1_n">Pick your day when you order</p></div>
     <div class="tag"><div class="tag-head" data-t="t2_h">Pickup</div><div class="tag-value" data-t="t2_v">Ra'anana</div><p class="tag-note" data-t="t2_n">Meg sends the spot on WhatsApp</p></div>
-    <div class="tag tg-only"><div class="tag-head" data-t="t3_h">Thanksgiving</div><div class="tag-value" data-t="t3_v">Order by Nov 19</div><p class="tag-note" data-t="t3_n">Pickup Nov 25&ndash;27, in Ra'anana or in Even Yehuda</p></div>
+    <div class="tag tg-only"><div class="tag-head" data-t="t3_h">Thanksgiving</div><div class="tag-value" data-t="t3_v">Order by Nov 19</div><p class="tag-note" data-t="t3_n">Pickup Nov 25&ndash;27, or delivery to Herzliya Pituach (&#8362;20)</p></div>
     <div class="tag"><div class="tag-head" data-t="t4_h">Payment</div><div class="tag-value" data-t="t4_v">Bit or Cash</div><p class="tag-note" data-t="t4_n">Bit once confirmed, or cash on pickup</p></div>
   </div>
 
@@ -407,19 +407,25 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
     <div class="slip-grid slip-row">
       <div class="slip-cell">
         <fieldset>
-          <legend class="slip-label" data-t="s_place">Pickup spot</legend>
+          <legend class="slip-label" data-t="s_place">Pickup or delivery</legend>
           <div class="opts">
             <label><input type="radio" name="place" id="place-raanana" value="Ra'anana" checked><span data-t="p_raanana">Ra'anana</span></label>
             <label class="tg-only"><input type="radio" name="place" id="place-ais" value="Even Yehuda"><span data-t="p_ais">Even Yehuda (Thanksgiving)</span></label>
+            <label class="tg-only"><input type="radio" name="place" id="place-deliv" value="Delivery to Herzliya Pituach"><span data-t="p_deliv">Delivery to Herzliya Pituach, ₪20 (Thanksgiving)</span></label>
           </div>
         </fieldset>
+        <div class="field" id="addr-field" hidden>
+          <label class="slip-label" for="addr" data-t="s_addr">Delivery address</label>
+          <input id="addr" name="addr" autocomplete="street-address" placeholder="Street and number, Herzliya Pituach" data-tp="ph_addr">
+        </div>
         <fieldset style="margin-top:14px">
-          <legend class="slip-label" data-t="s_when">Pickup day and time</legend>
+          <legend class="slip-label" data-t="s_when">Day and time</legend>
           <div class="opts" id="days"></div>
           <div class="field" id="date-field" hidden>
             <label class="slip-label" for="cookie-date" data-t="s_date">Pickup date</label>
             <input type="date" id="cookie-date" name="cookieDate">
-            <p class="hint" data-t="s_datehint">At least 3 days from today. Meg confirms the time on WhatsApp.</p>
+            <p class="hint" data-t="s_datehint">At least 3 days from today, and not on Saturdays. Meg confirms the time on WhatsApp.</p>
+            <p class="err" id="date-err" hidden></p>
           </div>
         </fieldset>
         <fieldset style="margin-top:14px">
@@ -457,7 +463,7 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
   <div class="notes">
     <div class="note"><h3 data-t="n1_h">Storage &amp; serving</h3><p data-t="n1_p">Pecan and pumpkin have egg custard fillings, so keep them in the fridge (up to 4 days) and take them out an hour before serving. Serve them at room temperature. In the fridge, cover any pie with plastic wrap, and once it&rsquo;s cut, press the wrap against the cut edges so the filling doesn&rsquo;t dry out. Apple keeps 2 days at room temperature or 5 in the fridge, and is best warm: heat your pie at 170&deg;C for 10&ndash;15 minutes to crisp the crust. Serve with vanilla ice cream or whipped cream, and never skip the ice cream with apple. Cookies stay at room temperature. Store chocolate in a cool, dry place out of the sun, but not in the fridge, because moisture can make it sweat and go dull. It melts quickly in a warm car.</p></div>
     <div class="note"><h3 data-t="n2_h">Allergens</h3><p data-t="n2_p">Pies and cookies are made with butter, wheat and eggs, and all the chocolate contains milk, so nothing is parve. The pecan pie and the walnut cookies contain tree nuts. The Bamba Rocky Road and the Peanut Butter Pretzel Bark contain peanuts, and the pretzel bark also contains wheat. Everything is made in a home kitchen that uses tree nuts and peanuts, and the kitchen is not kosher.</p></div>
-    <div class="note"><h3 data-t="n3_h">Pickup times</h3><p><span data-t="n3_p1">Any day: pickup in Ra&rsquo;anana with at least 3 days&rsquo; notice, and Meg confirms the time on WhatsApp.</span> <span class="tg-only" data-t="n3_p2">Thanksgiving (order by Nov 19): Ra'anana on Wed Nov 25, 17:00&ndash;19:00, Thu Nov 26, 12:30&ndash;14:00, or Fri Nov 27, 8:30&ndash;11:30; Even Yehuda on Wed Nov 25, 15:00&ndash;16:00.</span></p></div>
+    <div class="note"><h3 data-t="n3_h">Pickup times</h3><p><span data-t="n3_p1">Any day: pickup in Ra&rsquo;anana with at least 3 days&rsquo; notice, and Meg confirms the time on WhatsApp.</span> <span class="tg-only" data-t="n3_p2">Thanksgiving (order by Nov 19): Ra'anana on Wed Nov 25, 17:00&ndash;19:00, Thu Nov 26, 12:30&ndash;14:00, or Fri Nov 27, 8:30&ndash;11:30; Even Yehuda on Wed Nov 25, 15:00&ndash;16:00. Delivery to Herzliya Pituach (&#8362;20): Wed Nov 25, 17:00&ndash;18:00.</span></p></div>
   </div>
 </main>
 
@@ -608,7 +614,11 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
     tg_wed_r: "Thanksgiving · Wed Nov 25 · 17:00–19:00",
     tg_thu_r: "Thanksgiving · Thu Nov 26 · 12:30–14:00",
     tg_fri_r: "Thanksgiving · Fri Nov 27 · 8:30–11:30",
-    tg_wed_a: "Thanksgiving · Wed Nov 25 · 15:00–16:00"
+    tg_wed_a: "Thanksgiving · Wed Nov 25 · 15:00–16:00",
+    tg_wed_d: "Thanksgiving · Wed Nov 25 · 17:00–18:00",
+    deliv_line: "Delivery, Herzliya Pituach",
+    err_addr: "Add your delivery address in Herzliya Pituach.",
+    err_sat: "Sorry, no pickups on Saturdays. Please pick another day."
   };
   const HE = {
     meta_desc: "פאי אמריקאי, עוגיות חמאה חומה ושוקולד תוצרת בית, באפייה לפי הזמנה בכמויות קטנות. מזמינים 3 ימים מראש לאיסוף ברעננה.",
@@ -618,13 +628,14 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
     cta: "לתפריט",
     t1_h: "הזמנה", t1_v: "3 ימים מראש", t1_n: "בוחרים יום איסוף בזמן ההזמנה",
     t2_h: "איסוף", t2_v: "רעננה", t2_n: "המקום המדויק נשלח בוואטסאפ",
-    t3_h: "Thanksgiving", t3_v: "להזמין עד 19.11", t3_n: "איסוף 25-27.11, ברעננה או באבן יהודה",
+    t3_h: "Thanksgiving", t3_v: "להזמין עד 19.11", t3_n: "איסוף 25-27.11, או משלוח להרצליה פיתוח (₪20)",
     t4_h: "תשלום", t4_v: "ביט או מזומן", t4_n: "ביט לאחר אישור ההזמנה, או מזומן באיסוף",
     h_menu: "התפריט", h_order: "ההזמנה שלך", h_good: "טוב לדעת",
     s_contains: "בקופסה", s_choice: "(בחירה מצוינת)", s_total: "סה״כ",
-    s_place: "מקום איסוף", p_raanana: "רעננה", p_ais: "אבן יהודה (Thanksgiving)",
-    s_when: "יום ושעת איסוף", s_date: "תאריך איסוף",
-    s_datehint: "לפחות 3 ימים מהיום. השעה מתואמת בוואטסאפ.",
+    s_place: "איסוף או משלוח", p_raanana: "רעננה", p_ais: "אבן יהודה (Thanksgiving)",
+    p_deliv: "משלוח להרצליה פיתוח, ₪20 (Thanksgiving)", s_addr: "כתובת למשלוח", ph_addr: "רחוב ומספר, הרצליה פיתוח",
+    s_when: "יום ושעה", s_date: "תאריך איסוף",
+    s_datehint: "לפחות 3 ימים מהיום, ולא בשבת. השעה מתואמת בוואטסאפ.",
     s_pay: "תשלום", pay_bit: "ביט, לאחר אישור", pay_cash: "מזומן באיסוף",
     s_name: "השם שלך", ph_name: "שם פרטי ושם משפחה",
     s_notes: "הערות", s_opt: "(לא חובה)", ph_notes: "כל דבר שחשוב לדעת",
@@ -638,7 +649,7 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
     n2_p: "הפאים והעוגיות מכילים חמאה, חיטה וביצים, וכל השוקולד מכיל חלב, ולכן אין כאן מוצרים פרווה. פאי הפקאן ועוגיות אגוזי המלך מכילים אגוזי עץ. הרוקי רואד במבה והבארק חמאת בוטנים ובייגלה מכילים בוטנים, והבארק גם מכיל חיטה. הכול מוכן במטבח ביתי שבו משתמשים באגוזי עץ ובבוטנים, והמטבח אינו כשר.",
     n3_h: "מועדי איסוף",
     n3_p1: "בכל יום: איסוף ברעננה בהתראה של 3 ימים לפחות, והשעה מתואמת בוואטסאפ.",
-    n3_p2: "Thanksgiving (להזמין עד 19.11): ברעננה ביום רביעי 25.11 בין 17:00 ל-19:00, ביום חמישי 26.11 בין 12:30 ל-14:00, או ביום שישי 27.11 בין 8:30 ל-11:30; באבן יהודה ביום רביעי 25.11 בין 15:00 ל-16:00.",
+    n3_p2: "Thanksgiving (להזמין עד 19.11): ברעננה ביום רביעי 25.11 בין 17:00 ל-19:00, ביום חמישי 26.11 בין 12:30 ל-14:00, או ביום שישי 27.11 בין 8:30 ל-11:30; באבן יהודה ביום רביעי 25.11 בין 15:00 ל-16:00. משלוח להרצליה פיתוח (₪20): ביום רביעי 25.11 בין 17:00 ל-18:00.",
     soon_new: "New!", soon_label: "תמונה בקרוב",
     choose: "בחרו שוקולד", opt_milk: "שוקולד חלב", opt_white: "שוקולד לבן",
     u_pie: "", u_bag: "שקיות", u_pack: "מארזים",
@@ -655,7 +666,11 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
     tg_wed_r: "Thanksgiving · ד׳ 25.11 · 17:00-19:00",
     tg_thu_r: "Thanksgiving · ה׳ 26.11 · 12:30-14:00",
     tg_fri_r: "Thanksgiving · ו׳ 27.11 · 8:30-11:30",
-    tg_wed_a: "Thanksgiving · ד׳ 25.11 · 15:00-16:00"
+    tg_wed_a: "Thanksgiving · ד׳ 25.11 · 15:00-16:00",
+    tg_wed_d: "Thanksgiving · ד׳ 25.11 · 17:00-18:00",
+    deliv_line: "משלוח, הרצליה פיתוח",
+    err_addr: "הוסיפו כתובת למשלוח בהרצליה פיתוח.",
+    err_sat: "מצטערים, אין איסוף בשבת. בחרו יום אחר."
   };
   // Read the English text that is already in the HTML.
   document.querySelectorAll("[data-t]").forEach(el => { EN[el.dataset.t] = el.innerHTML; });
@@ -688,8 +703,17 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
     ] : [],
     "Even Yehuda": [
       { v: "Thanksgiving, Wednesday, Nov 25, 15:00–16:00", k: "tg_wed_a" }
+    ],
+    "Delivery to Herzliya Pituach": [
+      { v: "Thanksgiving, Wednesday, Nov 25, 17:00–18:00", k: "tg_wed_d" }
     ]
   };
+  const DELIVERY = "Delivery to Herzliya Pituach";
+  const DELIVERY_FEE = 20;
+  const isDelivery = () => val("place") === DELIVERY;
+  const fee = () => (isDelivery() && lines().length ? DELIVERY_FEE : 0);
+  // No pickups on Saturday (getDay() 6). Input value is YYYY-MM-DD.
+  const isSaturday = (v) => { const [y, m, d] = v.split("-").map(Number); return new Date(y, m - 1, d).getDay() === 6; };
 
   const OTHER = "other-day";
   const pad = (n) => String(n).padStart(2, "0");
@@ -779,7 +803,7 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
   const txt = (id) => document.getElementById(id).value.trim();
 
   function lines() { return ITEMS.filter(i => qty[i.id] > 0); }
-  function total() { return lines().reduce((s, i) => s + qty[i.id] * i.price, 0); }
+  function total() { return lines().reduce((s, i) => s + qty[i.id] * i.price, 0) + fee(); }
 
   // English only: this text goes to Meg.
   function message() {
@@ -787,29 +811,40 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
     for (const i of lines()) {
       parts.push(`• ${qty[i.id]} × ${msgName(i)}${unitTag(i.unit)} – ₪${qty[i.id] * i.price}`);
     }
+    if (fee()) parts.push(`• Delivery to Herzliya Pituach – ₪${DELIVERY_FEE}`);
     parts.push(`Total: ₪${total()}`, "",
-      val("day") === OTHER
-        ? `Pickup: ${val("place")}, ${dateInput.value ? prettyDate(dateInput.value) : "(date not picked)"} (3 days' notice)`
-        : `Pickup: ${val("place")}, ${val("day")}`,
+      isDelivery()
+        ? `Delivery: Herzliya Pituach, ${val("day")}`
+        : val("day") === OTHER
+          ? `Pickup: ${val("place")}, ${dateInput.value ? prettyDate(dateInput.value) : "(date not picked)"} (3 days' notice)`
+          : `Pickup: ${val("place")}, ${val("day")}`,
+      ...(isDelivery() ? [`Address: ${txt("addr") || "(not given)"}`] : []),
       `Payment: ${val("pay")}`,
       `Name: ${txt("name") || "(not given)"}`);
     if (txt("notes")) parts.push(`Notes: ${txt("notes")}`);
     return parts.join("\n");
   }
 
-  const dateOk = () => val("day") !== OTHER || (dateInput.value !== "" && dateInput.value >= MIN_DATE);
+  const dateOk = () => val("day") !== OTHER || (dateInput.value !== "" && dateInput.value >= MIN_DATE && !isSaturday(dateInput.value));
+  const addrOk = () => !isDelivery() || txt("addr").length > 0;
   function render() {
     renderDays();
-    document.getElementById("date-field").hidden = val("day") !== OTHER;
+    document.getElementById("date-field").hidden = val("day") !== OTHER || isDelivery();
+    document.getElementById("addr-field").hidden = !isDelivery();
+    const dateErr = document.getElementById("date-err");
+    const satPicked = val("day") === OTHER && dateInput.value !== "" && isSaturday(dateInput.value);
+    dateErr.hidden = !satPicked;
+    if (satPicked) dateErr.textContent = t("err_sat");
     document.getElementById("when-hint").textContent = TG_OPEN ? t("hint_tg") : t("hint");
     const ls = lines();
     const box = document.getElementById("contents");
     document.getElementById("choice").hidden = ls.length === 0;
     box.innerHTML = ls.length
-      ? "<ul>" + ls.map(i => `<li><span>${qty[i.id]} × ${slipName(i)}</span><span>₪${qty[i.id] * i.price}</span></li>`).join("") + "</ul>"
+      ? "<ul>" + ls.map(i => `<li><span>${qty[i.id]} × ${slipName(i)}</span><span>₪${qty[i.id] * i.price}</span></li>`).join("") +
+        (fee() ? `<li><span>${t("deliv_line")}</span><span>₪${DELIVERY_FEE}</span></li>` : "") + "</ul>"
       : `<span class="empty">${t("empty")}</span>`;
     document.getElementById("total").innerHTML = `₪${total()}<small>${val("pay").startsWith("Cash") ? t("total_cash") : t("total_bit")}</small>`;
-    const ready = ls.length > 0 && txt("name").length > 0 && dateOk();
+    const ready = ls.length > 0 && txt("name").length > 0 && addrOk() && dateOk();
     send.setAttribute("aria-disabled", ready ? "false" : "true");
     send.href = `https://wa.me/${PHONE}?text=${encodeURIComponent(message())}`;
     if (ready) err.hidden = true;
@@ -819,9 +854,11 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
   send.addEventListener("click", (e) => {
     if (send.getAttribute("aria-disabled") === "true") {
       e.preventDefault();
-      showErr(!lines().length ? "err_empty" : !txt("name") ? "err_name" : "err_date");
+      const satPicked = val("day") === OTHER && dateInput.value !== "" && isSaturday(dateInput.value);
+      showErr(!lines().length ? "err_empty" : !txt("name") ? "err_name" : !addrOk() ? "err_addr" : satPicked ? "err_sat" : "err_date");
       if (!lines().length) document.getElementById("menu").scrollIntoView({ behavior: "smooth", block: "start" });
       else if (!txt("name")) document.getElementById("name").focus();
+      else if (!addrOk()) document.getElementById("addr").focus();
       else dateInput.focus();
     }
   });
