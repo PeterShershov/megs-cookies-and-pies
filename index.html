@@ -139,7 +139,7 @@ main .tag { background: var(--white); }
 .section-head::before, .section-head::after {
   content: ""; flex: 1; height: 0; border-top: 1px solid var(--red);
 }
-.menu { display: grid; gap: 22px; }
+.menu { display: grid; gap: 30px; }
 .item {
   display: grid;
   grid-template-columns: 220px 1fr;
@@ -217,6 +217,9 @@ main .tag { background: var(--white); }
   font-family: var(--font-bar); font-size: .85rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft);
 }
 .cat-head:first-child { margin-top: 0; }
+.qty-row { margin-top: 14px; }
+.qty-row .qty { display: flex; width: 100%; max-width: 420px; justify-content: space-between; margin-top: 0; }
+.qty-row .qty output { flex: 1; }
 .variant { margin-top: 12px; }
 .variant .opts { margin-top: 4px; }
 
@@ -346,6 +349,7 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
   .item { grid-template-columns: 1fr; }
   .item img { width: 62%; margin: 0 auto; }
   .item.cookie img, .item .soon { width: 100%; aspect-ratio: 4 / 3; }
+  .qty-row .qty { max-width: none; }
   .slip-grid { grid-template-columns: 1fr; }
   .slip-cell + .slip-cell { border-inline-start: 0; border-top: 2px solid var(--red); }
   .pack { grid-template-columns: 1fr; }
@@ -765,17 +769,16 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
         ${it.img ? `<img src="${photo(it).src}" alt="${photo(it).alt}" loading="lazy">` : `<div class="soon" role="img" aria-label="${t("soon_label")}"><span class="soon-script">${t("soon_new")}</span><span class="soon-label">${t("soon_label")}</span></div>`}
         <div class="item-body">
           <div class="bar"><h3><bdi>${it.name}</bdi></h3><span class="price">₪${it.price}</span></div>
-          <p class="desc">${L.desc}</p>
-          <div class="meta">${L.meta.map(m => `<span>${m}</span>`).join("")}</div>
-          ${it.options ? `<fieldset class="variant"><legend class="qty-label" style="margin-inline-start:0">${t("choose")}</legend><div class="opts">${CHOCOLATES.map((o, k) => `<label><input type="radio" name="opt-${it.id}" id="opt-${it.id}-${k}" value="${o.msg}"${k === optSel[it.id] ? " checked" : ""}><span>${t("opt_" + o.key)}</span></label>`).join("")}</div></fieldset>` : ""}
-          <div>
+          <div class="qty-row">
             <div class="qty" role="group" aria-label="${t("how_many")(it.name)}">
               <button type="button" id="minus-${it.id}" aria-label="${t("fewer")}">&minus;</button>
               <output id="q-${it.id}" aria-live="polite">${qty[it.id]}</output>
               <button type="button" id="plus-${it.id}" aria-label="${t("more")}">+</button>
             </div>
-            <span class="qty-label">${t(unitKey(it.unit))}</span>
           </div>
+          ${it.options ? `<fieldset class="variant"><legend class="qty-label" style="margin-inline-start:0">${t("choose")}</legend><div class="opts">${CHOCOLATES.map((o, k) => `<label><input type="radio" name="opt-${it.id}" id="opt-${it.id}-${k}" value="${o.msg}"${k === optSel[it.id] ? " checked" : ""}><span>${t("opt_" + o.key)}</span></label>`).join("")}</div></fieldset>` : ""}
+          <p class="desc">${L.desc}</p>
+          <div class="meta">${L.meta.map(m => `<span>${m}</span>`).join("")}</div>
         </div>`;
       menu.appendChild(art);
       art.querySelector("#minus-" + it.id).addEventListener("click", () => setQty(it.id, qty[it.id] - 1));
