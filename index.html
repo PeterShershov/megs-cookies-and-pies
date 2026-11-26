@@ -364,7 +364,9 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
 html[lang="he"] .cb-h1 { font-family: var(--font-wide); font-weight: 800; font-size: clamp(1.8rem, 6vw, 2.4rem); }
 .cb-sub { color: var(--ink-soft); margin: 6px 0 18px; }
 .cb-steps { display: flex; gap: 6px; margin: 6px 0 16px; }
-.cb-step { flex: 1; text-align: center; font: 600 .7rem var(--font-wide); color: var(--ink-soft); }
+.cb-step { flex: 1; text-align: center; font: 600 .7rem var(--font-wide); color: var(--ink-soft); background: none; border: 0; padding: 0; cursor: pointer; }
+.cb-step:hover b, .cb-step:focus-visible b { color: var(--red); text-decoration: underline; }
+.cb-step:hover i { background: var(--red); }
 .cb-step i { display: block; height: 6px; border-radius: 3px; background: var(--paper-deep); margin-bottom: 6px; }
 .cb-step.done i { background: var(--red); }
 .cb-step.cur i { background: var(--red-deep); }
@@ -1390,7 +1392,8 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
     if (S.shape === "cup") { S.coat = "top"; S.candleOn = false; }
     $("cb-title").textContent = x.title; $("cb-sub").textContent = x.sub;
     $("cb-close").textContent = "× " + x.close; $("cb-lang").textContent = lang === "he" ? "English" : "עברית";
-    $("cb-steps").innerHTML = x.steps.map((s, i) => `<div class="cb-step ${i < S.step ? "done" : i === S.step ? "cur" : ""}"><i></i><b>${s}</b></div>`).join("");
+    $("cb-steps").innerHTML = x.steps.map((s, i) => `<button type="button" class="cb-step ${i < S.step ? "done" : i === S.step ? "cur" : ""}" data-i="${i}"${i === S.step ? ' aria-current="step"' : ""}><i></i><b>${s}</b></button>`).join("");
+    root.querySelectorAll(".cb-step").forEach(b => b.onclick = () => go(+b.dataset.i));
     $("cb-art").innerHTML = art(S);
     $("cb-panel").innerHTML = panel();
     $("cb-price").innerHTML = `${shek(p.total)}<small>${S.step === 4 ? x.total : x.from}</small>`;
@@ -1399,7 +1402,7 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
     const add = $("cb-add"); if (add) add.onclick = () => { const c = finished(); close(false); if (api.onAdd) api.onAdd(c); };
     root.querySelectorAll(".cb-opt").forEach(b => b.onclick = () => {
       const k = b.dataset.k, g = b.dataset.g;
-      if (S.step === 0) { S.shape = k; S.coat = "top"; S.frost = false; S.candleOn = false; }
+      if (S.step === 0) S.shape = k;   // keep the other choices. Cupcakes always get the top coating and no candle (see render).
       else if (S.step === 1) S.flavor = k; else if (S.step === 2) S.coat = k;
       else if (g === "spr") S.spr = k; else if (g === "frost") S.frost = k === "yes"; else if (g === "candle") S.candleOn = k === "yes";
       render();
@@ -1424,11 +1427,19 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
     isOpen = false; root.hidden = true; document.body.style.overflow = "";
     if (restore && opener && opener.focus) opener.focus();
   }
-  $("cb-next").onclick = () => {
-    if (S.step === 3 && S.candleOn && !digits(S)) { const e = $("cb-err"); if (e) e.hidden = false; const i = $("cb-cn"); if (i) i.focus(); return; }
-    S.step = Math.min(4, S.step + 1); render(); root.scrollTop = 0;
-  };
-  $("cb-back").onclick = () => { S.step = Math.max(0, S.step - 1); render(); root.scrollTop = 0; };
+  // Go to any step. The last step needs the candle number if a candle is chosen.
+  function go(i) {
+    if (i === S.step) return;
+    if (i === 4 && S.candleOn && !digits(S)) {
+      const stay = S.step === 3;
+      S.step = 3; render(); if (!stay) root.scrollTop = 0;
+      const e = $("cb-err"); if (e) e.hidden = false; const inp = $("cb-cn"); if (inp) inp.focus();
+      return;
+    }
+    S.step = i; render(); root.scrollTop = 0;
+  }
+  $("cb-next").onclick = () => go(Math.min(4, S.step + 1));
+  $("cb-back").onclick = () => go(Math.max(0, S.step - 1));
   $("cb-close").onclick = () => close();
   $("cb-lang").onclick = () => document.getElementById("lang-toggle").click();
   document.addEventListener("keydown", (e) => { if (isOpen && e.key === "Escape") close(); });
