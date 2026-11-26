@@ -1146,7 +1146,9 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
     return o;
   }
 
-  function roundSVG(st) {
+  // The cake and its plate span y 96 to 268 in the 320 x 270 frame, so shift them up by 47 to centre them.
+  function roundSVG(st) { return `<g transform="translate(0 -47)">${roundCake(st)}</g>`; }
+  function roundCake(st) {
     const sp = SPONGE[st.flavor], all = st.coat === "around", ty = 130, by = 208, RX = 96, RY = 34;
     const body = `M64 ${ty} V${by} A${RX} ${RY} 0 0 0 256 ${by} V${ty}Z`;
     let o = DEFS + `<clipPath id="rbody"><path d="${body}"/></clipPath>`;
@@ -1433,7 +1435,7 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
 
   const api = { open, close, refresh: () => { if (isOpen) render(); }, art, describe, slipDetail, msgLines, onAdd: null, minPrice: BASE.cup[6], name: () => ct().cakeName, removeLabel: () => ct().remove,
     // Square crop of the round-cake drawing for the round tile on the menu.
-    ctaArt: () => art({ shape: "round", cups: 12, flavor: "chocolate", coat: "top", spr: "on", frost: true, candleOn: true, candle: "5" }).replace('viewBox="0 0 320 270"', 'viewBox="40 36 240 240"') };
+    ctaArt: () => art({ shape: "round", cups: 12, flavor: "chocolate", coat: "top", spr: "on", frost: true, candleOn: true, candle: "5" }).replace('viewBox="0 0 320 270"', 'viewBox="40 1 240 240"') };
   return api;
   })();
 
