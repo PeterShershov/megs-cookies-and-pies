@@ -1044,7 +1044,7 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
       h: ["Every cake comes with ganache on top and sprinkles.","Same price for every flavor.","Dark chocolate ganache made with Cacao Barry chocolate.","Sprinkles are included. Add buttercream piping or a candle if you like.",""],
       round: ["Round cake","8 inch, two layers with white buttercream between them, serves 12-16"], party: ["Rectangular cake","9×13 inch, one layer, 24 pieces"], cup: ["Cupcakes","Coated in ganache with sprinkles"],
       count: "How many cupcakes", pcs: n => n + " cupcakes",
-      chocolate: ["Chocolate cake",""], yellow: ["Buttery vanilla cake",""], funfetti: ["Vanilla cake with sprinkles",""],
+      chocolate: ["Chocolate cake",""], yellow: ["Yellow cake",""], funfetti: ["Funfetti cake",""],
       top: ["Top coating only","Spread over the top, the sides stay bare"], around: ["Ganache all around","Top and sides coated and smooth"], topCup: ["Top coating only","Cupcakes always get ganache on top"],
       gSpr: "Sprinkles", sprOn: ["Colorful sprinkles","A border of sprinkles on top"], sprOnCup: ["Colorful sprinkles","Sprinkles on the ganache"], sprOff: ["No sprinkles","Smooth ganache, no sprinkles"],
       gFrost: "Buttercream piping", frostNone: ["No piping","Ganache only"],
@@ -1168,17 +1168,41 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
     return o;
   }
   function partySVG(st) {
-    const sp = SPONGE[st.flavor], all = st.coat === "around";
-    let o = DEFS + `<rect x="22" y="80" width="276" height="140" rx="16" fill="#fbfaf6" stroke="#cfd6dd" stroke-width="2"/>`;
-    o += `<rect x="40" y="168" width="240" height="38" rx="5" fill="${all ? GAN : sp}"/>`;
-    if (!all && st.flavor === "funfetti") { const r = rnd(5), pts = []; for (let i = 0; i < 40; i++) pts.push([44 + r() * 232, 172 + r() * 30]); o += dots(pts, 3); }
-    o += `<rect x="40" y="70" width="240" height="98" rx="7" fill="${GAN2}"/>`;
-    for (let c = 1; c < 6; c++) o += `<line x1="${40 + c * 40}" y1="70" x2="${40 + c * 40}" y2="168" stroke="rgba(0,0,0,.5)" stroke-width="1.4"/>`;
-    for (let r = 1; r < 4; r++) o += `<line x1="40" y1="${70 + r * 24.5}" x2="280" y2="${70 + r * 24.5}" stroke="rgba(0,0,0,.5)" stroke-width="1.4"/>`;
-    if (st.spr === "on") o += sprinkles(160, 119, 114, 44, 46, 3, false, 3);
-    if (st.frost) for (let r = 0; r < 4; r++) for (let c = 0; c < 6; c++) o += rosette(60 + c * 40, 82 + r * 24.5, 12.5, 9.5);
-    o += candleSVG(digits(st), 160, 130);
-    return o;
+    // One box drawn in a single view: a thin one-layer slab on a board, with the top, front and right side visible.
+    const sp = SPONGE[st.flavor], all = st.coat === "around", fun = st.flavor === "funfetti";
+    const f = (n) => n.toFixed(1);
+    const D = [52, -56], H = 38, X0 = 24, W = 208, FY = 170;           // front-top-left corner, width, depth vector, height
+    const P = (u, v) => [X0 + D[0] + u * W - v * 52, FY + D[1] + v * 56];  // top face: u 0..1 left to right, v 0..1 back to front
+    const poly = (pts, fill, extra = "") => `<polygon points="${pts.map(p => f(p[0]) + "," + f(p[1])).join(" ")}" fill="${fill}" ${extra}/>`;
+    const m = 12, k = .12;                                               // board margin and its depth margin
+    const FL = [X0 - m - k * D[0], FY + H + k * -D[1]], FR = [X0 + W + m - k * D[0], FY + H + k * -D[1]];
+    const BR = [X0 + W + D[0] + m + k * D[0], FY + H + D[1] - k * -D[1]], BL = [X0 + D[0] - m + k * D[0], FY + H + D[1] - k * -D[1]];
+    let o = DEFS + `<g transform="translate(6 -12)">`;
+    o += poly([FL, FR, [FR[0], FR[1] + 8], [FL[0], FL[1] + 8]], "#e6e9ec") + poly([FR, BR, [BR[0], BR[1] + 8], [FR[0], FR[1] + 8]], "#d3d8dc");
+    o += poly([FL, FR, BR, BL], "#fbfaf6", 'stroke="#cfd6dd" stroke-width="1.6" stroke-linejoin="round"');
+    // cake: front face, right face, then the top
+    const body = all ? GAN : sp;
+    o += poly([[X0, FY], [X0 + W, FY], [X0 + W, FY + H], [X0, FY + H]], body);
+    o += poly([[X0 + W, FY], [X0 + W + D[0], FY + D[1]], [X0 + W + D[0], FY + D[1] + H], [X0 + W, FY + H]], body);
+    o += poly([[X0 + W, FY], [X0 + W + D[0], FY + D[1]], [X0 + W + D[0], FY + D[1] + H], [X0 + W, FY + H]], "rgba(0,0,0,.14)");
+    if (!all && fun) {
+      const r = rnd(5), a = [], b = [];
+      for (let i = 0; i < 34; i++) a.push([X0 + 3 + r() * (W - 6), FY + 4 + r() * (H - 8)]);
+      for (let i = 0; i < 9; i++) { const t = .1 + r() * .8; b.push([X0 + W + D[0] * t, FY + D[1] * t + 6 + r() * (H - 12)]); }
+      o += dots(a, 3) + dots(b, 6);
+    }
+    o += poly([P(0, 0), P(1, 0), P(1, 1), P(0, 1)], GAN2);
+    // 24 pieces: 6 across, 4 deep
+    for (let c = 1; c < 6; c++) { const a = P(c / 6, 0), b = P(c / 6, 1); o += `<line x1="${f(a[0])}" y1="${f(a[1])}" x2="${f(b[0])}" y2="${f(b[1])}" stroke="rgba(0,0,0,.5)" stroke-width="1.2"/>`; }
+    for (let r = 1; r < 4; r++) { const a = P(0, r / 4), b = P(1, r / 4); o += `<line x1="${f(a[0])}" y1="${f(a[1])}" x2="${f(b[0])}" y2="${f(b[1])}" stroke="rgba(0,0,0,.5)" stroke-width="1.2"/>`; }
+    if (st.spr === "on") {
+      const r = rnd(3);
+      for (let i = 0; i < 46; i++) { const q = P(.03 + r() * .94, .05 + r() * .9); o += jimmy(q[0], q[1], 2.8, r() * 180, HEARTC[Math.floor(r() * HEARTC.length)]); }
+    }
+    if (st.frost) for (let r = 0; r < 4; r++) for (let c = 0; c < 6; c++) { const q = P((c + .5) / 6, (r + .5) / 4); o += rosette(q[0], q[1], 11, 6); }
+    const ctr = P(.5, .62);
+    o += candleSVG(digits(st), ctr[0], ctr[1] + 6);
+    return o + `</g>`;
   }
   function cupSVG(st) {
     const n = st.cups, cols = n === 6 ? 3 : n === 12 ? 4 : 6, rows = n / cols, cw = 320 / cols, ch = 250 / rows;
@@ -1237,12 +1261,14 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
       o += `<path d="M24 64 L104 64 L94 90 L34 90Z" fill="#fbeff0"/>`;
       for (let k = 0; k < 7; k += 2) { const f = (k + .5) / 7, x1 = 24 + 80 * f, x2 = 34 + 60 * f; o += `<path d="M${x1 - 4.5} 64 L${x1 + 4.5} 64 L${x2 + 3.5} 90 L${x2 - 3.5} 90Z" fill="#cf3a46"/>`; }
     } else {
-      // A piece of a rectangular cake.
-      o += `<clipPath id="sl"><rect x="14" y="34" width="86" height="50"/></clipPath>`;
-      o += `<polygon points="100,36 114,26 114,74 100,84" fill="${sp}" stroke="rgba(0,0,0,.18)" stroke-width=".8"/>`;
-      o += `<rect x="14" y="34" width="86" height="50" fill="${sp}"/>`;
-      if (fun) { const r = rnd(7), pts = []; for (let i = 0; i < 40; i++) pts.push([16 + r() * 82, 36 + r() * 46]); o += `<g clip-path="url(#sl)">${dots(pts, 2)}</g>`; }
-      o += `<polygon points="14,34 28,24 114,24 100,34" fill="${GAN2}"/><rect x="14" y="34" width="86" height="8" rx="2" fill="${GAN}"/>`;
+      // A piece of a rectangular cake: a small box seen from the front, with the top and right side visible.
+      const D2 = [14, -16], FW = 46, FH = 36, fx = 24, fy = 52;
+      let g = "";
+      g += `<polygon points="${fx},${fy} ${fx + FW},${fy} ${fx + FW},${fy + FH} ${fx},${fy + FH}" fill="${sp}"/>`;
+      g += `<polygon points="${fx + FW},${fy} ${fx + FW + D2[0]},${fy + D2[1]} ${fx + FW + D2[0]},${fy + D2[1] + FH} ${fx + FW},${fy + FH}" fill="${sp}"/><polygon points="${fx + FW},${fy} ${fx + FW + D2[0]},${fy + D2[1]} ${fx + FW + D2[0]},${fy + D2[1] + FH} ${fx + FW},${fy + FH}" fill="rgba(0,0,0,.14)"/>`;
+      if (fun) { const r = rnd(7), a = [], b = []; for (let i = 0; i < 16; i++) a.push([fx + 2 + r() * (FW - 4), fy + 3 + r() * (FH - 6)]); for (let i = 0; i < 4; i++) b.push([fx + FW + D2[0] * (.2 + r() * .6), fy + D2[1] * (.2 + r() * .6) + 5 + r() * (FH - 10)]); g += dots(a, 2) + dots(b, 5); }
+      g += `<polygon points="${fx},${fy} ${fx + FW},${fy} ${fx + FW + D2[0]},${fy + D2[1]} ${fx + D2[0]},${fy + D2[1]}" fill="${GAN2}"/>`;
+      o += `<g transform="translate(64 48) scale(1.25) translate(-${fx + (FW + D2[0]) / 2} -${fy + (D2[1] + FH) / 2})">${g}</g>`;
     }
     return `<svg viewBox="0 0 128 96" xmlns="http://www.w3.org/2000/svg">${o}</svg>`;
   }
