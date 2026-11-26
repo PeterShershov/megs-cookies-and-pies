@@ -1085,19 +1085,34 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
     cakeName: "Birthday cake", candleWord: "Number candle", close: "Close", errCandle: "Type the number for the candle.",
     added: "Cake added to your order.", seeOrder: "See my order",
     msgSize: { round: "8 inch / 20 cm", party: "9×13 inch / 23×33 cm" },
-    remove: "Remove this cake"
+    remove: "Remove this cake",
+    gCherry: "Maraschino cherries", cherryNone: ["No cherries", ""],
+    cherryRound: ["Stemmed maraschino cherries", "12 cherries around the edge of the cake"],
+    cherryParty: ["Stemmed maraschino cherries", "A cherry on each of the 24 pieces. Comes in a taller box so the stems fit."],
+    cherryCup: ["Stemmed maraschino cherries", "A cherry on every cupcake"],
+    cherryWord: (n) => n + " stemmed maraschino cherries",
+    sumHead: ["Shape", "Flavor", "Coating", "Sprinkles", "Buttercream", "Cherries", "Candle"],
+    h: CT.en.h.map((t, i) => i === 3 ? "Sprinkles are included. Add buttercream piping, cherries or a candle if you like." : t)
   });
   Object.assign(CT.he, {
     cakeName: "עוגת יום הולדת", candleWord: "נר מספר", close: "סגירה", errCandle: "הקלידו את המספר לנר.",
     added: "העוגה נוספה להזמנה.", seeOrder: "לראות את ההזמנה",
     msgSize: { round: "8 inch / 20 cm", party: "9×13 inch / 23×33 cm" },
-    remove: "הסרת העוגה"
+    remove: "הסרת העוגה",
+    gCherry: "דובדבני מרסקינו", cherryNone: ["ללא דובדבנים", ""],
+    cherryRound: ["דובדבני מרסקינו עם גבעול", "12 דובדבנים סביב שולי העוגה"],
+    cherryParty: ["דובדבני מרסקינו עם גבעול", "דובדבן על כל אחת מ-24 החתיכות. מגיעה בקופסה גבוהה יותר כדי שהגבעולים ייכנסו."],
+    cherryCup: ["דובדבני מרסקינו עם גבעול", "דובדבן על כל קאפקייק"],
+    cherryWord: (n) => n + " דובדבני מרסקינו עם גבעול",
+    sumHead: ["צורה", "טעם", "ציפוי", "סוכריות", "זילוף", "דובדבנים", "נר"],
+    h: CT.he.h.map((t, i) => i === 3 ? "סוכריות כלולות במחיר. אפשר להוסיף זילוף קרם חמאה, דובדבנים ונר." : t)
   });
   const COUNTS = [6, 12, 24];
   const BASE = { round: 250, party: 230, cup: { 6: 85, 12: 160, 24: 290 } };
   const COAT = { round: 30, party: 30, cup: 0 };
   const FROST = { round: 20, party: 40, cup: { 6: 10, 12: 25, 24: 50 } };
   const CANDLE_PER_DIGIT = 10;
+  const CHERRY = { round: 25, party: 45, cup: { 6: 12, 12: 24, 24: 45 } };   // stemmed maraschino cherries: 12 on the round cake, 24 on the rectangular cake, 1 per cupcake
   const isCup = (sh) => sh === "cup";
   const digits = (st) => (st.candleOn && !isCup(st.shape)) ? (st.candle || "").replace(/\D/g, "").slice(0, 3) : "";
   const price = (st = S) => {
@@ -1105,7 +1120,8 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
     const coat = st.coat === "around" && !isCup(st.shape) ? COAT[st.shape] : 0;
     const f = st.frost ? (isCup(st.shape) ? FROST.cup[st.cups] : FROST[st.shape]) : 0;
     const c = digits(st).length * CANDLE_PER_DIGIT;
-    return { base, coat, f, c, total: base + coat + f + c };
+    const ch = st.cherry ? (isCup(st.shape) ? CHERRY.cup[st.cups] : CHERRY[st.shape]) : 0;
+    return { base, coat, f, c, ch, total: base + coat + f + c + ch };
   };
   const shek = (n) => "₪" + n;
   const plus = (n) => n ? "+" + shek(n) : ct().incl;
@@ -1158,6 +1174,11 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
     return o;
   }
 
+  // A stemmed maraschino cherry. (x, y) is the centre of the cherry, r its radius. The stem curves up and to the right.
+  function cherrySVG(x, y, r) {
+    const k = r / 4.4;
+    return `<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(${k.toFixed(3)})"><path d="M0 -3.6 C.4 -9 3 -12 6.6 -13.6" fill="none" stroke="#7a5230" stroke-width="1.2" stroke-linecap="round"/><circle r="4.4" fill="#c4112f"/><circle cx="-1.5" cy="-1.6" r="1.1" fill="#ea5a70"/></g>`;
+  }
   // The cake and its plate span y 96 to 268 in the 320 x 270 frame, so shift them up by 47 to centre them.
   function roundSVG(st) { return `<g transform="translate(0 -47)">${roundCake(st)}</g>`; }
   function roundCake(st) {
@@ -1197,6 +1218,13 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
         }
       }
     }
+    if (st.cherry) {
+      // 12 cherries evenly around the top edge, back ones first so the front ones sit on top
+      const cs = [];
+      for (let i = 0; i < 12; i++) { const a = (i + .5) / 12 * 6.2832; cs.push([160 + Math.cos(a) * RX * .86, ty + Math.sin(a) * RY * .86]); }
+      cs.sort((p, q) => p[1] - q[1]);
+      for (const [x, y] of cs) o += cherrySVG(x, y - 2, 5.2);
+    }
     o += candleSVG(digits(st), 160, ty + 2);
     return o;
   }
@@ -1232,19 +1260,21 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
       for (let i = 0; i < 46; i++) { const q = P(.03 + r() * .94, .05 + r() * .9); o += jimmy(q[0], q[1], 2.8, r() * 180, HEARTC[Math.floor(r() * HEARTC.length)]); }
     }
     if (st.frost) for (let r = 0; r < 4; r++) for (let c = 0; c < 6; c++) { const q = P((c + .5) / 6, (r + .5) / 4); o += rosette(q[0], q[1], 11, 6); }
+    if (st.cherry) for (let r = 0; r < 4; r++) for (let c = 0; c < 6; c++) { const q = P((c + .5) / 6, (r + .5) / 4); o += cherrySVG(q[0], q[1] - 1.5, 3.7); }
     const ctr = P(.5, .62);
     o += candleSVG(digits(st), ctr[0], ctr[1] + 6);
     return o + `</g>`;
   }
   // One cupcake in local units. Origin: centre of the top edge of the liner. Width about 34, liner 24 tall.
   // top = colour of the dome (ganache, or the bare sponge for the flavour pictures).
-  function cupLocal(top, frost, spr, seed, fun) {
+  function cupLocal(top, frost, spr, seed, fun, cherry) {
     let o = `<path d="M-15 0 L15 0 L11.5 19 L-11.5 19Z" fill="#fbeff0"/>`;
     for (let k = 0; k < 7; k += 2) { const f = (k + .5) / 7, x1 = -15 + 30 * f, x2 = -11.5 + 23 * f; o += `<path d="M${x1 - 2} 0 L${x1 + 2} 0 L${x2 + 1.5} 19 L${x2 - 1.5} 19Z" fill="#cf3a46"/>`; }
     o += `<path d="M-17 2 Q-18 -15 0 -15 Q18 -15 17 2 Q0 7 -17 2Z" fill="${top}"/>`;
     if (fun) { const pts = spread(-14, -13.5, 14, 1, 7, 3, seed + 40).filter(([x, y]) => (x / 15) ** 2 + ((y + 6.5) / 7.8) ** 2 <= 1); o += dots(pts, seed + 2, 1.9); }
     if (spr) o += sprinkles(0, -6, 12.5, 6, frost ? 6 : 10, seed, false, 1.55);
     if (frost) o += swirlLocal();
+    if (cherry) o += frost ? cherrySVG(4.5, -36, 4.3) : cherrySVG(0, -17, 4.4);
     return o;
   }
   // Piped swirl: a ribbon of buttercream that coils up and in, over a darker cream cone. Drawn quarter turn by quarter turn,
@@ -1269,12 +1299,12 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
   function cupSVG(st) {
     // Lay the grid out from the real size of a cupcake, so every row fits and the grid is centred.
     const n = st.cups, cols = n === 6 ? 3 : n === 12 ? 4 : 6, rows = n / cols, cw = 300 / cols, ch = 250 / rows;
-    const top = st.frost ? -39.2 : -15, bot = 19, s = Math.min((cw - 8) / 36, (ch - 8) / (bot - top), 2.1);
+    const top = st.cherry ? (st.frost ? -50.5 : -31.5) : (st.frost ? -39.2 : -15), bot = 19, s = Math.min((cw - 8) / 36, (ch - 8) / (bot - top), 2.1);
     const mid = (top + bot) / 2, x0 = (320 - cols * cw) / 2, y0 = (270 - rows * ch) / 2;
     let o = DEFS;
     for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
       const cx = x0 + cw * (c + .5), cy = y0 + ch * (r + .5) - mid * s;
-      o += `<g transform="translate(${cx.toFixed(1)} ${cy.toFixed(1)}) scale(${s.toFixed(3)})">${cupLocal(GAN2, st.frost, st.spr === "on", 20 + r * 9 + c, false)}</g>`;
+      o += `<g transform="translate(${cx.toFixed(1)} ${cy.toFixed(1)}) scale(${s.toFixed(3)})">${cupLocal(GAN2, st.frost, st.spr === "on", 20 + r * 9 + c, false, st.cherry)}</g>`;
     }
     return o;
   }
@@ -1333,7 +1363,7 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
   /* ---------- the sheet ---------- */
   const root = document.getElementById("cb");
   const $ = (id) => document.getElementById(id);
-  const fresh = () => ({ step: 0, shape: "round", cups: 12, flavor: "chocolate", coat: "top", spr: "on", frost: false, candleOn: false, candle: "" });
+  const fresh = () => ({ step: 0, shape: "round", cups: 12, flavor: "chocolate", coat: "top", spr: "on", frost: false, cherry: false, candleOn: false, candle: "" });
   let S = fresh();
   const copy = () => ({ ...S });
 
@@ -1344,15 +1374,16 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
       shape: cup ? x.pcs(c.cups) : x[c.shape][0], flavor: x[c.flavor][0], coat: cup ? x.topCup[0] : x[c.coat][0],
       spr: c.spr === "on" ? (cup ? x.sprOnCup[0] : x.sprOn[0]) : x.sprOff[0],
       frost: c.frost ? (c.shape === "round" ? x.frost[0] : c.shape === "party" ? x.frostParty[0] : x.frostCup[0]) : x.frostNone[0],
+      cherry: c.cherry ? x.cherryWord(cup ? c.cups : c.shape === "round" ? 12 : 24) : x.cherryNone[0],
       candle: c.candle ? x.candleWord + " " + c.candle : x.candleNone[0]
     };
   }
-  const slipDetail = (c) => { const d = describe(c, lang); return [d.shape, d.flavor, d.coat, d.spr].concat(c.frost ? [d.frost] : [], c.candle ? [d.candle] : []).join(" · "); };
+  const slipDetail = (c) => { const d = describe(c, lang); return [d.shape, d.flavor, d.coat, d.spr].concat(c.frost ? [d.frost] : [], c.cherry ? [d.cherry] : [], c.candle ? [d.candle] : []).join(" · "); };
   function msgLines(c) {
     const x = CT.en, d = describe(c, "en"), size = c.shape === "cup" ? "" : " (" + x.msgSize[c.shape] + ")";
-    return [`• 1 × ${x.cakeName} – ₪${c.price}`, `   Shape: ${d.shape}${size}`, `   Flavor: ${d.flavor}`, `   Coating: ${d.coat}`, `   Sprinkles: ${d.spr}`, `   Piping: ${d.frost}`, `   Candle: ${d.candle}`];
+    return [`• 1 × ${x.cakeName} – ₪${c.price}`, `   Shape: ${d.shape}${size}`, `   Flavor: ${d.flavor}`, `   Coating: ${d.coat}`, `   Sprinkles: ${d.spr}`, `   Piping: ${d.frost}`, `   Cherries: ${d.cherry}`].concat(c.shape === "party" && c.cherry ? ["   Box: taller box (8-10 cm) for the cherry stems"] : [], [`   Candle: ${d.candle}`]);
   }
-  const finished = () => ({ shape: S.shape, cups: S.cups, flavor: S.flavor, coat: isCup(S.shape) ? "top" : S.coat, spr: S.spr, frost: S.frost, candle: digits(S), price: price().total });
+  const finished = () => ({ shape: S.shape, cups: S.cups, flavor: S.flavor, coat: isCup(S.shape) ? "top" : S.coat, spr: S.spr, frost: S.frost, cherry: S.cherry, candle: digits(S), price: price().total });
 
   const optCard = (key, title, desc, p, on, svg, grp) =>
     `<button type="button" class="cb-opt${on ? " on" : ""}" data-g="${grp || ""}" data-k="${key}"><div>${svg}</div><div><div class="t">${title}</div>${desc ? `<div class="d">${desc}</div>` : ""}</div><div class="p">${p}</div></button>`;
@@ -1390,6 +1421,12 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
       h += optCard("none", x.frostNone[0], x.frostNone[1], x.incl, !S.frost, art({ ...copy(), frost: false }), "frost");
       h += optCard("yes", ft[0], ft[1], plus(f), S.frost, art({ ...copy(), frost: true }), "frost");
       h += "</div>";
+      const chf = cup ? CHERRY.cup[S.cups] : CHERRY[S.shape];
+      const cht = S.shape === "round" ? x.cherryRound : S.shape === "party" ? x.cherryParty : x.cherryCup;
+      h += `<div class="cb-grp">${x.gCherry}</div><div class="cb-opts">`;
+      h += optCard("none", x.cherryNone[0], x.cherryNone[1], x.incl, !S.cherry, art({ ...copy(), cherry: false }), "cherry");
+      h += optCard("yes", cht[0], cht[1], plus(chf), S.cherry, art({ ...copy(), cherry: true }), "cherry");
+      h += "</div>";
       if (!cup) {
         const sample = { ...copy(), candleOn: true, candle: S.candle || "5" };
         h += `<div class="cb-grp">${x.gCandle}</div><div class="cb-opts">`;
@@ -1403,7 +1440,7 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
       const row = (a, b, c) => `<div class="cb-row"><div>${b}<small>${a}</small></div><div>${c}</div></div>`;
       h += `<div class="cb-sum">` + row(x.sumHead[0], d.shape, shek(p.base)) + row(x.sumHead[1], d.flavor, x.incl) +
         row(x.sumHead[2], d.coat, p.coat ? "+" + shek(p.coat) : x.incl) + row(x.sumHead[3], d.spr, x.incl) +
-        row(x.sumHead[4], d.frost, S.frost ? "+" + shek(p.f) : x.incl) + (ds ? row(x.sumHead[5], ds, "+" + shek(p.c)) : "") +
+        row(x.sumHead[4], d.frost, S.frost ? "+" + shek(p.f) : x.incl) + (S.cherry ? row(x.sumHead[5], d.cherry, "+" + shek(p.ch)) : "") + (ds ? row(x.sumHead[6], ds, "+" + shek(p.c)) : "") +
         `<div class="cb-tot"><span>${x.total}</span><span>${shek(p.total)}</span></div></div>`;
       h += `<button type="button" class="cb-add" id="cb-add">${x.add}</button><div class="cb-note">${x.keep}</div>`;
     }
@@ -1427,7 +1464,7 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
       $("cb-done").hidden = true;
       if (S.step === 0) S.shape = k;   // keep the other choices. Cupcakes always get the top coating and no candle (see render).
       else if (S.step === 1) S.flavor = k; else if (S.step === 2) S.coat = k;
-      else if (g === "spr") S.spr = k; else if (g === "frost") S.frost = k === "yes"; else if (g === "candle") S.candleOn = k === "yes";
+      else if (g === "spr") S.spr = k; else if (g === "frost") S.frost = k === "yes"; else if (g === "cherry") S.cherry = k === "yes"; else if (g === "candle") S.candleOn = k === "yes";
       render();
     });
     root.querySelectorAll(".cb-chip").forEach(b => b.onclick = () => { S.cups = +b.dataset.n; render(); });
