@@ -344,27 +344,7 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
 
 
 /* ---------- Categories: tiles that open their products ---------- */
-.cat-tile { display: grid; grid-template-columns: 150px 1fr auto; gap: 22px; align-items: center; width: 100%; text-align: start; background: none; border: 0; padding: 0; cursor: pointer; font: inherit; color: inherit; scroll-margin-top: 12px; }
-.cat-picwrap { position: relative; display: block; }
-.cat-pic { display: block; width: 100%; aspect-ratio: 1; border-radius: 50%; border: 4px solid var(--white); box-shadow: 0 0 0 3px var(--blue); overflow: hidden; background: var(--sticker); }
-.cat-pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.cat-pic svg { width: 100%; height: auto; display: block; }
-.cat-text { display: grid; gap: 4px; min-width: 0; }
-.cat-name { font-family: var(--font-script); color: var(--red); font-size: clamp(2.3rem, 6vw, 3rem); line-height: 1; }
-html[lang="he"] .cat-name { font-family: var(--font-wide); font-weight: 800; font-size: clamp(1.6rem, 5vw, 2.1rem); }
-.cat-note { font-family: var(--font-bar); font-size: .85rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft); }
-html[lang="he"] .cat-note { font-family: var(--font-body); text-transform: none; letter-spacing: 0; font-size: .95rem; }
-.cat-tile::after { content: "\25BE"; color: var(--red); font-size: 1.7rem; line-height: 1; padding-inline: 6px; transition: transform .15s ease; }
-.cat-tile.on::after { transform: rotate(180deg); }
-.cat-tile:hover .cat-name, .cat-tile:focus-visible .cat-name { text-decoration: underline; text-underline-offset: 5px; }
-.cat-tile.on .cat-name { color: var(--red-deep); }
-.cat-count { position: absolute; top: -2px; inset-inline-end: -2px; min-width: 28px; height: 28px; padding: 0 7px; border-radius: 999px; background: var(--red); color: var(--white); border: 2px solid var(--paper); font: 700 .9rem/24px var(--font-bar); text-align: center; }
-.cat-count:empty { display: none; }
-@media (max-width: 720px) { .cat-tile { grid-template-columns: 104px 1fr auto; gap: 16px; } .cat-name { font-size: 2.1rem; } html[lang="he"] .cat-name { font-size: 1.45rem; } }
 .cat-section { display: grid; gap: 30px; scroll-margin-top: 12px; }
-.cat-up { justify-self: center; font-family: var(--font-bar); font-weight: 600; letter-spacing: .1em; text-transform: uppercase; font-size: .85rem; color: var(--red-deep); background: transparent; border: 2px solid var(--red); border-radius: 999px; padding: 7px 18px; cursor: pointer; }
-.cat-up:hover { background: var(--red); color: var(--white); }
-html[lang="he"] .cat-up { font-family: var(--font-wide); text-transform: none; letter-spacing: 0; font-weight: 800; }
 .cb-done { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; background: var(--sticker); border: 2px solid var(--red); border-radius: 14px; padding: 10px 14px; margin-bottom: 14px; font-weight: 700; color: var(--red-deep); }
 .cb-done button { font: inherit; font-family: var(--font-bar); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; font-size: .85rem; color: var(--red-deep); background: var(--white); border: 2px solid var(--red); border-radius: 999px; padding: 6px 16px; cursor: pointer; }
 html[lang="he"] .cb-done button { font-family: var(--font-wide); text-transform: none; letter-spacing: 0; font-weight: 800; }
@@ -375,8 +355,14 @@ html[lang="he"] .cb-done button { font-family: var(--font-wide); text-transform:
 .cake-x { border: 0; background: transparent; color: var(--red-deep); cursor: pointer; font-size: 1.3rem; line-height: 1; padding: 0 4px; border-radius: 6px; }
 .cake-x:hover { background: rgba(196,42,48,.12); }
 .cb { margin-top: 0; }
+.cake-art { width: 100%; aspect-ratio: 1; border-radius: 50%; background: var(--sticker); border: 4px solid var(--white); box-shadow: 0 0 0 3px var(--blue); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.cake-art svg { width: 100%; height: auto; flex: none; }
+@media (max-width: 720px) { .cake-art { width: 62%; margin: 0 auto; } }
+.cake-open { display: flex; align-items: center; justify-content: center; width: 100%; max-width: 420px; background: var(--blue); color: var(--white); border: 0; border-radius: 999px; padding: 13px 20px; cursor: pointer; font-family: var(--font-bar); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; font-size: 1.05rem; }
+.cake-open:hover { background: #17306F; }
+.cake-count { margin-top: 8px; font-weight: 700; color: var(--red-deep); font-size: .95rem; }
 .cat-section > .cb { margin-top: 0; }
-.cb-sub { color: var(--ink-soft); margin: 6px 0 18px; }
+.cb-sub { display: none; }   /* the card above the builder already says this */
 .cb-steps { display: flex; gap: 6px; margin: 6px 0 16px; }
 .cb-step { flex: 1; text-align: center; font: 600 .7rem var(--font-wide); color: var(--ink-soft); background: none; border: 0; padding: 0; cursor: pointer; }
 .cb-step:hover b, .cb-step:focus-visible b { color: var(--red); text-decoration: underline; }
@@ -423,7 +409,7 @@ html[lang="he"] .cb-opt .t { font-family: var(--font-wide); font-weight: 800; te
 .cb-note { font-size: .88rem; color: var(--ink-soft); margin-top: 10px; }
 .cb-add { display: block; width: 100%; margin-top: 14px; background: var(--blue); color: var(--white); border: 0; border-radius: 999px; padding: 14px; font-family: var(--font-bar); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; font-size: 1.05rem; cursor: pointer; }
 .cb-add:hover { background: #17306F; }
-html[lang="he"] .cb-add { font-family: var(--font-wide); letter-spacing: 0; text-transform: none; font-weight: 800; }
+html[lang="he"] .cb-add, html[lang="he"] .cake-open { font-family: var(--font-wide); letter-spacing: 0; text-transform: none; font-weight: 800; }
 .cb-bar { position: sticky; bottom: 0; margin-top: 18px; background: var(--red); border: 3px solid var(--blue); color: var(--white); z-index: 5; }
 .cb-in { display: flex; align-items: center; gap: 12px; padding: 10px 16px; }
 .cb-price { font-family: var(--font-bar); font-weight: 700; font-size: 1.7rem; margin-inline-end: auto; line-height: 1; }
@@ -710,10 +696,10 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
       meta: ["מארז 100 גרם", "מכיל בוטנים", "לשמור במקום קריר ויבש (לא מקרר)"] }
   };
   const CATS = [
+    { id: "cakes", en: ["Birthday cakes", "Round, rectangular or cupcakes"], he: ["עוגות יום הולדת", "עגולה, מלבנית או קאפקייקס"] },
     { id: "pies", en: ["Pies", "9 inch, serves 8–10"], he: ["פאי", "קוטר 22 ס״מ, 8-10 מנות"] },
     { id: "cookies", en: ["Cookies", "Bags of 10 cookies, ₪50"], he: ["עוגיות", "שקיות של 10 עוגיות, ‏₪50"] },
-    { id: "chocolate", en: ["Chocolate", "100 g packs, ₪35"], he: ["שוקולד", "מארזי 100 גרם, ‏₪35"] },
-    { id: "cakes", en: ["Birthday cakes", "Round, rectangular or cupcakes"], he: ["עוגות יום הולדת", "עגולה, מלבנית או קאפקייקס"] }
+    { id: "chocolate", en: ["Chocolate", "100 g packs, ₪35"], he: ["שוקולד", "מארזי 100 גרם, ‏₪35"] }
   ];
   // Birthday Cake Bark choices. "msg" is the English text that goes into the WhatsApp message.
   const CHOCOLATES = [
@@ -866,8 +852,13 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
     const secs = {};
     for (const c of CATS) {
       const sec = document.createElement("section");
-      sec.className = "cat-section"; sec.id = "sec-" + c.id; sec.setAttribute("aria-labelledby", "cat-tile-" + c.id);
-      secs[c.id] = sec;
+      sec.className = "cat-section"; sec.id = "sec-" + c.id; sec.setAttribute("aria-labelledby", "cat-" + c.id);
+      const [cname, cnote] = c[lang];
+      const h = document.createElement("h3");
+      h.className = "cat-head"; h.id = "cat-" + c.id;
+      h.innerHTML = `${cname}<small>${cnote}</small>`;
+      sec.appendChild(h);
+      secs[c.id] = sec; menu.appendChild(sec);
     }
     for (const it of ITEMS) {
       const L = loc(it);
@@ -899,55 +890,46 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
         render();
       }));
     }
-    secs.cakes.appendChild(cbEl);
-    for (const c of CATS) {
-      const up = document.createElement("button");
-      up.type = "button"; up.className = "cat-up"; up.textContent = "\u2191 " + CAT_UI[lang].up;
-      up.addEventListener("click", () => { setOpen(c.id); document.getElementById("cat-tile-" + c.id).scrollIntoView({ behavior: "smooth", block: "center" }); });
-      secs[c.id].appendChild(up);
-      menu.appendChild(makeTile(c)); menu.appendChild(secs[c.id]);   // the row, then its products right under it
-    }
-    syncOpen(); refreshTiles();
+    buildCakeCard(secs.cakes, cbEl);
+    refreshCake();
   }
 
-  const CAT_UI = { en: { up: "Close" }, he: { up: "סגירה" } };
-  let openCat = null;   // the category that is open (none at first)
-  // The picture on each tile: a product photo, or the round cake drawing for the cakes.
-  const TILE_ITEM = { pies: "pecan", cookies: "cookies", chocolate: "smores" };
-  function tilePic(id) {
-    if (id === "cakes") return CB.ctaArt();
-    return `<img src="${photo(ITEMS.find(i => i.id === TILE_ITEM[id])).src}" alt="" loading="lazy">`;
+  const CAKE_TXT = {
+    en: { bar: "Build your cake", from: "from ", open: "Build your birthday cake", close: "Close the cake builder", more: "Add another cake",
+      desc: "Choose a shape, a flavor, a coating and a decoration. You see the cake and the price as you go.",
+      meta: ["Round cake, rectangular cake or cupcakes", "Keeps up to 2 days in a cool place"], inOrder: (n) => n === 1 ? "1 cake in your order" : n + " cakes in your order" },
+    he: { bar: "בונים עוגה", from: "מ-", open: "בונים עוגת יום הולדת", close: "סגירת בונה העוגות", more: "להוסיף עוגה נוספת",
+      desc: "בוחרים צורה, טעם, ציפוי וקישוט, ורואים את העוגה והמחיר תוך כדי.",
+      meta: ["עוגה עגולה, עוגה מלבנית או קאפקייקס", "נשמרת עד יומיים במקום קריר"], inOrder: (n) => n === 1 ? "עוגה אחת בהזמנה" : n + " עוגות בהזמנה" }
+  };
+  let cakeOpen = false;   // the builder is closed until the customer opens it
+  // The card for the cakes (like a product), and the builder under it.
+  function buildCakeCard(sec, cbEl) {
+    const x = CAKE_TXT[lang];
+    const a = document.createElement("article");
+    a.className = "item"; a.id = "item-cakes";
+    a.innerHTML = `<div class="cake-art" role="img" aria-label="${CATS[0][lang][0]}">${CB.ctaArt()}</div>
+      <div class="item-body">
+        <div class="bar"><h3>${x.bar}</h3><span class="price">${x.from}₪${CB.minPrice}</span></div>
+        <div class="qty-row"><button type="button" class="cake-open" id="cake-open" aria-controls="cb"></button><div class="cake-count" id="cake-count" aria-live="polite"></div></div>
+        <p class="desc">${x.desc}</p>
+        <div class="meta">${x.meta.map(m => `<span>${m}</span>`).join("")}</div>
+      </div>`;
+    sec.appendChild(a);
+    sec.appendChild(cbEl);
+    cbEl.hidden = !cakeOpen;
+    a.querySelector("#cake-open").addEventListener("click", () => {
+      cakeOpen = !cakeOpen; cbEl.hidden = !cakeOpen; refreshCake();
+      if (cakeOpen) cbEl.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
   }
-  // One row per category: a round picture, the name and a short note.
-  function makeTile(c) {
-    const [cname, cnote] = c[lang];
-    const b = document.createElement("button");
-    b.type = "button"; b.className = "cat-tile"; b.id = "cat-tile-" + c.id;
-    b.setAttribute("aria-controls", "sec-" + c.id);
-    b.innerHTML = `<span class="cat-picwrap"><span class="cat-pic">${tilePic(c.id)}</span><span class="cat-count" aria-hidden="true"></span></span><span class="cat-text"><span class="cat-name">${cname}</span><span class="cat-note">${cnote}</span></span>`;
-    b.addEventListener("click", () => setOpen(c.id));
-    return b;
-  }
-  // Show only the open category.
-  function syncOpen() {
-    for (const c of CATS) {
-      const on = openCat === c.id, tile = document.getElementById("cat-tile-" + c.id), sec = document.getElementById("sec-" + c.id);
-      if (tile) { tile.classList.toggle("on", on); tile.setAttribute("aria-expanded", on); }
-      if (sec) sec.hidden = !on;
-    }
-  }
-  function setOpen(id) {
-    openCat = openCat === id ? null : id;
-    syncOpen();
-    if (openCat) document.getElementById("cat-tile-" + openCat).scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-  // The number on a tile: how many items from that category are in the order.
-  function refreshTiles() {
-    for (const c of CATS) {
-      const tile = document.getElementById("cat-tile-" + c.id); if (!tile) continue;
-      const n = c.id === "cakes" ? cakes.length : ITEMS.filter(i => i.cat === c.id).reduce((sum, i) => sum + qty[i.id], 0);
-      tile.querySelector(".cat-count").textContent = n || "";
-    }
+  function refreshCake() {
+    const b = document.getElementById("cake-open"); if (!b) return;
+    const x = CAKE_TXT[lang];
+    b.textContent = cakeOpen ? x.close : (cakes.length ? x.more : x.open);
+    b.setAttribute("aria-expanded", cakeOpen);
+    document.getElementById("cake-count").textContent = cakes.length ? x.inOrder(cakes.length) : "";
+    document.getElementById("item-cakes").classList.toggle("picked", cakes.length > 0);
   }
 
   const form = document.getElementById("slip");
@@ -1023,7 +1005,7 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
       : `<span class="empty">${t("empty")}</span>`;
     document.getElementById("total").innerHTML = `₪${total()}<small>${val("pay").startsWith("Cash") ? t("total_cash") : t("total_bit")}</small>`;
     const ready = hasItems() && txt("name").length > 0 && addrOk() && dateOk();
-    refreshTiles();
+    refreshCake();
     send.setAttribute("aria-disabled", ready ? "false" : "true");
     send.href = `https://wa.me/${PHONE}?text=${encodeURIComponent(message())}`;
     if (ready) err.hidden = true;
