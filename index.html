@@ -343,25 +343,38 @@ html[lang="he"] body .arc text { letter-spacing: 0; }
 html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
 
 
-/* ---------- Birthday cake builder (full-screen sheet) ---------- */
-.cake-art { width: 100%; aspect-ratio: 1; border-radius: 50%; background: var(--sticker); border: 4px solid var(--white); box-shadow: 0 0 0 3px var(--blue); display: flex; align-items: center; justify-content: center; overflow: hidden; }
-.cake-art svg { width: 100%; height: auto; flex: none; }
-@media (max-width: 720px) { .cake-art { width: 62%; margin: 0 auto; } }
-.cake-open { display: flex; align-items: center; justify-content: center; width: 100%; max-width: 420px; background: var(--blue); color: var(--white); border: 0; border-radius: 999px; padding: 13px 20px; cursor: pointer; font-family: var(--font-bar); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; font-size: 1.05rem; }
-.cake-open:hover { background: #17306F; }
-.cake-count { margin-top: 8px; font-weight: 700; color: var(--red-deep); font-size: .95rem; }
+/* ---------- Categories: tiles that open their products ---------- */
+.cat-tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; scroll-margin-top: 12px; }
+@media (max-width: 720px) { .cat-tiles { grid-template-columns: 1fr 1fr; gap: 10px; } }
+.cat-tile { position: relative; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; background: var(--white); border: 2px solid #cdbf9f; border-radius: 16px; padding: 18px 10px 12px; cursor: pointer; font: inherit; color: inherit; }
+.cat-tile:hover { border-color: var(--red); }
+.cat-tile.on { border-color: var(--red); background: #fff; box-shadow: 0 0 0 3px rgba(196,42,48,.2); }
+.cat-tile::after { content: "\25BE"; color: var(--red); font-size: 1.1rem; line-height: 1; margin-top: auto; }
+.cat-tile.on::after { content: "\25B4"; }
+.cat-pic { width: min(100%, 120px); aspect-ratio: 1; border-radius: 50%; border: 3px solid var(--white); box-shadow: 0 0 0 3px var(--blue); overflow: hidden; background: var(--sticker); display: block; }
+.cat-pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cat-pic svg { width: 100%; height: auto; display: block; }
+.cat-name { font-family: var(--font-script); color: var(--red); font-size: 1.9rem; line-height: 1; margin-top: 4px; }
+html[lang="he"] .cat-name { font-family: var(--font-wide); font-weight: 800; font-size: 1.25rem; }
+.cat-note { font-family: var(--font-bar); font-size: .76rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-soft); line-height: 1.3; }
+html[lang="he"] .cat-note { font-family: var(--font-body); text-transform: none; letter-spacing: 0; font-size: .85rem; }
+.cat-count { position: absolute; top: 8px; inset-inline-end: 8px; min-width: 26px; height: 26px; padding: 0 7px; border-radius: 999px; background: var(--red); color: var(--white); font: 700 .85rem/26px var(--font-bar); text-align: center; }
+.cat-count:empty { display: none; }
+.cat-section { display: grid; gap: 30px; scroll-margin-top: 12px; }
+.cat-up { justify-self: center; font-family: var(--font-bar); font-weight: 600; letter-spacing: .1em; text-transform: uppercase; font-size: .85rem; color: var(--red-deep); background: transparent; border: 2px solid var(--red); border-radius: 999px; padding: 7px 18px; cursor: pointer; }
+.cat-up:hover { background: var(--red); color: var(--white); }
+html[lang="he"] .cat-up { font-family: var(--font-wide); text-transform: none; letter-spacing: 0; font-weight: 800; }
+.cb-done { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; background: var(--sticker); border: 2px solid var(--red); border-radius: 14px; padding: 10px 14px; margin-bottom: 14px; font-weight: 700; color: var(--red-deep); }
+.cb-done button { font: inherit; font-family: var(--font-bar); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; font-size: .85rem; color: var(--red-deep); background: var(--white); border: 2px solid var(--red); border-radius: 999px; padding: 6px 16px; cursor: pointer; }
+html[lang="he"] .cb-done button { font-family: var(--font-wide); text-transform: none; letter-spacing: 0; font-weight: 800; }
+/* ---------- Birthday cake builder (opens inside the Birthday cakes category) ---------- */
 .contents li small { display: block; color: var(--ink-soft); font-size: .82rem; line-height: 1.35; margin-top: 2px; }
 .contents li .cake-line { min-width: 0; }
 .contents li .cake-end { display: flex; align-items: flex-start; gap: 8px; white-space: nowrap; }
 .cake-x { border: 0; background: transparent; color: var(--red-deep); cursor: pointer; font-size: 1.3rem; line-height: 1; padding: 0 4px; border-radius: 6px; }
 .cake-x:hover { background: rgba(196,42,48,.12); }
-.cb { position: fixed; inset: 0; z-index: 100; overflow: auto; background: var(--paper); background-image: radial-gradient(rgba(94,74,63,.05) 1px, transparent 1.2px); background-size: 6px 6px; -webkit-overflow-scrolling: touch; }
-.cb-wrap { max-width: 980px; margin: 0 auto; padding: 0 16px 120px; }
-.cb-top { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; }
-.cb-pill { font-family: var(--font-wide); font-weight: 800; font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; color: var(--red); background: transparent; border: 2px solid var(--red); border-radius: 999px; padding: 7px 18px; cursor: pointer; }
-.cb-pill:hover { background: var(--red); color: var(--white); }
-.cb-h1 { margin: 6px 0 2px; font-family: var(--font-script); color: var(--red); font-weight: 400; font-size: clamp(2.4rem, 8vw, 3.4rem); line-height: 1; }
-html[lang="he"] .cb-h1 { font-family: var(--font-wide); font-weight: 800; font-size: clamp(1.8rem, 6vw, 2.4rem); }
+.cb { margin-top: 0; }
+.cat-section > .cb { margin-top: -14px; }
 .cb-sub { color: var(--ink-soft); margin: 6px 0 18px; }
 .cb-steps { display: flex; gap: 6px; margin: 6px 0 16px; }
 .cb-step { flex: 1; text-align: center; font: 600 .7rem var(--font-wide); color: var(--ink-soft); background: none; border: 0; padding: 0; cursor: pointer; }
@@ -409,9 +422,9 @@ html[lang="he"] .cb-opt .t { font-family: var(--font-wide); font-weight: 800; te
 .cb-note { font-size: .88rem; color: var(--ink-soft); margin-top: 10px; }
 .cb-add { display: block; width: 100%; margin-top: 14px; background: var(--blue); color: var(--white); border: 0; border-radius: 999px; padding: 14px; font-family: var(--font-bar); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; font-size: 1.05rem; cursor: pointer; }
 .cb-add:hover { background: #17306F; }
-html[lang="he"] .cb-add, html[lang="he"] .cake-open { font-family: var(--font-wide); letter-spacing: 0; text-transform: none; font-weight: 800; }
-.cb-bar { position: fixed; inset-inline: 0; bottom: 0; background: var(--red); border-top: 3px solid var(--blue); color: var(--white); z-index: 5; }
-.cb-in { max-width: 980px; margin: 0 auto; display: flex; align-items: center; gap: 12px; padding: 10px 16px; }
+html[lang="he"] .cb-add { font-family: var(--font-wide); letter-spacing: 0; text-transform: none; font-weight: 800; }
+.cb-bar { position: sticky; bottom: 0; margin-top: 18px; background: var(--red); border: 3px solid var(--blue); color: var(--white); z-index: 5; }
+.cb-in { display: flex; align-items: center; gap: 12px; padding: 10px 16px; }
 .cb-price { font-family: var(--font-bar); font-weight: 700; font-size: 1.7rem; margin-inline-end: auto; line-height: 1; }
 .cb-price small { display: block; font: 500 .66rem var(--font-wide); opacity: .85; letter-spacing: .1em; text-transform: uppercase; }
 html[lang="he"] .cb-price small { letter-spacing: 0; text-transform: none; }
@@ -560,19 +573,18 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
 </footer>
 
 
-<div class="cb" id="cb" role="dialog" aria-modal="true" aria-labelledby="cb-title" hidden>
-  <div class="cb-wrap">
-    <div class="cb-top"><button type="button" class="cb-pill" id="cb-close"></button><button type="button" class="cb-pill" id="cb-lang"></button></div>
-    <h2 class="cb-h1" id="cb-title"></h2>
-    <p class="cb-sub" id="cb-sub"></p>
-    <div class="cb-steps" id="cb-steps"></div>
-    <div class="cb-grid"><div class="cb-stage"><div id="cb-art"></div></div><div class="cb-panel" id="cb-panel"></div></div>
-  </div>
+<div id="cb-stash" hidden>
+<div class="cb" id="cb">
+  <p class="cb-sub" id="cb-sub"></p>
+  <div class="cb-done" id="cb-done" hidden></div>
+  <div class="cb-steps" id="cb-steps"></div>
+  <div class="cb-grid"><div class="cb-stage"><div id="cb-art"></div></div><div class="cb-panel" id="cb-panel"></div></div>
   <div class="cb-bar"><div class="cb-in">
     <div class="cb-price" id="cb-price"></div>
     <button type="button" class="cb-btn" id="cb-back"></button>
     <button type="button" class="cb-btn cb-go" id="cb-next"></button>
   </div></div>
+</div>
 </div>
 
 <script>
@@ -699,7 +711,8 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
   const CATS = [
     { id: "pies", en: ["Pies", "9 inch, serves 8–10"], he: ["פאי", "קוטר 22 ס״מ, 8-10 מנות"] },
     { id: "cookies", en: ["Cookies", "Bags of 10 cookies, ₪50"], he: ["עוגיות", "שקיות של 10 עוגיות, ‏₪50"] },
-    { id: "chocolate", en: ["Chocolate", "100 g packs, ₪35"], he: ["שוקולד", "מארזי 100 גרם, ‏₪35"] }
+    { id: "chocolate", en: ["Chocolate", "100 g packs, ₪35"], he: ["שוקולד", "מארזי 100 גרם, ‏₪35"] },
+    { id: "cakes", en: ["Birthday cakes", "Round, rectangular or cupcakes"], he: ["עוגות יום הולדת", "עגולה, מלבנית או קאפקייקס"] }
   ];
   // Birthday Cake Bark choices. "msg" is the English text that goes into the WhatsApp message.
   const CHOCOLATES = [
@@ -844,20 +857,24 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
 
   const menu = document.getElementById("menu");
   function buildMenu() {
+    // The builder lives in the Birthday cakes section. Park it while the menu is rebuilt.
+    const cbEl = document.getElementById("cb");
+    document.getElementById("cb-stash").appendChild(cbEl);
     menu.innerHTML = "";
     ITEMS.forEach(it => { if (it.img2) new Image().src = imgUrl(it.img2); });
-    let lastCat = null;
+    const secs = {};
+    for (const c of CATS) {
+      const sec = document.createElement("section");
+      sec.className = "cat-section"; sec.id = "sec-" + c.id; sec.setAttribute("aria-labelledby", "cat-tile-" + c.id);
+      const [cname, cnote] = c[lang];
+      const h = document.createElement("h3");
+      h.className = "cat-head"; h.id = "cat-" + c.id;
+      h.innerHTML = `${cname}<small>${cnote}</small>`;
+      sec.appendChild(h);
+      secs[c.id] = sec; menu.appendChild(sec);
+    }
     for (const it of ITEMS) {
       const L = loc(it);
-      if (it.cat !== lastCat) {
-        const c = CATS.find(x => x.id === it.cat);
-        const [cname, cnote] = c[lang];
-        const h = document.createElement("h3");
-        h.className = "cat-head"; h.id = "cat-" + c.id;
-        h.innerHTML = `${cname}<small>${cnote}</small>`;
-        menu.appendChild(h);
-        lastCat = it.cat;
-      }
       const art = document.createElement("article");
       art.className = "item " + it.cls + (qty[it.id] > 0 ? " picked" : "");
       art.id = "item-" + it.id;
@@ -876,7 +893,7 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
           <p class="desc">${L.desc}</p>
           <div class="meta">${L.meta.map(m => `<span>${m}</span>`).join("")}</div>
         </div>`;
-      menu.appendChild(art);
+      secs[it.cat].appendChild(art);
       art.querySelector("#minus-" + it.id).addEventListener("click", () => setQty(it.id, qty[it.id] - 1));
       art.querySelector("#plus-" + it.id).addEventListener("click", () => setQty(it.id, qty[it.id] + 1));
       art.querySelectorAll(`[name="opt-${it.id}"]`).forEach((r, k) => r.addEventListener("change", () => {
@@ -886,42 +903,58 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
         render();
       }));
     }
-    buildCakeSection();
+    secs.cakes.appendChild(cbEl);
+    for (const c of CATS) {
+      const up = document.createElement("button");
+      up.type = "button"; up.className = "cat-up"; up.textContent = "\u2191 " + CAT_UI[lang].up;
+      up.addEventListener("click", () => document.getElementById("cat-tiles").scrollIntoView({ behavior: "smooth", block: "start" }));
+      secs[c.id].appendChild(up);
+    }
+    buildTiles(); syncOpen(); refreshTiles();
   }
 
-  const CAKE_TXT = {
-    en: { head: "Birthday cakes", note: "Round, rectangular or cupcakes", bar: "Build your cake", from: "from ", open: "Build your birthday cake", more: "Add another cake",
-      desc: "Choose a shape, a flavor, a coating and a decoration. You see the cake and the price as you go.",
-      meta: ["Round cake, rectangular cake or cupcakes", "Keeps up to 2 days in a cool place"], inOrder: (n) => n === 1 ? "1 cake in your order" : n + " cakes in your order" },
-    he: { head: "עוגות יום הולדת", note: "עגולה, מלבנית או קאפקייקס", bar: "בונים עוגה", from: "מ-", open: "בונים עוגת יום הולדת", more: "להוסיף עוגה נוספת",
-      desc: "בוחרים צורה, טעם, ציפוי וקישוט, ורואים את העוגה והמחיר תוך כדי.",
-      meta: ["עוגה עגולה, עוגה מלבנית או קאפקייקס", "נשמרת עד יומיים במקום קריר"], inOrder: (n) => n === 1 ? "עוגה אחת בהזמנה" : n + " עוגות בהזמנה" }
-  };
-  function buildCakeSection() {
-    const x = CAKE_TXT[lang];
-    const h = document.createElement("h3");
-    h.className = "cat-head"; h.id = "cat-cakes";
-    h.innerHTML = `${x.head}<small>${x.note}</small>`;
-    menu.appendChild(h);
-    const a = document.createElement("article");
-    a.className = "item"; a.id = "item-cakes";
-    a.innerHTML = `<div class="cake-art" role="img" aria-label="${x.head}">${CB.ctaArt()}</div>
-      <div class="item-body">
-        <div class="bar"><h3>${x.bar}</h3><span class="price">${x.from}₪${CB.minPrice}</span></div>
-        <div class="qty-row"><button type="button" class="cake-open" id="cake-open"></button><div class="cake-count" id="cake-count" aria-live="polite"></div></div>
-        <p class="desc">${x.desc}</p>
-        <div class="meta">${x.meta.map(m => `<span>${m}</span>`).join("")}</div>
-      </div>`;
-    menu.appendChild(a);
-    a.querySelector("#cake-open").addEventListener("click", (e) => CB.open(e.currentTarget));
-    refreshCta();
+  const CAT_UI = { en: { up: "Back to categories" }, he: { up: "חזרה לקטגוריות" } };
+  let openCat = null;   // the category that is open (none at first)
+  // The picture on each tile: a product photo, or the round cake drawing for the cakes.
+  const TILE_ITEM = { pies: "pecan", cookies: "cookies", chocolate: "smores" };
+  function tilePic(id) {
+    if (id === "cakes") return CB.ctaArt();
+    return `<img src="${photo(ITEMS.find(i => i.id === TILE_ITEM[id])).src}" alt="" loading="lazy">`;
   }
-  function refreshCta() {
-    const b = document.getElementById("cake-open"); if (!b) return;
-    const x = CAKE_TXT[lang];
-    b.textContent = cakes.length ? x.more : x.open;
-    document.getElementById("cake-count").textContent = cakes.length ? x.inOrder(cakes.length) : "";
-    document.getElementById("item-cakes").classList.toggle("picked", cakes.length > 0);
+  function buildTiles() {
+    const wrap = document.createElement("div");
+    wrap.className = "cat-tiles"; wrap.id = "cat-tiles";
+    for (const c of CATS) {
+      const [cname, cnote] = c[lang];
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "cat-tile"; b.id = "cat-tile-" + c.id;
+      b.setAttribute("aria-controls", "sec-" + c.id);
+      b.innerHTML = `<span class="cat-pic">${tilePic(c.id)}</span><span class="cat-name">${cname}</span><span class="cat-note">${cnote}</span><span class="cat-count" aria-hidden="true"></span>`;
+      b.addEventListener("click", () => setOpen(c.id));
+      wrap.appendChild(b);
+    }
+    menu.insertBefore(wrap, menu.firstChild);
+  }
+  // Show only the open category.
+  function syncOpen() {
+    for (const c of CATS) {
+      const on = openCat === c.id, tile = document.getElementById("cat-tile-" + c.id), sec = document.getElementById("sec-" + c.id);
+      if (tile) { tile.classList.toggle("on", on); tile.setAttribute("aria-expanded", on); }
+      if (sec) sec.hidden = !on;
+    }
+  }
+  function setOpen(id) {
+    openCat = openCat === id ? null : id;
+    syncOpen();
+    if (openCat) document.getElementById("sec-" + openCat).scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  // The number on a tile: how many items from that category are in the order.
+  function refreshTiles() {
+    for (const c of CATS) {
+      const tile = document.getElementById("cat-tile-" + c.id); if (!tile) continue;
+      const n = c.id === "cakes" ? cakes.length : ITEMS.filter(i => i.cat === c.id).reduce((sum, i) => sum + qty[i.id], 0);
+      tile.querySelector(".cat-count").textContent = n || "";
+    }
   }
 
   const form = document.getElementById("slip");
@@ -997,7 +1030,7 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
       : `<span class="empty">${t("empty")}</span>`;
     document.getElementById("total").innerHTML = `₪${total()}<small>${val("pay").startsWith("Cash") ? t("total_cash") : t("total_bit")}</small>`;
     const ready = hasItems() && txt("name").length > 0 && addrOk() && dateOk();
-    refreshCta();
+    refreshTiles();
     send.setAttribute("aria-disabled", ready ? "false" : "true");
     send.href = `https://wa.me/${PHONE}?text=${encodeURIComponent(message())}`;
     if (ready) err.hidden = true;
@@ -1075,11 +1108,13 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
 
   Object.assign(CT.en, {
     cakeName: "Birthday cake", candleWord: "Number candle", close: "Close", errCandle: "Type the number for the candle.",
+    added: "Cake added to your order.", seeOrder: "See my order",
     msgSize: { round: "8 inch / 20 cm", party: "9×13 inch / 23×33 cm" },
     remove: "Remove this cake"
   });
   Object.assign(CT.he, {
     cakeName: "עוגת יום הולדת", candleWord: "נר מספר", close: "סגירה", errCandle: "הקלידו את המספר לנר.",
+    added: "העוגה נוספה להזמנה.", seeOrder: "לראות את ההזמנה",
     msgSize: { round: "8 inch / 20 cm", party: "9×13 inch / 23×33 cm" },
     remove: "הסרת העוגה"
   });
@@ -1234,13 +1269,26 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
     o += `<path d="M-17 2 Q-18 -15 0 -15 Q18 -15 17 2 Q0 7 -17 2Z" fill="${top}"/>`;
     if (fun) { const pts = spread(-14, -13.5, 14, 1, 7, 3, seed + 40).filter(([x, y]) => (x / 15) ** 2 + ((y + 6.5) / 7.8) ** 2 <= 1); o += dots(pts, seed + 2, 1.9); }
     if (spr) o += sprinkles(0, -6, 12.5, 6, frost ? 6 : 10, seed, false, 1.55);
-    if (frost) {
-      // Piped swirl: four tiers that get smaller, each tilted a little, and a curled tip.
-      const T = [[0, -12.5, 12.5, 4.6, -3], [.4, -18, 10.3, 4.1, 4], [-.3, -23, 7.8, 3.6, -5], [.2, -27.2, 5, 3, 3]];
-      o += `<g fill="${CREAM}" stroke="${CSTROKE}" stroke-width=".7" stroke-linejoin="round">` +
-        T.map(([cx, cy, rx, ry, rot]) => `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" transform="rotate(${rot} ${cx} ${cy})"/>`).join("") +
-        `<path d="M-3 -28.2 C-3.4 -33.8 1.2 -35 3.6 -39.2 C4.8 -34.2 3.8 -30.6 3.2 -28.2Z"/></g>`;
+    if (frost) o += swirlLocal();
+    return o;
+  }
+  // Piped swirl: a ribbon of buttercream that coils up and in, over a darker cream cone. Drawn quarter turn by quarter turn,
+  // so each coil overlaps the one below it and gets its own outline.
+  function swirlLocal() {
+    const base = -11.2, rise = 22, rx0 = 13.4, ry0 = 4.6, turns = 2.5, Q = Math.round(turns * 4);
+    const at = (t) => { const th = Math.PI + t * turns * 2 * Math.PI, k = 1 - .74 * t; return [1.7 + Math.cos(th) * rx0 * k, base - rise * t + Math.sin(th) * ry0 * k]; };
+    const wid = (t) => 7.2 - 3.6 * t;
+    let o = `<path d="M-16.2 -10.5 Q-14.2 -23 1.7 -35.5 Q15.8 -23 16.2 -10.5 Q0 -4.4 -16.2 -10.5Z" fill="${RIDGE}"/>`;
+    for (let q = 0; q < Q; q++) {
+      const t0 = q / Q, t1 = (q + 1) / Q, line = [], fill = [], back = q ? .012 : 0;
+      for (let i = 0; i <= 14; i++) line.push(at(t0 + (t1 - t0) * i / 14).map(n => n.toFixed(2)).join(","));
+      for (let i = 0; i <= 16; i++) fill.push(at(t0 - back + (t1 - t0 + back) * i / 16).map(n => n.toFixed(2)).join(","));
+      const w = wid((t0 + t1) / 2);
+      o += `<polyline points="${line.join(" ")}" fill="none" stroke="${CSTROKE}" stroke-width="${(w + 1.6).toFixed(2)}" stroke-linejoin="round"/>`;
+      o += `<polyline points="${fill.join(" ")}" fill="none" stroke="${CREAM}" stroke-width="${w.toFixed(2)}" stroke-linejoin="round"/>`;
     }
+    const e = at(1);
+    o += `<path d="M${(e[0] - 2.8).toFixed(1)} ${(e[1] + 1.5).toFixed(1)} C${(e[0] - 3.2).toFixed(1)} ${(e[1] - 3).toFixed(1)} ${(e[0] + .8).toFixed(1)} ${(e[1] - 4.5).toFixed(1)} ${(e[0] + 2.6).toFixed(1)} ${(e[1] - 8).toFixed(1)} C${(e[0] + 3.8).toFixed(1)} ${(e[1] - 4).toFixed(1)} ${(e[0] + 3.6).toFixed(1)} ${(e[1] - .5).toFixed(1)} ${(e[0] + 2.8).toFixed(1)} ${(e[1] + 1.5).toFixed(1)}Z" fill="${CREAM}" stroke="${CSTROKE}" stroke-width=".7" stroke-linejoin="round"/>`;
     return o;
   }
   function cupSVG(st) {
@@ -1311,7 +1359,7 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
   const root = document.getElementById("cb");
   const $ = (id) => document.getElementById(id);
   const fresh = () => ({ step: 0, shape: "round", cups: 12, flavor: "chocolate", coat: "top", spr: "on", frost: false, candleOn: false, candle: "" });
-  let S = fresh(), isOpen = false, opener = null;
+  let S = fresh();
   const copy = () => ({ ...S });
 
   // Text parts for a finished cake, in language L. The WhatsApp message always uses "en".
@@ -1390,8 +1438,7 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
   function render() {
     const x = ct(), p = price();
     if (S.shape === "cup") { S.coat = "top"; S.candleOn = false; }
-    $("cb-title").textContent = x.title; $("cb-sub").textContent = x.sub;
-    $("cb-close").textContent = "× " + x.close; $("cb-lang").textContent = lang === "he" ? "English" : "עברית";
+    $("cb-sub").textContent = x.sub;
     $("cb-steps").innerHTML = x.steps.map((s, i) => `<button type="button" class="cb-step ${i < S.step ? "done" : i === S.step ? "cur" : ""}" data-i="${i}"${i === S.step ? ' aria-current="step"' : ""}><i></i><b>${s}</b></button>`).join("");
     root.querySelectorAll(".cb-step").forEach(b => b.onclick = () => go(+b.dataset.i));
     $("cb-art").innerHTML = art(S);
@@ -1399,9 +1446,10 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
     $("cb-price").innerHTML = `${shek(p.total)}<small>${S.step === 4 ? x.total : x.from}</small>`;
     $("cb-back").textContent = x.back; $("cb-back").style.visibility = S.step === 0 ? "hidden" : "visible";
     $("cb-next").textContent = x.next; $("cb-next").style.display = S.step === 4 ? "none" : "";
-    const add = $("cb-add"); if (add) add.onclick = () => { const c = finished(); close(false); if (api.onAdd) api.onAdd(c); };
+    const add = $("cb-add"); if (add) add.onclick = () => { const c = finished(); S = fresh(); render(); showDone(); toTop(); if (api.onAdd) api.onAdd(c); };
     root.querySelectorAll(".cb-opt").forEach(b => b.onclick = () => {
       const k = b.dataset.k, g = b.dataset.g;
+      $("cb-done").hidden = true;
       if (S.step === 0) S.shape = k;   // keep the other choices. Cupcakes always get the top coating and no candle (see render).
       else if (S.step === 1) S.flavor = k; else if (S.step === 2) S.coat = k;
       else if (g === "spr") S.spr = k; else if (g === "frost") S.frost = k === "yes"; else if (g === "candle") S.candleOn = k === "yes";
@@ -1417,43 +1465,40 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
     };
   }
 
-  function open(from) {
-    S = fresh(); opener = from || document.activeElement; isOpen = true;
-    root.hidden = false; root.scrollTop = 0; document.body.style.overflow = "hidden";
-    render(); $("cb-close").focus();
+  // After a cake is added: a short message with a way to the order, and the builder starts again.
+  function showDone() {
+    const x = ct(), d = $("cb-done");
+    d.innerHTML = `<span>\u2713 ${x.added}</span><button type="button" id="cb-see">${x.seeOrder}</button>`;
+    d.hidden = false;
+    $("cb-see").onclick = () => document.getElementById("order").scrollIntoView({ behavior: "smooth", block: "start" });
   }
-  function close(restore = true) {
-    if (!isOpen) return;
-    isOpen = false; root.hidden = true; document.body.style.overflow = "";
-    if (restore && opener && opener.focus) opener.focus();
+  // Bring the top of the builder into view when it is scrolled out of sight.
+  function toTop() {
+    const top = root.getBoundingClientRect().top;
+    if (top < 0 || top > window.innerHeight * .6) window.scrollTo({ top: window.scrollY + top - 12, behavior: "smooth" });
   }
   // Go to any step. The last step needs the candle number if a candle is chosen.
   function go(i) {
     if (i === S.step) return;
+    $("cb-done").hidden = true;
     if (i === 4 && S.candleOn && !digits(S)) {
       const stay = S.step === 3;
-      S.step = 3; render(); if (!stay) root.scrollTop = 0;
+      S.step = 3; render(); if (!stay) toTop();
       const e = $("cb-err"); if (e) e.hidden = false; const inp = $("cb-cn"); if (inp) inp.focus();
       return;
     }
-    S.step = i; render(); root.scrollTop = 0;
+    S.step = i; render(); toTop();
   }
   $("cb-next").onclick = () => go(Math.min(4, S.step + 1));
   $("cb-back").onclick = () => go(Math.max(0, S.step - 1));
-  $("cb-close").onclick = () => close();
-  $("cb-lang").onclick = () => document.getElementById("lang-toggle").click();
-  document.addEventListener("keydown", (e) => { if (isOpen && e.key === "Escape") close(); });
 
-  const api = { open, close, refresh: () => { if (isOpen) render(); }, art, describe, slipDetail, msgLines, onAdd: null, minPrice: BASE.cup[6], name: () => ct().cakeName, removeLabel: () => ct().remove,
+  const api = { refresh: () => { $("cb-done").hidden = true; render(); }, art, describe, slipDetail, msgLines, onAdd: null, minPrice: BASE.cup[6], name: () => ct().cakeName, removeLabel: () => ct().remove,
     // Square crop of the round-cake drawing for the round tile on the menu.
     ctaArt: () => art({ shape: "round", cups: 12, flavor: "chocolate", coat: "top", spr: "on", frost: true, candleOn: true, candle: "5" }).replace('viewBox="0 0 320 270"', 'viewBox="40 1 240 240"') };
   return api;
   })();
 
-  CB.onAdd = (c) => {
-    cakes.push(c); render();
-    document.getElementById("order").scrollIntoView({ behavior: "smooth", block: "start" });
-  };
+  CB.onAdd = (c) => { cakes.push(c); render(); };
 
   const langBtn = document.getElementById("lang-toggle");
   // Safari reverses right-to-left text on a curved path. In Hebrew each letter is placed on the
