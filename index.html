@@ -1204,23 +1204,32 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
     o += candleSVG(digits(st), ctr[0], ctr[1] + 6);
     return o + `</g>`;
   }
+  // One cupcake in local units. Origin: centre of the top edge of the liner. Width about 34, liner 24 tall.
+  // top = colour of the dome (ganache, or the bare sponge for the flavour pictures).
+  function cupLocal(top, frost, spr, seed, fun) {
+    let o = `<path d="M-15 0 L15 0 L11.5 19 L-11.5 19Z" fill="#fbeff0"/>`;
+    for (let k = 0; k < 7; k += 2) { const f = (k + .5) / 7, x1 = -15 + 30 * f, x2 = -11.5 + 23 * f; o += `<path d="M${x1 - 2} 0 L${x1 + 2} 0 L${x2 + 1.5} 19 L${x2 - 1.5} 19Z" fill="#cf3a46"/>`; }
+    o += `<path d="M-17 2 Q-18 -15 0 -15 Q18 -15 17 2 Q0 7 -17 2Z" fill="${top}"/>`;
+    if (fun) { const r = rnd(seed + 40), pts = []; for (let i = 0; i < 16; i++) { const a = r() * 6.283, d = Math.sqrt(r()); pts.push([Math.cos(a) * 13 * d, -7 + Math.sin(a) * 6.5 * d]); } o += dots(pts, seed + 2); }
+    if (spr) o += sprinkles(0, -6, 12.5, 6, frost ? 6 : 10, seed, false, 1.55);
+    if (frost) {
+      // Piped swirl: four tiers that get smaller, each tilted a little, and a curled tip.
+      const T = [[0, -12.5, 12.5, 4.6, -3], [.4, -18, 10.3, 4.1, 4], [-.3, -23, 7.8, 3.6, -5], [.2, -27.2, 5, 3, 3]];
+      o += `<g fill="${CREAM}" stroke="${CSTROKE}" stroke-width=".7" stroke-linejoin="round">` +
+        T.map(([cx, cy, rx, ry, rot]) => `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" transform="rotate(${rot} ${cx} ${cy})"/>`).join("") +
+        `<path d="M-3 -28.2 C-3.4 -33.8 1.2 -35 3.6 -39.2 C4.8 -34.2 3.8 -30.6 3.2 -28.2Z"/></g>`;
+    }
+    return o;
+  }
   function cupSVG(st) {
-    const n = st.cups, cols = n === 6 ? 3 : n === 12 ? 4 : 6, rows = n / cols, cw = 320 / cols, ch = 250 / rows;
-    const s = Math.min(cw / 38, ch / (st.frost ? 62 : 52)); let o = DEFS;
+    // Lay the grid out from the real size of a cupcake, so every row fits and the grid is centred.
+    const n = st.cups, cols = n === 6 ? 3 : n === 12 ? 4 : 6, rows = n / cols, cw = 300 / cols, ch = 250 / rows;
+    const top = st.frost ? -39.2 : -15, bot = 19, s = Math.min((cw - 8) / 36, (ch - 8) / (bot - top), 2.1);
+    const mid = (top + bot) / 2, x0 = (320 - cols * cw) / 2, y0 = (270 - rows * ch) / 2;
+    let o = DEFS;
     for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
-      const x = cw * (c + .5) + (r % 2 ? cw * .04 : -cw * .04), yT = 40 + ch * (r + .62) - 4 * s;
-      o += `<path d="M${x - 16 * s} ${yT} L${x + 16 * s} ${yT} L${x + 12 * s} ${yT + 19 * s} L${x - 12 * s} ${yT + 19 * s}Z" fill="#fbeff0"/>`;
-      for (let k = 0; k < 7; k++) { const f = (k + .5) / 7, x1 = x - 16 * s + 32 * s * f, x2 = x - 12 * s + 24 * s * f; if (k % 2 === 0) o += `<path d="M${x1 - 2 * s} ${yT} L${x1 + 2 * s} ${yT} L${x2 + 1.6 * s} ${yT + 19 * s} L${x2 - 1.6 * s} ${yT + 19 * s}Z" fill="#cf3a46"/>`; }
-      o += `<ellipse cx="${x}" cy="${yT + 1 * s}" rx="${15.5 * s}" ry="${4 * s}" fill="${SPONGE[st.flavor]}"/>`;
-      o += `<path d="M${x - 16.5 * s} ${yT + 1 * s} Q${x - 18 * s} ${yT - 17 * s} ${x} ${yT - 17 * s} Q${x + 18 * s} ${yT - 17 * s} ${x + 16.5 * s} ${yT + 1 * s} Q${x} ${yT + 6 * s} ${x - 16.5 * s} ${yT + 1 * s}Z" fill="${GAN2}"/>`;
-      if (st.spr === "on") o += sprinkles(x, yT - 6 * s, 12 * s, 6 * s, st.frost ? 5 : 9, 20 + r * 9 + c, false, Math.max(1.3, 1.5 * s));
-      if (st.frost) {
-        // Piped swirl: four tiers that get smaller, each tilted a little, and a curled tip.
-        const y0 = yT - 12 * s, T = [[0, -2, 12.5, 4.6, -3], [.4, -7.4, 10, 4.2, 4], [-.3, -12.4, 7.4, 3.6, -5], [.2, -16.6, 4.8, 3, 3]];
-        o += `<g transform="translate(${x} ${y0}) scale(${s})" fill="${CREAM}" stroke="${CSTROKE}" stroke-width=".8" stroke-linejoin="round">` +
-          T.map(([cx, cy, rx, ry, rot]) => `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" transform="rotate(${rot} ${cx} ${cy})"/>`).join("") +
-          `<path d="M-3 -17.5 C-3.4 -23 1 -24.2 3.6 -28.5 C4.8 -23.5 3.8 -19.5 3 -17.5Z"/></g>`;
-      }
+      const cx = x0 + cw * (c + .5), cy = y0 + ch * (r + .5) - mid * s;
+      o += `<g transform="translate(${cx.toFixed(1)} ${cy.toFixed(1)}) scale(${s.toFixed(3)})">${cupLocal(GAN2, st.frost, st.spr === "on", 20 + r * 9 + c, false)}</g>`;
     }
     return o;
   }
@@ -1254,12 +1263,8 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
       g += `<path d="M0 0 L0 ${H} L${f(P2[0])} ${f(P2[1] + H)} ${arcBack(H)} L${P1[0]} 0" fill="none" stroke="rgba(0,0,0,.22)" stroke-width="1.4" stroke-linejoin="round"/>`;
       o += `<g transform="translate(27 8) scale(.8)">${g}</g>`;
     } else if (shape === "cup") {
-      // A bare cupcake, no ganache, so the sponge colour shows: a domed top on a pleated liner.
-      o += `<path d="M26 64 Q22 24 64 22 Q106 24 102 64 Z" fill="${sp}"/>`;
-      o += `<ellipse cx="64" cy="64" rx="38" ry="5" fill="${sp}"/>`;
-      if (fun) { const r = rnd(9), pts = []; for (let i = 0; i < 26; i++) { const a = r() * 6.283, d = Math.sqrt(r()); pts.push([64 + Math.cos(a) * 34 * d, 46 + Math.sin(a) * 18 * d]); } o += dots(pts, 4); }
-      o += `<path d="M24 64 L104 64 L94 90 L34 90Z" fill="#fbeff0"/>`;
-      for (let k = 0; k < 7; k += 2) { const f = (k + .5) / 7, x1 = 24 + 80 * f, x2 = 34 + 60 * f; o += `<path d="M${x1 - 4.5} 64 L${x1 + 4.5} 64 L${x2 + 3.5} 90 L${x2 - 3.5} 90Z" fill="#cf3a46"/>`; }
+      // A bare cupcake, no ganache, so the sponge colour shows.
+      o += `<g transform="translate(64 ${(48 - 2 * 1.8).toFixed(1)}) scale(1.8)">${cupLocal(sp, false, false, 9, fun)}</g>`;
     } else {
       // A piece of a rectangular cake: a small box seen from the front, with the top and right side visible.
       const D2 = [14, -16], FW = 46, FH = 36, fx = 24, fy = 52;
