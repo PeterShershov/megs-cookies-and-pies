@@ -342,6 +342,81 @@ html[lang="he"] body .bar h3 { letter-spacing: .12em !important; }
 html[lang="he"] body .arc text { letter-spacing: 0; }
 html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
 
+
+/* ---------- Birthday cake builder (full-screen sheet) ---------- */
+.cake-art { width: 100%; aspect-ratio: 1; border-radius: 50%; background: var(--sticker); border: 4px solid var(--white); box-shadow: 0 0 0 3px var(--blue); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.cake-art svg { width: 100%; height: auto; flex: none; }
+@media (max-width: 720px) { .cake-art { width: 62%; margin: 0 auto; } }
+.cake-open { display: flex; align-items: center; justify-content: center; width: 100%; max-width: 420px; background: var(--blue); color: var(--white); border: 0; border-radius: 999px; padding: 13px 20px; cursor: pointer; font-family: var(--font-bar); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; font-size: 1.05rem; }
+.cake-open:hover { background: #17306F; }
+.cake-count { margin-top: 8px; font-weight: 700; color: var(--red-deep); font-size: .95rem; }
+.contents li small { display: block; color: var(--ink-soft); font-size: .82rem; line-height: 1.35; margin-top: 2px; }
+.contents li .cake-line { min-width: 0; }
+.contents li .cake-end { display: flex; align-items: flex-start; gap: 8px; white-space: nowrap; }
+.cake-x { border: 0; background: transparent; color: var(--red-deep); cursor: pointer; font-size: 1.3rem; line-height: 1; padding: 0 4px; border-radius: 6px; }
+.cake-x:hover { background: rgba(196,42,48,.12); }
+.cb { position: fixed; inset: 0; z-index: 100; overflow: auto; background: var(--paper); background-image: radial-gradient(rgba(94,74,63,.05) 1px, transparent 1.2px); background-size: 6px 6px; -webkit-overflow-scrolling: touch; }
+.cb-wrap { max-width: 980px; margin: 0 auto; padding: 0 16px 120px; }
+.cb-top { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; }
+.cb-pill { font-family: var(--font-wide); font-weight: 800; font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; color: var(--red); background: transparent; border: 2px solid var(--red); border-radius: 999px; padding: 7px 18px; cursor: pointer; }
+.cb-pill:hover { background: var(--red); color: var(--white); }
+.cb-h1 { margin: 6px 0 2px; font-family: var(--font-script); color: var(--red); font-weight: 400; font-size: clamp(2.4rem, 8vw, 3.4rem); line-height: 1; }
+html[lang="he"] .cb-h1 { font-family: var(--font-wide); font-weight: 800; font-size: clamp(1.8rem, 6vw, 2.4rem); }
+.cb-sub { color: var(--ink-soft); margin: 6px 0 18px; }
+.cb-steps { display: flex; gap: 6px; margin: 6px 0 16px; }
+.cb-step { flex: 1; text-align: center; font: 600 .7rem var(--font-wide); color: var(--ink-soft); }
+.cb-step i { display: block; height: 6px; border-radius: 3px; background: var(--paper-deep); margin-bottom: 6px; }
+.cb-step.done i { background: var(--red); }
+.cb-step.cur i { background: var(--red-deep); }
+.cb-step.cur { color: var(--red-deep); }
+.cb-step b { display: block; font-weight: 700; }
+.cb-grid { display: grid; gap: 18px; }
+@media (min-width: 760px) { .cb-grid { grid-template-columns: 1fr 1fr; align-items: start; } .cb-stage { position: sticky; top: 12px; } }
+.cb-stage { background: var(--sticker); border: 2px solid var(--red); padding: 12px; text-align: center; box-shadow: 6px 6px 0 var(--blue); }
+.cb-stage svg { width: 100%; max-width: 340px; height: auto; display: block; margin: 0 auto; }
+@media (max-width: 759px) { .cb-stage { padding: 8px 12px; } .cb-stage svg { max-width: 270px; } }
+.cb-panel h2 { margin: 0 0 4px; font-family: var(--font-bar); text-transform: uppercase; letter-spacing: .12em; color: var(--red); font-size: 1.5rem; }
+html[lang="he"] .cb-panel h2 { font-family: var(--font-wide); font-weight: 800; text-transform: none; font-size: 1.4rem; }
+.cb-hint { color: var(--ink-soft); margin: 0 0 14px; font-size: .95rem; }
+.cb-grp { font: 700 .85rem var(--font-bar); text-transform: uppercase; letter-spacing: .14em; color: var(--blue); margin: 20px 0 8px; border-bottom: 1px solid var(--blue); padding-bottom: 4px; }
+html[lang="he"] .cb-grp { font-family: var(--font-wide); text-transform: none; font-size: .95rem; }
+.cb-hint + .cb-grp { margin-top: 6px; }
+.cb-opts { display: grid; gap: 12px; }
+.cb-opt { display: grid; grid-template-columns: 92px 1fr auto; gap: 12px; align-items: center; text-align: start; background: var(--white); border: 2px solid #cdbf9f; border-radius: 16px; padding: 10px 14px 10px 10px; cursor: pointer; width: 100%; font: inherit; color: inherit; }
+html[dir="rtl"] .cb-opt { padding: 10px 10px 10px 14px; }
+.cb-opt svg { width: 92px; height: auto; display: block; }
+.cb-opt .t { font-family: var(--font-bar); font-weight: 600; font-size: 1.15rem; letter-spacing: .06em; text-transform: uppercase; }
+html[lang="he"] .cb-opt .t { font-family: var(--font-wide); font-weight: 800; text-transform: none; font-size: 1.02rem; }
+.cb-opt .d { color: var(--ink-soft); font-size: .88rem; line-height: 1.35; margin-top: 2px; }
+.cb-opt .p { font-family: var(--font-bar); font-weight: 700; color: var(--red); font-size: 1.05rem; white-space: nowrap; }
+.cb-opt.on { border-color: var(--red); background: #fff; box-shadow: 0 0 0 3px rgba(196,42,48,.2); }
+.cb-opt.on .t::after { content: " \2713"; color: var(--red); }
+.cb-chips { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.cb-chip { border: 2px solid var(--red); border-radius: 999px; background: var(--white); color: var(--red-deep); font-family: var(--font-bar); font-weight: 600; padding: 6px 16px; cursor: pointer; font-size: 1rem; }
+.cb-chip.on { background: var(--red); color: var(--white); }
+.cb-chiplabel { font: 600 .8rem var(--font-bar); text-transform: uppercase; letter-spacing: .1em; color: var(--ink-soft); margin-top: 12px; }
+.cb-candle { display: flex; align-items: center; gap: 12px; margin-top: 12px; background: var(--white); border: 2px solid var(--red); border-radius: 16px; padding: 10px 14px; flex-wrap: wrap; }
+.cb-candle label { font-weight: 700; }
+.cb-candle input { width: 96px; text-align: center; font-family: var(--font-bar); font-weight: 700; font-size: 1.6rem; border: 2px solid var(--red); border-radius: 12px; padding: 4px 8px; background: #fff; direction: ltr; }
+.cb-candle small { color: var(--ink-soft); display: block; font-size: .82rem; }
+.cb-error { color: var(--red-deep); font-weight: 700; font-size: .95rem; margin-top: 8px; }
+.cb-sum { background: var(--white); border: 2px solid var(--red); border-radius: 16px; padding: 14px; }
+.cb-row { display: flex; justify-content: space-between; gap: 10px; padding: 8px 0; border-bottom: 1px dashed #cdbf9f; }
+.cb-row small { display: block; color: var(--ink-soft); font-size: .82rem; }
+.cb-tot { display: flex; justify-content: space-between; font-family: var(--font-bar); font-weight: 700; font-size: 1.9rem; border-top: 2px solid var(--red); margin-top: 6px; padding-top: 10px; }
+.cb-note { font-size: .88rem; color: var(--ink-soft); margin-top: 10px; }
+.cb-add { display: block; width: 100%; margin-top: 14px; background: var(--blue); color: var(--white); border: 0; border-radius: 999px; padding: 14px; font-family: var(--font-bar); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; font-size: 1.05rem; cursor: pointer; }
+.cb-add:hover { background: #17306F; }
+html[lang="he"] .cb-add, html[lang="he"] .cake-open { font-family: var(--font-wide); letter-spacing: 0; text-transform: none; font-weight: 800; }
+.cb-bar { position: fixed; inset-inline: 0; bottom: 0; background: var(--red); border-top: 3px solid var(--blue); color: var(--white); z-index: 5; }
+.cb-in { max-width: 980px; margin: 0 auto; display: flex; align-items: center; gap: 12px; padding: 10px 16px; }
+.cb-price { font-family: var(--font-bar); font-weight: 700; font-size: 1.7rem; margin-inline-end: auto; line-height: 1; }
+.cb-price small { display: block; font: 500 .66rem var(--font-wide); opacity: .85; letter-spacing: .1em; text-transform: uppercase; }
+html[lang="he"] .cb-price small { letter-spacing: 0; text-transform: none; }
+.cb-btn { border: 2px solid var(--white); background: transparent; color: var(--white); border-radius: 999px; padding: 10px 22px; font-family: var(--font-bar); font-weight: 600; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; }
+html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; letter-spacing: 0; font-weight: 800; }
+.cb-btn.cb-go { background: var(--white); color: var(--red-deep); }
+
 @media (max-width: 720px) {
   .tags, .tags.three { grid-template-columns: 1fr 1fr; gap: 10px; }
   .tags.three .tag:last-child { grid-column: 1 / -1; }
@@ -481,6 +556,22 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
     </div>
   </div>
 </footer>
+
+
+<div class="cb" id="cb" role="dialog" aria-modal="true" aria-labelledby="cb-title" hidden>
+  <div class="cb-wrap">
+    <div class="cb-top"><button type="button" class="cb-pill" id="cb-close"></button><button type="button" class="cb-pill" id="cb-lang"></button></div>
+    <h2 class="cb-h1" id="cb-title"></h2>
+    <p class="cb-sub" id="cb-sub"></p>
+    <div class="cb-steps" id="cb-steps"></div>
+    <div class="cb-grid"><div class="cb-stage"><div id="cb-art"></div></div><div class="cb-panel" id="cb-panel"></div></div>
+  </div>
+  <div class="cb-bar"><div class="cb-in">
+    <div class="cb-price" id="cb-price"></div>
+    <button type="button" class="cb-btn" id="cb-back"></button>
+    <button type="button" class="cb-btn cb-go" id="cb-next"></button>
+  </div></div>
+</div>
 
 <script>
 (() => {
@@ -700,6 +791,9 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
   const unitKey = (u) => u === "pie" ? "u_pie" : u === "cake" ? "u_cake" : u === "pack" ? "u_pack" : "u_bag";
   const unitTag = (u) => (u === "pie" || u === "cake") ? "" : u === "pack" ? " (100 g)" : " (bag of 10)";
   const qty = Object.fromEntries(ITEMS.map(i => [i.id, 0]));
+  const cakes = []; // finished birthday cakes in the order
+  const cakeTotal = () => cakes.reduce((n, c) => n + c.price, 0);
+  function hasItems() { return lines().length > 0 || cakes.length > 0; }
   const optSel = { birthday: 0 };
   const optLabel = (it) => { const l = t("opt_" + CHOCOLATES[optSel[it.id]].key); return lang === "he" ? l : l.toLowerCase(); };
   // Items with a second photo (img2) show it when the second chocolate choice is picked.
@@ -730,7 +824,7 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
   const DELIVERY = "Delivery to Herzliya Pituach";
   const DELIVERY_FEE = 20;
   const isDelivery = () => val("place") === DELIVERY;
-  const fee = () => (isDelivery() && lines().length ? DELIVERY_FEE : 0);
+  const fee = () => (isDelivery() && hasItems() ? DELIVERY_FEE : 0);
   // No pickups on Saturday (getDay() 6). Input value is YYYY-MM-DD.
   const isSaturday = (v) => { const [y, m, d] = v.split("-").map(Number); return new Date(y, m - 1, d).getDay() === 6; };
 
@@ -790,6 +884,42 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
         render();
       }));
     }
+    buildCakeSection();
+  }
+
+  const CAKE_TXT = {
+    en: { head: "Birthday cakes", note: "Round, rectangular or cupcakes", bar: "Build your cake", from: "from ", open: "Build your birthday cake", more: "Add another cake",
+      desc: "Choose a shape, a flavor, a coating and a decoration. You see the cake and the price as you go.",
+      meta: ["Round cake, rectangular cake or cupcakes", "Keeps up to 2 days in a cool place"], inOrder: (n) => n === 1 ? "1 cake in your order" : n + " cakes in your order" },
+    he: { head: "עוגות יום הולדת", note: "עגולה, מלבנית או קאפקייקס", bar: "בונים עוגה", from: "מ-", open: "בונים עוגת יום הולדת", more: "להוסיף עוגה נוספת",
+      desc: "בוחרים צורה, טעם, ציפוי וקישוט, ורואים את העוגה והמחיר תוך כדי.",
+      meta: ["עוגה עגולה, עוגה מלבנית או קאפקייקס", "נשמרת עד יומיים במקום קריר"], inOrder: (n) => n === 1 ? "עוגה אחת בהזמנה" : n + " עוגות בהזמנה" }
+  };
+  function buildCakeSection() {
+    const x = CAKE_TXT[lang];
+    const h = document.createElement("h3");
+    h.className = "cat-head"; h.id = "cat-cakes";
+    h.innerHTML = `${x.head}<small>${x.note}</small>`;
+    menu.appendChild(h);
+    const a = document.createElement("article");
+    a.className = "item"; a.id = "item-cakes";
+    a.innerHTML = `<div class="cake-art" role="img" aria-label="${x.head}">${CB.ctaArt()}</div>
+      <div class="item-body">
+        <div class="bar"><h3>${x.bar}</h3><span class="price">${x.from}₪${CB.minPrice}</span></div>
+        <div class="qty-row"><button type="button" class="cake-open" id="cake-open"></button><div class="cake-count" id="cake-count" aria-live="polite"></div></div>
+        <p class="desc">${x.desc}</p>
+        <div class="meta">${x.meta.map(m => `<span>${m}</span>`).join("")}</div>
+      </div>`;
+    menu.appendChild(a);
+    a.querySelector("#cake-open").addEventListener("click", (e) => CB.open(e.currentTarget));
+    refreshCta();
+  }
+  function refreshCta() {
+    const b = document.getElementById("cake-open"); if (!b) return;
+    const x = CAKE_TXT[lang];
+    b.textContent = cakes.length ? x.more : x.open;
+    document.getElementById("cake-count").textContent = cakes.length ? x.inOrder(cakes.length) : "";
+    document.getElementById("item-cakes").classList.toggle("picked", cakes.length > 0);
   }
 
   const form = document.getElementById("slip");
@@ -821,7 +951,7 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
   const txt = (id) => document.getElementById(id).value.trim();
 
   function lines() { return ITEMS.filter(i => qty[i.id] > 0); }
-  function total() { return lines().reduce((s, i) => s + qty[i.id] * i.price, 0) + fee(); }
+  function total() { return lines().reduce((s, i) => s + qty[i.id] * i.price, 0) + cakeTotal() + fee(); }
 
   // English only: this text goes to Meg.
   function message() {
@@ -829,6 +959,7 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
     for (const i of lines()) {
       parts.push(`• ${qty[i.id]} × ${msgName(i)}${unitTag(i.unit)} – ₪${qty[i.id] * i.price}`);
     }
+    for (const c of cakes) parts.push(...CB.msgLines(c));
     if (fee()) parts.push(`• Delivery to Herzliya Pituach – ₪${DELIVERY_FEE}`);
     parts.push(`Total: ₪${total()}`, "",
       isDelivery()
@@ -856,13 +987,15 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
     document.getElementById("when-hint").textContent = TG_OPEN ? t("hint_tg") : t("hint");
     const ls = lines();
     const box = document.getElementById("contents");
-    document.getElementById("choice").hidden = ls.length === 0;
-    box.innerHTML = ls.length
+    document.getElementById("choice").hidden = !hasItems();
+    box.innerHTML = hasItems()
       ? "<ul>" + ls.map(i => `<li><span>${qty[i.id]} × ${slipName(i)}</span><span>₪${qty[i.id] * i.price}</span></li>`).join("") +
+        cakes.map((c, n) => `<li><span class="cake-line">1 × ${CB.name()}<small>${CB.slipDetail(c)}</small></span><span class="cake-end">₪${c.price}<button type="button" class="cake-x" data-cake="${n}" aria-label="${CB.removeLabel()}">&times;</button></span></li>`).join("") +
         (fee() ? `<li><span>${t("deliv_line")}</span><span>₪${DELIVERY_FEE}</span></li>` : "") + "</ul>"
       : `<span class="empty">${t("empty")}</span>`;
     document.getElementById("total").innerHTML = `₪${total()}<small>${val("pay").startsWith("Cash") ? t("total_cash") : t("total_bit")}</small>`;
-    const ready = ls.length > 0 && txt("name").length > 0 && addrOk() && dateOk();
+    const ready = hasItems() && txt("name").length > 0 && addrOk() && dateOk();
+    refreshCta();
     send.setAttribute("aria-disabled", ready ? "false" : "true");
     send.href = `https://wa.me/${PHONE}?text=${encodeURIComponent(message())}`;
     if (ready) err.hidden = true;
@@ -873,12 +1006,16 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
     if (send.getAttribute("aria-disabled") === "true") {
       e.preventDefault();
       const satPicked = val("day") === OTHER && dateInput.value !== "" && isSaturday(dateInput.value);
-      showErr(!lines().length ? "err_empty" : !txt("name") ? "err_name" : !addrOk() ? "err_addr" : satPicked ? "err_sat" : "err_date");
-      if (!lines().length) document.getElementById("menu").scrollIntoView({ behavior: "smooth", block: "start" });
+      showErr(!hasItems() ? "err_empty" : !txt("name") ? "err_name" : !addrOk() ? "err_addr" : satPicked ? "err_sat" : "err_date");
+      if (!hasItems()) document.getElementById("menu").scrollIntoView({ behavior: "smooth", block: "start" });
       else if (!txt("name")) document.getElementById("name").focus();
       else if (!addrOk()) document.getElementById("addr").focus();
       else dateInput.focus();
     }
+  });
+  document.getElementById("contents").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-cake]");
+    if (b) { cakes.splice(+b.dataset.cake, 1); render(); }
   });
   form.addEventListener("input", render);
   form.addEventListener("change", () => { renderDays(); render(); });
@@ -896,6 +1033,359 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
     }
     setTimeout(() => { copyBtn.textContent = t("copy"); }, 2000);
   });
+
+
+  /* ================= Birthday cake builder ================= */
+  const CB = (() => {
+  const CT = {
+    en: { badge: "MOCK - not on the real site", title: "Build your birthday cake", sub: "Pick a shape, a flavor, a coating and a finish. You see the price as you go.",
+      steps: ["Shape","Flavor","Coating","Decoration","Your cake"],
+      q: ["Choose a shape","Choose a flavor","Choose a coating","Choose a decoration","Your cake"],
+      h: ["Every cake comes with ganache on top and sprinkles.","Same price for every flavor.","Dark chocolate ganache made with Cacao Barry chocolate.","Sprinkles are included. Add buttercream piping or a candle if you like.",""],
+      round: ["Round cake","8 inch, two layers with white buttercream between them, serves 12-16"], party: ["Rectangular cake","9×13 inch, one layer, 24 pieces"], cup: ["Cupcakes","Coated in ganache with sprinkles"],
+      count: "How many cupcakes", pcs: n => n + " cupcakes",
+      chocolate: ["Chocolate cake",""], yellow: ["Buttery vanilla cake",""], funfetti: ["Vanilla cake with sprinkles",""],
+      top: ["Top coating only","Spread over the top, the sides stay bare"], around: ["Ganache all around","Top and sides coated and smooth"], topCup: ["Top coating only","Cupcakes always get ganache on top"],
+      gSpr: "Sprinkles", sprOn: ["Colorful sprinkles","A border of sprinkles on top"], sprOnCup: ["Colorful sprinkles","Sprinkles on the ganache"], sprOff: ["No sprinkles","Smooth ganache, no sprinkles"],
+      gFrost: "Buttercream piping", frostNone: ["No piping","Ganache only"],
+      frost: ["Buttercream piping","Piped buttercream border on the top and bottom of the cake"], frostParty: ["Buttercream piping","A buttercream rosette on each of the 24 pieces"], frostCup: ["Buttercream piping","A buttercream swirl on each cupcake"],
+      gCandle: "Number candle", candleNone: ["No candle",""], candleYes: ["Number candle","₪10 per digit, for example 22 = ₪20"], which: "Which number?", perDigit: "₪10 per digit",
+      incl: "Included", total: "Total", from: "Price", sumHead: ["Shape","Flavor","Coating","Sprinkles","Buttercream","Candle"],
+      next: "Next", back: "Back", add: "Add to my order", toast: "On the real site this adds the cake to the order slip and the WhatsApp message.",
+      keep: "Keeps up to 2 days in a cool place. Cupcakes are best eaten on the day they are baked.", art: "Illustration. Meg's real photos can replace these later." },
+    he: { badge: "דוגמה - עדיין לא באתר", title: "בונים עוגת יום הולדת", sub: "בוחרים צורה, טעם, ציפוי וקישוט. המחיר מתעדכן תוך כדי.",
+      steps: ["צורה","טעם","ציפוי","קישוט","העוגה שלך"],
+      q: ["בחרו צורה","בחרו טעם","בחרו ציפוי","בחרו קישוט","העוגה שלך"],
+      h: ["כל עוגה מגיעה עם גנאש מעל וסוכריות צבעוניות.","המחיר זהה לכל הטעמים.","גנאש שוקולד מריר של קקאו ברי.","סוכריות כלולות במחיר. אפשר להוסיף זילוף קרם חמאה ונר.",""],
+      round: ["עוגה עגולה","קוטר 20 ס״מ, שתי שכבות עם שכבת קרם חמאה לבן ביניהן, 12-16 מנות"], party: ["עוגה מלבנית","עוגה בגודל 23x33 ס״מ, שכבה אחת, 24 מנות"], cup: ["קאפקייקס","בציפוי גנאש עם סוכריות צבעוניות"],
+      count: "כמה קאפקייקס", pcs: n => n + " קאפקייקס",
+      chocolate: ["עוגת שוקולד",""], yellow: ["עוגת וניל חמאתית",""], funfetti: ["עוגת וניל עם סוכריות צבעוניות",""],
+      top: ["ציפוי עליון בלבד","נמרח על פני העוגה, הצדדים נשארים חשופים"], around: ["גנאש מסביב","ציפוי חלק למעלה ובצדדים"], topCup: ["ציפוי עליון בלבד","בקאפקייקס תמיד יש גנאש למעלה"],
+      gSpr: "סוכריות", sprOn: ["סוכריות צבעוניות","מסגרת סוכריות צבעוניות על פני העוגה"], sprOnCup: ["סוכריות צבעוניות","סוכריות צבעוניות על הגנאש"], sprOff: ["ללא סוכריות צבעוניות","גנאש חלק בלי סוכריות"],
+      gFrost: "זילוף קרם חמאה", frostNone: ["ללא זילוף","גנאש בלבד"],
+      frost: ["זילוף קרם חמאה","מסגרת קרם חמאה מזולפת בחלק העליון ותחתון של העוגה"], frostParty: ["זילוף קרם חמאה","ורד קרם חמאה על כל אחת מ-24 החתיכות"], frostCup: ["זילוף קרם חמאה","ספירלת קרם חמאה על כל קאפקייק"],
+      gCandle: "נר מספר", candleNone: ["ללא נר",""], candleYes: ["נר מספר","10 ₪ לכל ספרה, כך שנר 22 עולה 20 ₪"], which: "איזה מספר?", perDigit: "10 ₪ לכל ספרה",
+      incl: "כלול", total: "סה״כ", from: "מחיר", sumHead: ["צורה","טעם","ציפוי","סוכריות","זילוף","נר"],
+      next: "הבא", back: "חזרה", add: "הוספה להזמנה", toast: "באתר האמיתי הכפתור יוסיף את העוגה להזמנה ולהודעת הוואטסאפ.",
+      keep: "נשמרת עד יומיים במקום קריר. את הקאפקייקס מומלץ לאכול ביום האפייה.", art: "איור. אפשר להחליף בתמונות אמיתיות של העוגות." }
+  };
+  const ct = () => CT[lang];
+
+  Object.assign(CT.en, {
+    cakeName: "Birthday cake", candleWord: "Number candle", close: "Close", errCandle: "Type the number for the candle.",
+    msgSize: { round: "8 inch / 20 cm", party: "9×13 inch / 23×33 cm" },
+    remove: "Remove this cake"
+  });
+  Object.assign(CT.he, {
+    cakeName: "עוגת יום הולדת", candleWord: "נר מספר", close: "סגירה", errCandle: "הקלידו את המספר לנר.",
+    msgSize: { round: "8 inch / 20 cm", party: "9×13 inch / 23×33 cm" },
+    remove: "הסרת העוגה"
+  });
+  const COUNTS = [6, 12, 24];
+  const BASE = { round: 250, party: 230, cup: { 6: 85, 12: 160, 24: 290 } };
+  const COAT = { round: 30, party: 30, cup: 0 };
+  const FROST = { round: 20, party: 40, cup: { 6: 10, 12: 25, 24: 50 } };
+  const CANDLE_PER_DIGIT = 10;
+  const isCup = (sh) => sh === "cup";
+  const digits = (st) => (st.candleOn && !isCup(st.shape)) ? (st.candle || "").replace(/\D/g, "").slice(0, 3) : "";
+  const price = (st = S) => {
+    const base = isCup(st.shape) ? BASE.cup[st.cups] : BASE[st.shape];
+    const coat = st.coat === "around" && !isCup(st.shape) ? COAT[st.shape] : 0;
+    const f = st.frost ? (isCup(st.shape) ? FROST.cup[st.cups] : FROST[st.shape]) : 0;
+    const c = digits(st).length * CANDLE_PER_DIGIT;
+    return { base, coat, f, c, total: base + coat + f + c };
+  };
+  const shek = (n) => "₪" + n;
+  const plus = (n) => n ? "+" + shek(n) : ct().incl;
+
+  /* ================= illustrations ================= */
+  const HEARTC = ["#e8433f", "#f28c28", "#f7c600", "#46b86a", "#3aa0e0", "#ee6aa7", "#8a5cc9", "#ffffff"];
+  const SPONGE = { chocolate: "#6a3a24", yellow: "#f2c867", funfetti: "#f2c867" };
+  const GAN = "#3b2218", GAN2 = "#4a2c20", CREAM = "#fff8ea", CSTROKE = "#e2cfa6", RIDGE = "#e7d6b0";
+  const rnd = (seed) => { let x = seed; return () => (x = (x * 9301 + 49297) % 233280) / 233280; };
+  // A jimmy is a short rounded rod. s sets the size.
+  const jimmy = (x, y, s, rot, c) => `<rect x="${(-1.05 * s).toFixed(2)}" y="${(-.38 * s).toFixed(2)}" width="${(2.1 * s).toFixed(2)}" height="${(.76 * s).toFixed(2)}" rx="${(.38 * s).toFixed(2)}" fill="${c}" transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${rot.toFixed(0)})"/>`;
+  function sprinkles(cx, cy, rx, ry, n, seed, ring, s = 3.3) {
+    const r = rnd(seed); let o = "";
+    for (let i = 0; i < n; i++) {
+      const a = r() * 6.283, d = ring ? 0.62 + 0.34 * r() : Math.sqrt(r()) * 0.94;
+      o += jimmy(cx + Math.cos(a) * rx * d, cy + Math.sin(a) * ry * d, s, r() * 180, HEARTC[Math.floor(r() * HEARTC.length)]);
+    }
+    return o;
+  }
+  const dots = (pts, seed) => { const r = rnd(seed); return pts.map(([x, y]) => `<circle cx="${x}" cy="${y}" r="1.6" fill="${HEARTC[Math.floor(r() * 6)]}"/>`).join(""); };
+  const DEFS = "";
+  function wavy(cx, cy, rx, ry, base, amp, k, n) {
+    const p = [];
+    for (let i = 0; i <= n; i++) { const th = i / n * 6.2832, r = base + amp * Math.sin(k * th); p.push((cx + Math.cos(th) * rx * r).toFixed(1) + " " + (cy + Math.sin(th) * ry * r).toFixed(1)); }
+    return "M" + p.join(" L") + "Z";
+  }
+  function shell(x, y, s) {
+    return `<path d="M${x - 9 * s} ${y + 4 * s} Q${x - 10 * s} ${y - 9 * s} ${x} ${y - 10 * s} Q${x + 10 * s} ${y - 9 * s} ${x + 9 * s} ${y + 4 * s} Q${x} ${y + 9 * s} ${x - 9 * s} ${y + 4 * s}Z" fill="${CREAM}" stroke="${CSTROKE}" stroke-width=".8"/>`;
+  }
+  function rosette(x, y, rx, ry) {
+    let p = "";
+    for (let i = 0; i < 24; i++) { const a = i / 24 * 6.2832, r = i % 2 ? 0.76 : 1; p += (i ? "L" : "M") + (x + Math.cos(a) * rx * r).toFixed(1) + " " + (y + Math.sin(a) * ry * r).toFixed(1); }
+    return `<path d="${p}Z" fill="${CREAM}" stroke="${CSTROKE}" stroke-width=".7"/><circle cx="${x}" cy="${y}" r="${rx * .24}" fill="${RIDGE}"/>`;
+  }
+  function candleSVG(ds, cx, baseY) {
+    if (!ds) return "";
+    let o = "";
+    [...ds].forEach((d, i) => {
+      const x = cx + (i - (ds.length - 1) / 2) * 52;
+      o += `<line x1="${x}" y1="${baseY - 50}" x2="${x - 1}" y2="${baseY - 64}" stroke="#c4c8ce" stroke-width="2.4" stroke-linecap="round"/>` +
+        `<text x="${x}" y="${baseY}" text-anchor="middle" font-family="Rubik,Archivo,Arial,sans-serif" font-weight="800" font-size="70" fill="#c3c8cf" stroke="#7d838b" stroke-width="1.6" paint-order="stroke">${d}</text>`;
+    });
+    return o;
+  }
+
+  function roundSVG(st) {
+    const sp = SPONGE[st.flavor], all = st.coat === "around", ty = 130, by = 208, RX = 96, RY = 34;
+    const body = `M64 ${ty} V${by} A${RX} ${RY} 0 0 0 256 ${by} V${ty}Z`;
+    let o = DEFS + `<clipPath id="rbody"><path d="${body}"/></clipPath>`;
+    o += `<ellipse cx="160" cy="222" rx="152" ry="46" fill="#fbfaf6" stroke="#cfd6dd" stroke-width="2"/>`;
+    o += `<path d="${body}" fill="${all ? GAN : sp}"/>`;
+    if (!all) {
+      const m = (ty + by) / 2 + 2;
+      o += `<path d="M64 ${m} A${RX} ${RY} 0 0 0 256 ${m} V${m + 7} A${RX} ${RY} 0 0 1 64 ${m + 7}Z" fill="${CREAM}"/>`;
+      if (st.flavor === "funfetti") { const r = rnd(4), pts = []; for (let i = 0; i < 46; i++) pts.push([68 + r() * 184, ty + 2 + r() * 108]); o += `<g clip-path="url(#rbody)">${dots(pts, 8)}</g>`; }
+    }
+    o += `<ellipse cx="160" cy="${ty}" rx="${RX}" ry="${RY}" fill="${GAN2}"/>`;
+    if (st.spr === "on") o += sprinkles(160, ty, RX - 4, RY - 3, st.frost ? 26 : 38, 11, !st.frost);
+    if (st.frost) {
+      const path = wavy(160, ty, RX, RY, 0.64, 0.13, 5, 160);
+      o += `<path d="${path}" fill="none" stroke="${CREAM}" stroke-width="10" stroke-linejoin="round"/>`;
+      if (st.spr === "on") o += sprinkles(160, ty, RX - 16, RY - 8, 12, 31, true, 3);
+      // Shells at the base: evenly spaced along the front curve, drawn from the edges toward the middle.
+      const pts = [], N = 400, t0 = .1, t1 = Math.PI - .1; let len = [0];
+      for (let i = 0; i <= N; i++) { const t = t0 + (t1 - t0) * i / N; pts.push([160 + Math.cos(t) * 92, by + 2 + Math.sin(t) * 33]); if (i) len.push(len[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1])); }
+      const K = 12, sh = [];
+      for (let k = 0; k < K; k++) { const target = len[N] * k / (K - 1); let i = 0; while (i < N && len[i] < target) i++; sh.push(pts[i]); }
+      sh.sort((p, q) => Math.abs(q[0] - 160) - Math.abs(p[0] - 160));
+      for (const [x, y] of sh) o += shell(x, y, 1.05);
+    }
+    o += candleSVG(digits(st), 160, ty + 2);
+    return o;
+  }
+  function partySVG(st) {
+    const sp = SPONGE[st.flavor], all = st.coat === "around";
+    let o = DEFS + `<rect x="22" y="80" width="276" height="140" rx="16" fill="#fbfaf6" stroke="#cfd6dd" stroke-width="2"/>`;
+    o += `<rect x="40" y="168" width="240" height="38" rx="5" fill="${all ? GAN : sp}"/>`;
+    if (!all && st.flavor === "funfetti") { const r = rnd(5), pts = []; for (let i = 0; i < 40; i++) pts.push([44 + r() * 232, 172 + r() * 30]); o += dots(pts, 3); }
+    o += `<rect x="40" y="70" width="240" height="98" rx="7" fill="${GAN2}"/>`;
+    for (let c = 1; c < 6; c++) o += `<line x1="${40 + c * 40}" y1="70" x2="${40 + c * 40}" y2="168" stroke="rgba(0,0,0,.5)" stroke-width="1.4"/>`;
+    for (let r = 1; r < 4; r++) o += `<line x1="40" y1="${70 + r * 24.5}" x2="280" y2="${70 + r * 24.5}" stroke="rgba(0,0,0,.5)" stroke-width="1.4"/>`;
+    if (st.spr === "on") o += sprinkles(160, 119, 114, 44, 46, 3, false, 3);
+    if (st.frost) for (let r = 0; r < 4; r++) for (let c = 0; c < 6; c++) o += rosette(60 + c * 40, 82 + r * 24.5, 12.5, 9.5);
+    o += candleSVG(digits(st), 160, 130);
+    return o;
+  }
+  function cupSVG(st) {
+    const n = st.cups, cols = n === 6 ? 3 : n === 12 ? 4 : 6, rows = n / cols, cw = 320 / cols, ch = 250 / rows;
+    const s = Math.min(cw / 38, ch / (st.frost ? 62 : 52)); let o = DEFS;
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+      const x = cw * (c + .5) + (r % 2 ? cw * .04 : -cw * .04), yT = 40 + ch * (r + .62) - 4 * s;
+      o += `<path d="M${x - 16 * s} ${yT} L${x + 16 * s} ${yT} L${x + 12 * s} ${yT + 19 * s} L${x - 12 * s} ${yT + 19 * s}Z" fill="#fbeff0"/>`;
+      for (let k = 0; k < 7; k++) { const f = (k + .5) / 7, x1 = x - 16 * s + 32 * s * f, x2 = x - 12 * s + 24 * s * f; if (k % 2 === 0) o += `<path d="M${x1 - 2 * s} ${yT} L${x1 + 2 * s} ${yT} L${x2 + 1.6 * s} ${yT + 19 * s} L${x2 - 1.6 * s} ${yT + 19 * s}Z" fill="#cf3a46"/>`; }
+      o += `<ellipse cx="${x}" cy="${yT + 1 * s}" rx="${15.5 * s}" ry="${4 * s}" fill="${SPONGE[st.flavor]}"/>`;
+      o += `<path d="M${x - 16.5 * s} ${yT + 1 * s} Q${x - 18 * s} ${yT - 17 * s} ${x} ${yT - 17 * s} Q${x + 18 * s} ${yT - 17 * s} ${x + 16.5 * s} ${yT + 1 * s} Q${x} ${yT + 6 * s} ${x - 16.5 * s} ${yT + 1 * s}Z" fill="${GAN2}"/>`;
+      if (st.spr === "on") o += sprinkles(x, yT - 6 * s, 12 * s, 6 * s, st.frost ? 5 : 9, 20 + r * 9 + c, false, Math.max(1.3, 1.5 * s));
+      if (st.frost) {
+        // Piped swirl: four tiers that get smaller, each tilted a little, and a curled tip.
+        const y0 = yT - 12 * s, T = [[0, -2, 12.5, 4.6, -3], [.4, -7.4, 10, 4.2, 4], [-.3, -12.4, 7.4, 3.6, -5], [.2, -16.6, 4.8, 3, 3]];
+        o += `<g transform="translate(${x} ${y0}) scale(${s})" fill="${CREAM}" stroke="${CSTROKE}" stroke-width=".8" stroke-linejoin="round">` +
+          T.map(([cx, cy, rx, ry, rot]) => `<ellipse cx="${cx}" cy="${cy}" rx="${rx}" ry="${ry}" transform="rotate(${rot} ${cx} ${cy})"/>`).join("") +
+          `<path d="M-3 -17.5 C-3.4 -23 1 -24.2 3.6 -28.5 C4.8 -23.5 3.8 -19.5 3 -17.5Z"/></g>`;
+      }
+    }
+    return o;
+  }
+  const art = (st) => `<svg viewBox="0 0 320 270" xmlns="http://www.w3.org/2000/svg" role="img">${st.shape === "round" ? roundSVG(st) : st.shape === "party" ? partySVG(st) : cupSVG(st)}</svg>`;
+  // cut-away slice that shows the sponge colour
+  function sliceSVG(flavor, shape) {
+    const sp = SPONGE[flavor], fun = flavor === "funfetti";
+    let o = "";
+    if (shape === "round") {
+      // A wedge cut from the whole round cake picture: same view, same ellipse (96 x 34), same layers and colors.
+      // Local origin is the centre of the cake top. The wedge spans 0 to 52 degrees of the ellipse (right-front).
+      const RX = 96, RY = 34, H = 78, th = 52 * Math.PI / 180;
+      const P1 = [RX, 0], P2 = [RX * Math.cos(th), RY * Math.sin(th)];
+      const f = (n) => n.toFixed(1);
+      const arcTop = (y) => `A${RX} ${RY} 0 0 1 ${f(P2[0])} ${f(P2[1] + y)}`;
+      const arcBack = (y) => `A${RX} ${RY} 0 0 0 ${f(P1[0])} ${f(P1[1] + y)}`;
+      const crust = (y0, y1, fill) => `<path d="M${P1[0]} ${y0} ${arcTop(y0)} L${f(P2[0])} ${f(P2[1] + y1)} ${arcBack(y1)}Z" fill="${fill}"/>`;
+      const cut = (y0, y1, fill) => `<polygon points="0,${y0} ${f(P2[0])},${f(P2[1] + y0)} ${f(P2[0])},${f(P2[1] + y1)} 0,${y1}" fill="${fill}"/>`;
+      const mid = H / 2 + 2;
+      const bands = [[0, mid, sp], [mid, mid + 7, CREAM], [mid + 7, H, sp]];
+      let g = "";
+      for (const [a, b, c] of bands) g += crust(a, b, c);
+      g += crust(0, H, "rgba(0,0,0,.12)");
+      for (const [a, b, c] of bands) g += cut(a, b, c);
+      if (fun) {
+        const r = rnd(8), pts = [];
+        for (let i = 0; i < 34; i++) { const u = .05 + r() * .9; pts.push([P2[0] * u, P2[1] * u + 4 + r() * (H - 8)]); }
+        g += dots(pts, 2);
+      }
+      g += `<path d="M0 0 L${P1[0]} 0 ${arcTop(0)}Z" fill="${GAN2}"/>`;
+      g += `<path d="M0 0 L0 ${H} L${f(P2[0])} ${f(P2[1] + H)} ${arcBack(H)} L${P1[0]} 0" fill="none" stroke="rgba(0,0,0,.22)" stroke-width="1.4" stroke-linejoin="round"/>`;
+      o += `<g transform="translate(27 8) scale(.8)">${g}</g>`;
+    } else if (shape === "cup") {
+      // A bare cupcake, no ganache, so the sponge colour shows: a domed top on a pleated liner.
+      o += `<path d="M26 64 Q22 24 64 22 Q106 24 102 64 Z" fill="${sp}"/>`;
+      o += `<ellipse cx="64" cy="64" rx="38" ry="5" fill="${sp}"/>`;
+      if (fun) { const r = rnd(9), pts = []; for (let i = 0; i < 26; i++) { const a = r() * 6.283, d = Math.sqrt(r()); pts.push([64 + Math.cos(a) * 34 * d, 46 + Math.sin(a) * 18 * d]); } o += dots(pts, 4); }
+      o += `<path d="M24 64 L104 64 L94 90 L34 90Z" fill="#fbeff0"/>`;
+      for (let k = 0; k < 7; k += 2) { const f = (k + .5) / 7, x1 = 24 + 80 * f, x2 = 34 + 60 * f; o += `<path d="M${x1 - 4.5} 64 L${x1 + 4.5} 64 L${x2 + 3.5} 90 L${x2 - 3.5} 90Z" fill="#cf3a46"/>`; }
+    } else {
+      // A piece of a rectangular cake.
+      o += `<clipPath id="sl"><rect x="14" y="34" width="86" height="50"/></clipPath>`;
+      o += `<polygon points="100,36 114,26 114,74 100,84" fill="${sp}" stroke="rgba(0,0,0,.18)" stroke-width=".8"/>`;
+      o += `<rect x="14" y="34" width="86" height="50" fill="${sp}"/>`;
+      if (fun) { const r = rnd(7), pts = []; for (let i = 0; i < 40; i++) pts.push([16 + r() * 82, 36 + r() * 46]); o += `<g clip-path="url(#sl)">${dots(pts, 2)}</g>`; }
+      o += `<polygon points="14,34 28,24 114,24 100,34" fill="${GAN2}"/><rect x="14" y="34" width="86" height="8" rx="2" fill="${GAN}"/>`;
+    }
+    return `<svg viewBox="0 0 128 96" xmlns="http://www.w3.org/2000/svg">${o}</svg>`;
+  }
+
+
+  /* ---------- the sheet ---------- */
+  const root = document.getElementById("cb");
+  const $ = (id) => document.getElementById(id);
+  const fresh = () => ({ step: 0, shape: "round", cups: 12, flavor: "chocolate", coat: "top", spr: "on", frost: false, candleOn: false, candle: "" });
+  let S = fresh(), isOpen = false, opener = null;
+  const copy = () => ({ ...S });
+
+  // Text parts for a finished cake, in language L. The WhatsApp message always uses "en".
+  function describe(c, L) {
+    const x = CT[L], cup = c.shape === "cup";
+    return {
+      shape: cup ? x.pcs(c.cups) : x[c.shape][0], flavor: x[c.flavor][0], coat: cup ? x.topCup[0] : x[c.coat][0],
+      spr: c.spr === "on" ? (cup ? x.sprOnCup[0] : x.sprOn[0]) : x.sprOff[0],
+      frost: c.frost ? (c.shape === "round" ? x.frost[0] : c.shape === "party" ? x.frostParty[0] : x.frostCup[0]) : x.frostNone[0],
+      candle: c.candle ? x.candleWord + " " + c.candle : x.candleNone[0]
+    };
+  }
+  const slipDetail = (c) => { const d = describe(c, lang); return [d.shape, d.flavor, d.coat, d.spr].concat(c.frost ? [d.frost] : [], c.candle ? [d.candle] : []).join(" · "); };
+  function msgLines(c) {
+    const x = CT.en, d = describe(c, "en"), size = c.shape === "cup" ? "" : " (" + x.msgSize[c.shape] + ")";
+    return [`• 1 × ${x.cakeName} – ₪${c.price}`, `   Shape: ${d.shape}${size}`, `   Flavor: ${d.flavor}`, `   Coating: ${d.coat}`, `   Sprinkles: ${d.spr}`, `   Piping: ${d.frost}`, `   Candle: ${d.candle}`];
+  }
+  const finished = () => ({ shape: S.shape, cups: S.cups, flavor: S.flavor, coat: isCup(S.shape) ? "top" : S.coat, spr: S.spr, frost: S.frost, candle: digits(S), price: price().total });
+
+  const optCard = (key, title, desc, p, on, svg, grp) =>
+    `<button type="button" class="cb-opt${on ? " on" : ""}" data-g="${grp || ""}" data-k="${key}"><div>${svg}</div><div><div class="t">${title}</div>${desc ? `<div class="d">${desc}</div>` : ""}</div><div class="p">${p}</div></button>`;
+
+  function panel() {
+    const x = ct(), st = S.step, cup = isCup(S.shape); let h = `<h2>${x.q[st]}</h2><p class="cb-hint">${x.h[st]}</p>`;
+    if (st === 0) {
+      h += '<div class="cb-opts">';
+      for (const k of ["round", "party", "cup"]) {
+        const c = { ...copy(), shape: k, coat: "top", frost: false, candleOn: false };
+        h += optCard(k, x[k][0], x[k][1], (k === "cup" ? (lang === "he" ? "מ-" : "from ") : "") + shek(k === "cup" ? BASE.cup[6] : BASE[k]), S.shape === k, art(c));
+      }
+      h += "</div>";
+      if (cup) h += `<div class="cb-chiplabel">${x.count}</div><div class="cb-chips">` + COUNTS.map(n => `<button type="button" class="cb-chip${S.cups === n ? " on" : ""}" data-n="${n}">${n} · ${shek(BASE.cup[n])}</button>`).join("") + "</div>";
+    } else if (st === 1) {
+      h += '<div class="cb-opts">';
+      for (const k of ["chocolate", "yellow", "funfetti"]) h += optCard(k, x[k][0], x[k][1], "", S.flavor === k, sliceSVG(k, S.shape));
+      h += "</div>";
+    } else if (st === 2) {
+      h += '<div class="cb-opts">';
+      if (cup) h += optCard("top", x.topCup[0], x.topCup[1], x.incl, true, art({ ...copy(), coat: "top" }));
+      else {
+        h += optCard("top", x.top[0], x.top[1], x.incl, S.coat === "top", art({ ...copy(), coat: "top" }));
+        h += optCard("around", x.around[0], x.around[1], plus(COAT[S.shape]), S.coat === "around", art({ ...copy(), coat: "around" }));
+      }
+      h += "</div>";
+    } else if (st === 3) {
+      const f = cup ? FROST.cup[S.cups] : FROST[S.shape];
+      const ft = S.shape === "round" ? x.frost : S.shape === "party" ? x.frostParty : x.frostCup;
+      const so = cup ? x.sprOnCup : x.sprOn;
+      h += `<div class="cb-grp">${x.gSpr}</div><div class="cb-opts">`;
+      h += optCard("on", so[0], so[1], x.incl, S.spr === "on", art({ ...copy(), spr: "on" }), "spr");
+      h += optCard("off", x.sprOff[0], x.sprOff[1], x.incl, S.spr === "off", art({ ...copy(), spr: "off" }), "spr");
+      h += `</div><div class="cb-grp">${x.gFrost}</div><div class="cb-opts">`;
+      h += optCard("none", x.frostNone[0], x.frostNone[1], x.incl, !S.frost, art({ ...copy(), frost: false }), "frost");
+      h += optCard("yes", ft[0], ft[1], plus(f), S.frost, art({ ...copy(), frost: true }), "frost");
+      h += "</div>";
+      if (!cup) {
+        const sample = { ...copy(), candleOn: true, candle: S.candle || "5" };
+        h += `<div class="cb-grp">${x.gCandle}</div><div class="cb-opts">`;
+        h += optCard("none", x.candleNone[0], x.candleNone[1], x.incl, !S.candleOn, art({ ...copy(), candleOn: false }), "candle");
+        h += optCard("yes", x.candleYes[0], x.candleYes[1], plus(CANDLE_PER_DIGIT * Math.max(1, digits({ ...S, candleOn: true }).length)), S.candleOn, art(sample), "candle");
+        h += "</div>";
+        if (S.candleOn) h += `<div class="cb-candle"><label for="cb-cn">${x.which}</label><input id="cb-cn" inputmode="numeric" maxlength="3" placeholder="5" value="${S.candle}"><small>${x.perDigit}</small></div><div class="cb-error" id="cb-err" hidden>${x.errCandle}</div>`;
+      }
+    } else {
+      const p = price(), d = describe(finished(), lang), ds = digits(S);
+      const row = (a, b, c) => `<div class="cb-row"><div>${b}<small>${a}</small></div><div>${c}</div></div>`;
+      h += `<div class="cb-sum">` + row(x.sumHead[0], d.shape, shek(p.base)) + row(x.sumHead[1], d.flavor, x.incl) +
+        row(x.sumHead[2], d.coat, p.coat ? "+" + shek(p.coat) : x.incl) + row(x.sumHead[3], d.spr, x.incl) +
+        row(x.sumHead[4], d.frost, S.frost ? "+" + shek(p.f) : x.incl) + (ds ? row(x.sumHead[5], ds, "+" + shek(p.c)) : "") +
+        `<div class="cb-tot"><span>${x.total}</span><span>${shek(p.total)}</span></div></div>`;
+      h += `<button type="button" class="cb-add" id="cb-add">${x.add}</button><div class="cb-note">${x.keep}</div>`;
+    }
+    return h;
+  }
+
+  function render() {
+    const x = ct(), p = price();
+    if (S.shape === "cup") { S.coat = "top"; S.candleOn = false; }
+    $("cb-title").textContent = x.title; $("cb-sub").textContent = x.sub;
+    $("cb-close").textContent = "× " + x.close; $("cb-lang").textContent = lang === "he" ? "English" : "עברית";
+    $("cb-steps").innerHTML = x.steps.map((s, i) => `<div class="cb-step ${i < S.step ? "done" : i === S.step ? "cur" : ""}"><i></i><b>${s}</b></div>`).join("");
+    $("cb-art").innerHTML = art(S);
+    $("cb-panel").innerHTML = panel();
+    $("cb-price").innerHTML = `${shek(p.total)}<small>${S.step === 4 ? x.total : x.from}</small>`;
+    $("cb-back").textContent = x.back; $("cb-back").style.visibility = S.step === 0 ? "hidden" : "visible";
+    $("cb-next").textContent = x.next; $("cb-next").style.display = S.step === 4 ? "none" : "";
+    const add = $("cb-add"); if (add) add.onclick = () => { const c = finished(); close(false); if (api.onAdd) api.onAdd(c); };
+    root.querySelectorAll(".cb-opt").forEach(b => b.onclick = () => {
+      const k = b.dataset.k, g = b.dataset.g;
+      if (S.step === 0) { S.shape = k; S.coat = "top"; S.frost = false; S.candleOn = false; }
+      else if (S.step === 1) S.flavor = k; else if (S.step === 2) S.coat = k;
+      else if (g === "spr") S.spr = k; else if (g === "frost") S.frost = k === "yes"; else if (g === "candle") S.candleOn = k === "yes";
+      render();
+    });
+    root.querySelectorAll(".cb-chip").forEach(b => b.onclick = () => { S.cups = +b.dataset.n; render(); });
+    const cn = $("cb-cn");
+    if (cn) cn.oninput = () => {
+      S.candle = cn.value.replace(/\D/g, "").slice(0, 3);
+      const e = $("cb-err"); if (e) e.hidden = true;
+      $("cb-art").innerHTML = art(S);
+      $("cb-price").innerHTML = `${shek(price().total)}<small>${x.from}</small>`;
+    };
+  }
+
+  function open(from) {
+    S = fresh(); opener = from || document.activeElement; isOpen = true;
+    root.hidden = false; root.scrollTop = 0; document.body.style.overflow = "hidden";
+    render(); $("cb-close").focus();
+  }
+  function close(restore = true) {
+    if (!isOpen) return;
+    isOpen = false; root.hidden = true; document.body.style.overflow = "";
+    if (restore && opener && opener.focus) opener.focus();
+  }
+  $("cb-next").onclick = () => {
+    if (S.step === 3 && S.candleOn && !digits(S)) { const e = $("cb-err"); if (e) e.hidden = false; const i = $("cb-cn"); if (i) i.focus(); return; }
+    S.step = Math.min(4, S.step + 1); render(); root.scrollTop = 0;
+  };
+  $("cb-back").onclick = () => { S.step = Math.max(0, S.step - 1); render(); root.scrollTop = 0; };
+  $("cb-close").onclick = () => close();
+  $("cb-lang").onclick = () => document.getElementById("lang-toggle").click();
+  document.addEventListener("keydown", (e) => { if (isOpen && e.key === "Escape") close(); });
+
+  const api = { open, close, refresh: () => { if (isOpen) render(); }, art, describe, slipDetail, msgLines, onAdd: null, minPrice: BASE.cup[6], name: () => ct().cakeName, removeLabel: () => ct().remove,
+    // Square crop of the round-cake drawing for the round tile on the menu.
+    ctaArt: () => art({ shape: "round", cups: 12, flavor: "chocolate", coat: "top", spr: "on", frost: true, candleOn: true, candle: "5" }).replace('viewBox="0 0 320 270"', 'viewBox="40 36 240 240"') };
+  return api;
+  })();
+
+  CB.onAdd = (c) => {
+    cakes.push(c); render();
+    document.getElementById("order").scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   const langBtn = document.getElementById("lang-toggle");
   // Safari reverses right-to-left text on a curved path. In Hebrew each letter is placed on the
@@ -943,6 +1433,7 @@ html[lang="he"] .empty, html[lang="he"] .thanks { font-style: normal; }
     langBtn.lang = he ? "en" : "he";
     buildMenu();
     render();
+    CB.refresh();
     drawArc();
     if (lang === "he" && document.fonts && document.fonts.load) document.fonts.load("800 15px Rubik", t("arc")).then(drawArc, () => {});
     if (!err.hidden && errKey) err.textContent = t(errKey);
