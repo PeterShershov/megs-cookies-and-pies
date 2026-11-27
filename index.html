@@ -1333,8 +1333,8 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
   // One cupcake in local units. Origin: centre of the top edge of the liner. Width about 34, liner 24 tall.
   // top = colour of the dome (ganache, or the bare sponge for the flavour pictures).
   function cupLocal(top, frost, spr, seed, fun, cherry) {
-    let o = `<path d="M-15 0 L15 0 L11.5 19 L-11.5 19Z" fill="#fbeff0"/>`;
-    for (let k = 0; k < 7; k += 2) { const f = (k + .5) / 7, x1 = -15 + 30 * f, x2 = -11.5 + 23 * f; o += `<path d="M${x1 - 2} 0 L${x1 + 2} 0 L${x2 + 1.5} 19 L${x2 - 1.5} 19Z" fill="#cf3a46"/>`; }
+    // A plain white paper liner, with a thin outline so it shows on a white card.
+    let o = `<path d="M-15 0 L15 0 L11.5 19 L-11.5 19Z" fill="#fffdf8" stroke="#e3d6bd" stroke-width=".7" stroke-linejoin="round"/>`;
     o += `<path d="M-17 2 Q-18 -15 0 -15 Q18 -15 17 2 Q0 7 -17 2Z" fill="${top}"/>`;
     if (fun) { const pts = spread(-14, -13.5, 14, 1, 7, 3, seed + 40).filter(([x, y]) => (x / 15) ** 2 + ((y + 6.5) / 7.8) ** 2 <= 1); o += dots(pts, seed + 2, 1.9); }
     // The ganache dome: top edge and bottom edge at each x, used to keep sprinkles inside it.
