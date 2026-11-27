@@ -431,6 +431,8 @@ html[lang="he"] .cb-price small { letter-spacing: 0; text-transform: none; }
 .cb-btn { border: 2px solid var(--white); background: transparent; color: var(--white); border-radius: 999px; padding: 10px 22px; font-family: var(--font-bar); font-weight: 600; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; }
 html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; letter-spacing: 0; font-weight: 800; }
 .cb-btn.cb-go { background: var(--white); color: var(--red-deep); }
+.cb-btn.cb-add-go { background: var(--blue); color: var(--white); border-color: var(--white); flex: 1; max-width: 260px; }
+.cb-btn.cb-add-go:hover { background: #17306F; }
 
 @media (max-width: 720px) {
   .tags, .tags.three { grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -1520,7 +1522,7 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
         (cup ? "" : row(x.sumHead[2], d.coat, p.coat ? "+" + shek(p.coat) : x.incl)) + row(x.sumHead[3], d.spr, x.incl) +
         row(x.sumHead[4], d.frost, S.frost ? "+" + shek(p.f) : x.incl) + (S.cherry ? row(x.sumHead[5], d.cherry, "+" + shek(p.ch)) : "") + (ds ? row(x.sumHead[6], ds, "+" + shek(p.c)) : "") +
         `<div class="cb-tot"><span>${x.total}</span><span>${shek(p.total)}</span></div></div>`;
-      h += `<button type="button" class="cb-add" id="cb-add">${x.add}</button><div class="cb-note">${x.keep}</div>`;
+      h += `<div class="cb-note">${x.keep}</div>`;
     }
     return h;
   }
@@ -1536,7 +1538,7 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
     $("cb-panel").innerHTML = panel();
     $("cb-price").innerHTML = priceHTML();
     $("cb-back").textContent = x.back; $("cb-back").style.visibility = S.step === 0 ? "hidden" : "visible";
-    $("cb-next").textContent = S.step === 4 ? x.add : x.next; $("cb-next").classList.toggle("cb-off", S.step < 4 && !stepOk(S.step));
+    $("cb-next").textContent = S.step === 4 ? x.add : x.next; $("cb-next").classList.toggle("cb-add-go", S.step === 4); $("cb-next").classList.toggle("cb-go", S.step !== 4); $("cb-next").classList.toggle("cb-off", S.step < 4 && !stepOk(S.step));
     const add = $("cb-add"); if (add) add.onclick = addCake;
     root.querySelectorAll(".cb-opt").forEach(b => b.onclick = () => {
       const k = b.dataset.k, g = b.dataset.g;
