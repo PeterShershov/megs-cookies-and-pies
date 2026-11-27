@@ -1093,9 +1093,9 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
       count: "How many cupcakes", pcs: n => n + " cupcakes",
       chocolate: ["Chocolate cake",""], yellow: ["Yellow cake",""], funfetti: ["Funfetti cake",""],
       top: ["Top coating only","Spread over the top, the sides stay bare"], around: ["Ganache all around","Top and sides coated and smooth"], topCup: ["Top coating only","Cupcakes always get ganache on top"],
-      gSpr: "Sprinkles", sprOn: ["Colorful sprinkles","A border of sprinkles on top"], sprOnCup: ["Colorful sprinkles","Sprinkles on the ganache"], sprOff: ["No sprinkles","Smooth ganache, no sprinkles"],
+      gSpr: "Sprinkles", sprOn: ["Colorful sprinkles","A border of sprinkles on top"], sprOnCup: ["Colorful sprinkles","Sprinkles on the ganache"], sprOnParty: ["Colorful sprinkles","Sprinkles scattered over the top"], sprOff: ["No sprinkles","Smooth ganache, no sprinkles"],
       gFrost: "Buttercream piping", frostNone: ["No piping","Ganache only"],
-      frost: ["Buttercream piping","Piped buttercream border on the top and bottom of the cake"], frostParty: ["Buttercream piping","A buttercream rosette on each of the 24 pieces"], frostCup: ["Buttercream piping","A buttercream swirl on each cupcake"],
+      frost: ["Buttercream piping","Piped buttercream border on the top and bottom of the cake"], frostParty: ["Buttercream piping","A buttercream swirl on each of the 24 pieces"], frostCup: ["Buttercream piping","A buttercream swirl on each cupcake"],
       gCandle: "Number candle", candleNone: ["No candle",""], candleYes: ["Number candle","₪10 per digit"], which: "Which number?", perDigit: "₪10 per digit",
       incl: "Included", total: "Total", from: "Price", sumHead: ["Shape","Flavor","Coating","Sprinkles","Buttercream","Candle"],
       next: "Next", back: "Back", add: "Add to order", toast: "On the real site this adds the cake to the order slip and the WhatsApp message.",
@@ -1108,9 +1108,9 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
       count: "כמה קאפקייקס", pcs: n => n + " קאפקייקס",
       chocolate: ["עוגת שוקולד",""], yellow: ["עוגת וניל חמאתית",""], funfetti: ["עוגת וניל עם סוכריות צבעוניות",""],
       top: ["ציפוי עליון בלבד","נמרח על פני העוגה, הצדדים נשארים חשופים"], around: ["גנאש מסביב","ציפוי חלק למעלה ובצדדים"], topCup: ["ציפוי עליון בלבד","בקאפקייקס תמיד יש גנאש למעלה"],
-      gSpr: "סוכריות", sprOn: ["סוכריות צבעוניות","מסגרת סוכריות צבעוניות על פני העוגה"], sprOnCup: ["סוכריות צבעוניות","סוכריות צבעוניות על הגנאש"], sprOff: ["ללא סוכריות צבעוניות","גנאש חלק בלי סוכריות"],
+      gSpr: "סוכריות", sprOn: ["סוכריות צבעוניות","מסגרת סוכריות צבעוניות על פני העוגה"], sprOnCup: ["סוכריות צבעוניות","סוכריות צבעוניות על הגנאש"], sprOnParty: ["סוכריות צבעוניות","סוכריות צבעוניות פזורות על פני העוגה"], sprOff: ["ללא סוכריות צבעוניות","גנאש חלק בלי סוכריות"],
       gFrost: "זילוף קרם חמאה", frostNone: ["ללא זילוף","גנאש בלבד"],
-      frost: ["זילוף קרם חמאה","מסגרת קרם חמאה מזולפת בחלק העליון ותחתון של העוגה"], frostParty: ["זילוף קרם חמאה","ורד קרם חמאה על כל אחת מ-24 החתיכות"], frostCup: ["זילוף קרם חמאה","ספירלת קרם חמאה על כל קאפקייק"],
+      frost: ["זילוף קרם חמאה","מסגרת קרם חמאה מזולפת בחלק העליון ותחתון של העוגה"], frostParty: ["זילוף קרם חמאה","ספירלת קרם חמאה על כל אחת מ-24 החתיכות"], frostCup: ["זילוף קרם חמאה","ספירלת קרם חמאה על כל קאפקייק"],
       gCandle: "נר מספר", candleNone: ["ללא נר",""], candleYes: ["נר מספר","10 ₪ לכל ספרה"], which: "איזה מספר?", perDigit: "10 ₪ לכל ספרה",
       incl: "כלול", total: "סה״כ", from: "מחיר", sumHead: ["צורה","טעם","ציפוי","סוכריות","זילוף","נר"],
       next: "הבא", back: "חזרה", add: "הוספה להזמנה", toast: "באתר האמיתי הכפתור יוסיף את העוגה להזמנה ולהודעת הוואטסאפ.",
@@ -1512,7 +1512,7 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
     } else if (st === 3) {
       const f = cup ? FROST.cup[S.cups] : FROST[S.shape];
       const ft = S.shape === "round" ? x.frost : S.shape === "party" ? x.frostParty : x.frostCup;
-      const so = cup ? x.sprOnCup : x.sprOn;
+      const so = cup ? x.sprOnCup : S.shape === "party" ? x.sprOnParty : x.sprOn;   // round cake: a border. Rectangular cake: scattered. Cupcakes: on the ganache.
       h += `<div class="cb-grp${miss("spr")}" data-g="spr">${x.gSpr}${tag("spr")}</div><div class="cb-opts">`;
       h += optCard("on", so[0], so[1], x.incl, S.spr === "on", art({ ...copy(), spr: "on" }), "spr");
       h += optCard("off", x.sprOff[0], x.sprOff[1], x.incl, S.spr === "off", art({ ...copy(), spr: "off" }), "spr");
