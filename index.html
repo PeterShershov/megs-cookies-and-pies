@@ -1332,9 +1332,11 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
   }
   // One cupcake in local units. Origin: centre of the top edge of the liner. Width about 34, liner 24 tall.
   // top = colour of the dome (ganache, or the bare sponge for the flavour pictures).
-  function cupLocal(top, frost, spr, seed, fun, cherry) {
-    // A plain white paper liner, with a thin outline so it shows on a white card.
-    let o = `<path d="M-15 0 L15 0 L11.5 19 L-11.5 19Z" fill="#fffdf8" stroke="#e3d6bd" stroke-width=".7" stroke-linejoin="round"/>`;
+  function cupLocal(top, frost, spr, seed, fun, cherry, sponge) {
+    // A plain white paper liner, a little see-through so the cake shows inside, with a firm outline so it does not vanish on white.
+    let o = `<path d="M-14.2 0 L14.2 0 L10.9 18.4 L-10.9 18.4Z" fill="${sponge || "#c9a27a"}"/>` +
+      `<path d="M-15 0 L15 0 L11.5 19 L-11.5 19Z" fill="#ffffff" fill-opacity=".62" stroke="#cdbb97" stroke-width=".9" stroke-linejoin="round"/>` +
+      [-8, -2.7, 2.7, 8].map(x => `<path d="M${x} 1.2 L${(x * .77).toFixed(1)} 17.8" stroke="#b9a37c" stroke-opacity=".38" stroke-width=".6" fill="none"/>`).join("");
     o += `<path d="M-17 2 Q-18 -15 0 -15 Q18 -15 17 2 Q0 7 -17 2Z" fill="${top}"/>`;
     if (fun) { const pts = spread(-14, -13.5, 14, 1, 7, 3, seed + 40).filter(([x, y]) => (x / 15) ** 2 + ((y + 6.5) / 7.8) ** 2 <= 1); o += dots(pts, seed + 2, 1.9); }
     // The ganache dome: top edge and bottom edge at each x, used to keep sprinkles inside it.
@@ -1392,7 +1394,7 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
     let o = DEFS;
     for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
       const cx = x0 + cw * (c + .5), cy = y0 + ch * (r + .5) - mid * s;
-      o += `<g transform="translate(${cx.toFixed(1)} ${cy.toFixed(1)}) scale(${s.toFixed(3)})">${cupLocal(GAN2, st.frost, st.spr === "on", 20 + r * 9 + c, false, st.cherry)}</g>`;
+      o += `<g transform="translate(${cx.toFixed(1)} ${cy.toFixed(1)}) scale(${s.toFixed(3)})">${cupLocal(GAN2, st.frost, st.spr === "on", 20 + r * 9 + c, false, st.cherry, SPONGE[st.flavor])}</g>`;
     }
     return o;
   }
@@ -1431,7 +1433,7 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
       o += `<g transform="translate(27 8) scale(.8)">${g}</g>`;
     } else if (shape === "cup") {
       // A bare cupcake, no ganache, so the sponge colour shows.
-      o += `<g transform="translate(64 ${(48 - 2 * 1.8).toFixed(1)}) scale(1.8)">${cupLocal(sp, false, false, 9, fun)}</g>`;
+      o += `<g transform="translate(64 ${(48 - 2 * 1.8).toFixed(1)}) scale(1.8)">${cupLocal(sp, false, false, 9, fun, false, sp)}</g>`;
     } else {
       // A piece of a rectangular cake: a small box seen from the front, with the top and right side visible.
       const D2 = [14, -16], FW = 46, FH = 36, fx = 24, fy = 52;
