@@ -417,6 +417,8 @@ html[lang="he"] .cb-opt .t { font-family: var(--font-wide); font-weight: 800; te
 .cb-row { display: flex; justify-content: space-between; gap: 10px; padding: 8px 0; border-bottom: 1px dashed #cdbf9f; }
 .cb-row small { display: block; color: var(--ink-soft); font-size: .82rem; }
 .cb-tot { display: flex; justify-content: space-between; font-family: var(--font-bar); font-weight: 700; font-size: 1.9rem; border-top: 2px solid var(--red); margin-top: 6px; padding-top: 10px; }
+/* Keep the steps clear of the fixed cart button on phones. */
+@media (max-width: 720px) { .cb-steps { padding-inline-end: 54px; } }
 .cb-note { font-size: .88rem; color: var(--ink-soft); margin-top: 10px; }
 .cb-add { display: block; width: 100%; margin-top: 14px; background: var(--blue); color: var(--white); border: 0; border-radius: 999px; padding: 14px; font-family: var(--font-bar); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; font-size: 1.05rem; cursor: pointer; }
 .cb-add:hover { background: #17306F; }
@@ -1534,8 +1536,8 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
     $("cb-panel").innerHTML = panel();
     $("cb-price").innerHTML = priceHTML();
     $("cb-back").textContent = x.back; $("cb-back").style.visibility = S.step === 0 ? "hidden" : "visible";
-    $("cb-next").textContent = x.next; $("cb-next").style.display = S.step === 4 ? "none" : ""; $("cb-next").classList.toggle("cb-off", !stepOk(S.step));
-    const add = $("cb-add"); if (add) add.onclick = () => { const c = finished(); S = fresh(); render(); showDone(); toTop(); if (api.onAdd) api.onAdd(c); };
+    $("cb-next").textContent = S.step === 4 ? x.add : x.next; $("cb-next").classList.toggle("cb-off", S.step < 4 && !stepOk(S.step));
+    const add = $("cb-add"); if (add) add.onclick = addCake;
     root.querySelectorAll(".cb-opt").forEach(b => b.onclick = () => {
       const k = b.dataset.k, g = b.dataset.g;
       $("cb-done").hidden = true;
@@ -1609,6 +1611,8 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
     const top = root.getBoundingClientRect().top;
     if (top < 0 || top > window.innerHeight * .6) window.scrollTo({ top: window.scrollY + top - 12, behavior: "smooth" });
   }
+  // Add the finished cake to the order, then start a new one.
+  function addCake() { const c = finished(); S = fresh(); render(); showDone(); toTop(); if (api.onAdd) api.onAdd(c); }
   // Go to any step. The last step needs the candle number if a candle is chosen.
   function go(i) {
     if (i === S.step) return;
@@ -1619,7 +1623,7 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
     }
     S.warn = false; S.step = i; render(); toTop();
   }
-  $("cb-next").onclick = () => { if (!stepOk(S.step)) { showMissing(); return; } go(nextStep(S.step)); };
+  $("cb-next").onclick = () => { if (S.step === 4) { addCake(); return; } if (!stepOk(S.step)) { showMissing(); return; } go(nextStep(S.step)); };
   $("cb-back").onclick = () => go(prevStep(S.step));
 
   const api = { refresh: () => { $("cb-done").hidden = true; render(); }, art, describe, slipDetail, msgLines, onAdd: null, minPrice: BASE.cup[6], name: () => ct().cakeName, removeLabel: () => ct().remove,
