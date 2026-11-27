@@ -1296,32 +1296,33 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
     if (fun) { const pts = spread(-14, -13.5, 14, 1, 7, 3, seed + 40).filter(([x, y]) => (x / 15) ** 2 + ((y + 6.5) / 7.8) ** 2 <= 1); o += dots(pts, seed + 2, 1.9); }
     if (spr) o += sprinkles(0, -6, 12.5, 6, frost ? 6 : 10, seed, false, 1.55);
     if (frost) o += swirlLocal();
-    if (cherry) o += frost ? cherrySVG(4.5, -36, 4.3) : cherrySVG(0, -17, 4.4);
+    if (cherry) o += frost ? cherrySVG(1.6, -21.6, 4.6) : cherrySVG(0, -17, 4.4);
     return o;
   }
-  // Piped swirl: a ribbon of buttercream that coils up and in, over a darker cream cone. Drawn quarter turn by quarter turn,
-  // so each coil overlaps the one below it and gets its own outline.
+  // Piped swirl: a low, wide spiral of buttercream, about as wide as the top of the cupcake. The ribbon coils in and up,
+  // over a darker cream base. Drawn quarter turn by quarter turn, so each coil overlaps the one below it and gets its own outline.
   function swirlLocal() {
-    const base = -11.2, rise = 22, rx0 = 13.4, ry0 = 4.6, turns = 2.5, Q = Math.round(turns * 4);
-    const at = (t) => { const th = Math.PI + t * turns * 2 * Math.PI, k = 1 - .74 * t; return [1.7 + Math.cos(th) * rx0 * k, base - rise * t + Math.sin(th) * ry0 * k]; };
-    const wid = (t) => 7.2 - 3.6 * t;
-    let o = `<path d="M-16.2 -10.5 Q-14.2 -23 1.7 -35.5 Q15.8 -23 16.2 -10.5 Q0 -4.4 -16.2 -10.5Z" fill="${RIDGE}"/>`;
-    for (let q = 0; q < Q; q++) {
-      const t0 = q / Q, t1 = (q + 1) / Q, line = [], fill = [], back = q ? .012 : 0;
-      for (let i = 0; i <= 14; i++) line.push(at(t0 + (t1 - t0) * i / 14).map(n => n.toFixed(2)).join(","));
-      for (let i = 0; i <= 16; i++) fill.push(at(t0 - back + (t1 - t0 + back) * i / 16).map(n => n.toFixed(2)).join(","));
-      const w = wid((t0 + t1) / 2);
-      o += `<polyline points="${line.join(" ")}" fill="none" stroke="${CSTROKE}" stroke-width="${(w + 1.6).toFixed(2)}" stroke-linejoin="round"/>`;
-      o += `<polyline points="${fill.join(" ")}" fill="none" stroke="${CREAM}" stroke-width="${w.toFixed(2)}" stroke-linejoin="round"/>`;
+    // Two full turns. The spiral starts at the back, so the joins between turns sit behind the next coil.
+    const base = -10.2, rise = 9.4, rx0 = 15.6, ry0 = 5.4, turns = 3, start = -Math.PI / 2;
+    const at = (t) => { const th = start + t * turns * 2 * Math.PI, k = 1 - .8 * t; return [1.2 + Math.cos(th) * rx0 * k, base - rise * t + Math.sin(th) * ry0 * k]; };
+    const wid = (t) => 5.6 - 2.1 * t;
+    let o = `<path d="M-15.6 -9.2 Q-14.8 -16.8 1.2 -20.4 Q16.4 -16.8 17.2 -9.2 Q.8 -3.8 -15.6 -9.2Z" fill="${RIDGE}"/>`;
+    for (let q = 0; q < turns; q++) {
+      const t0 = q / turns, t1 = (q + 1) / turns, line = [], fill = [], back = q ? .015 : 0;
+      for (let i = 0; i <= 40; i++) line.push(at(t0 + (t1 - t0) * i / 40).map(n => n.toFixed(2)).join(","));
+      for (let i = 0; i <= 44; i++) fill.push(at(t0 - back + (t1 - t0 + back) * i / 44).map(n => n.toFixed(2)).join(","));
+      const w = wid((t0 + t1) / 2), cap = q ? "butt" : "round";
+      o += `<polyline points="${line.join(" ")}" fill="none" stroke="${CSTROKE}" stroke-width="${(w + 1.6).toFixed(2)}" stroke-linejoin="round" stroke-linecap="${cap}"/>`;
+      o += `<polyline points="${fill.join(" ")}" fill="none" stroke="${CREAM}" stroke-width="${w.toFixed(2)}" stroke-linejoin="round" stroke-linecap="${cap}"/>`;
     }
     const e = at(1);
-    o += `<path d="M${(e[0] - 2.8).toFixed(1)} ${(e[1] + 1.5).toFixed(1)} C${(e[0] - 3.2).toFixed(1)} ${(e[1] - 3).toFixed(1)} ${(e[0] + .8).toFixed(1)} ${(e[1] - 4.5).toFixed(1)} ${(e[0] + 2.6).toFixed(1)} ${(e[1] - 8).toFixed(1)} C${(e[0] + 3.8).toFixed(1)} ${(e[1] - 4).toFixed(1)} ${(e[0] + 3.6).toFixed(1)} ${(e[1] - .5).toFixed(1)} ${(e[0] + 2.8).toFixed(1)} ${(e[1] + 1.5).toFixed(1)}Z" fill="${CREAM}" stroke="${CSTROKE}" stroke-width=".7" stroke-linejoin="round"/>`;
+    o += `<ellipse cx="${(e[0] + .2).toFixed(1)}" cy="${(e[1] - .6).toFixed(1)}" rx="2.7" ry="2" fill="${CREAM}" stroke="${CSTROKE}" stroke-width=".7"/>`;
     return o;
   }
   function cupSVG(st) {
     // Lay the grid out from the real size of a cupcake, so every row fits and the grid is centred.
     const n = st.cups, cols = n === 6 ? 3 : n === 12 ? 4 : 6, rows = n / cols, cw = 300 / cols, ch = 250 / rows;
-    const top = st.cherry ? (st.frost ? -50.5 : -31.5) : (st.frost ? -39.2 : -15), bot = 19, s = Math.min((cw - 8) / 36, (ch - 8) / (bot - top), 2.1);
+    const top = st.cherry ? (st.frost ? -37.5 : -31.5) : (st.frost ? -23 : -15), bot = 19, s = Math.min((cw - 8) / 36, (ch - 8) / (bot - top), 2.1);
     const mid = (top + bot) / 2, x0 = (320 - cols * cw) / 2, y0 = (270 - rows * ch) / 2;
     let o = DEFS;
     for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
