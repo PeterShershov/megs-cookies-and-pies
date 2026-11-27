@@ -1337,11 +1337,15 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
     for (let k = 0; k < 7; k += 2) { const f = (k + .5) / 7, x1 = -15 + 30 * f, x2 = -11.5 + 23 * f; o += `<path d="M${x1 - 2} 0 L${x1 + 2} 0 L${x2 + 1.5} 19 L${x2 - 1.5} 19Z" fill="#cf3a46"/>`; }
     o += `<path d="M-17 2 Q-18 -15 0 -15 Q18 -15 17 2 Q0 7 -17 2Z" fill="${top}"/>`;
     if (fun) { const pts = spread(-14, -13.5, 14, 1, 7, 3, seed + 40).filter(([x, y]) => (x / 15) ** 2 + ((y + 6.5) / 7.8) ** 2 <= 1); o += dots(pts, seed + 2, 1.9); }
-    if (spr && !frost) o += sprinkles(0, -6, 12.5, 6, 10, seed, false, 1.55);
+    // The ganache dome: top edge and bottom edge at each x, used to keep sprinkles inside it.
+    const domeTop = (x) => -15 + 17 * (x / 17) ** 2, domeBottom = (x) => 2 + 2.5 * (1 - (x / 17) ** 2);
+    // Plain cupcake: sprinkles on an even, slightly shaken grid over the whole dome (same size as before).
+    if (spr && !frost) { const pts = spread(-14, -12.4, 14, 3.4, 5, 4, seed, .3).filter(([x, y]) => y > domeTop(x) + 2.4 && y < domeBottom(x) - 1.7); o += dots(pts, seed + 7, 1.55); }
     if (frost) {
       o += swirlLocal();
       // Sprinkles on the ganache that shows below the swirl: larger, so they can be seen.
-      if (spr) { const pts = spread(-12.6, -4.2, 12.6, .6, 5, 2, seed).filter(([x, y]) => (x / 16.4) ** 2 + ((y + 5) / 9) ** 2 <= 1); const r = rnd(seed + 5); for (const [x, y] of pts) o += jimmy(x, y, 2.5, r() * 180, HEARTC[Math.floor(r() * HEARTC.length)]); }
+      // Same size as on a plain cupcake, but more of them, spread along the ganache that shows below the swirl.
+      if (spr) { const pts = spread(-13.6, -3.2, 13.6, 1.1, 9, 2, seed, .3).filter(([x, y]) => y < domeBottom(x) - 1.3); o += dots(pts, seed + 7, 1.55); }
     }
     if (cherry) o += frost ? cherrySVG(1.4, swirlEndY() - 2.6, 4.6) : cherrySVG(0, -17, 4.4);
     return o;
