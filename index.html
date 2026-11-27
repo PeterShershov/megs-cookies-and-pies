@@ -1309,8 +1309,8 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
       for (let i = 0; i < 46; i++) { const q = P(.03 + r() * .94, .05 + r() * .9); o += jimmy(q[0], q[1], 2.8, r() * 180, HEARTC[Math.floor(r() * HEARTC.length)]); }
     }
     // A small smooth swirl of buttercream on each of the 24 pieces
-    if (st.frost) for (let r = 0; r < 4; r++) for (let c = 0; c < 6; c++) { const q = P((c + .5) / 6, (r + .5) / 4); o += `<g transform="translate(${q[0].toFixed(1)} ${(q[1] + 9).toFixed(1)}) scale(1 1.04)">${swirlLocal()}</g>`; }
-    if (st.cherry) for (let r = 0; r < 4; r++) for (let c = 0; c < 6; c++) { const q = P((c + .5) / 6, (r + .5) / 4); o += cherrySVG(q[0], q[1] - 1.5, 3.7); }
+    if (st.frost) for (let r = 0; r < 4; r++) for (let c = 0; c < 6; c++) { const q = P((c + .5) / 6, (r + .5) / 4); o += `<g transform="translate(${q[0].toFixed(1)} ${(q[1] + 9).toFixed(1)}) scale(1 1.04)">${swirlLocal()}</g>` + (st.cherry ? cherrySVG(q[0] + 1.2, q[1] + 9 + 1.04 * (swirlEndY() - 1.2), 3.9) : ""); }
+    if (st.cherry && !st.frost) for (let r = 0; r < 4; r++) for (let c = 0; c < 6; c++) { const q = P((c + .5) / 6, (r + .5) / 4); o += cherrySVG(q[0], q[1] - 1.5, 3.7); }
     const ctr = P(.5, .62);
     o += candleSVG(digits(st), ctr[0], ctr[1] + 6);
     return o + `</g>`;
