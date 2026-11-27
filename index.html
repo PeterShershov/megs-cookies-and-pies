@@ -931,10 +931,10 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
 
   const CAKE_TXT = {
     en: { bar: "Build your cake", from: "from ", open: "Build your birthday cake", close: "Close the cake builder", more: "Add another cake",
-      desc: "Choose a shape, a flavor, a coating and a decoration. You see the cake and the price as you go.",
+      desc: "Choose shape, flavor, coating and decoration.",
       meta: ["Round cake, rectangular cake or cupcakes", "Keeps up to 2 days in a cool place"], inOrder: (n) => n === 1 ? "1 cake in your order" : n + " cakes in your order" },
     he: { bar: "בונים עוגה", from: "מ-", open: "בונים עוגת יום הולדת", close: "סגירת בונה העוגות", more: "להוסיף עוגה נוספת",
-      desc: "בוחרים צורה, טעם, ציפוי וקישוט, ורואים את העוגה והמחיר תוך כדי.",
+      desc: "בוחרים צורה, טעם, ציפוי וקישוט.",
       meta: ["עוגה עגולה, עוגה מלבנית או קאפקייקס", "נשמרת עד יומיים במקום קריר"], inOrder: (n) => n === 1 ? "עוגה אחת בהזמנה" : n + " עוגות בהזמנה" }
   };
   // The card for the cakes (like a product), and the builder under it.
@@ -1089,7 +1089,7 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
       steps: ["Shape","Flavor","Coating","Decoration","Your cake"],
       q: ["Choose a shape","Choose a flavor","Choose a coating","Choose a decoration","Your cake"],
       h: ["Every cake comes with ganache on top and sprinkles.","Same price for every flavor.","Dark chocolate ganache made with Cacao Barry chocolate.","Sprinkles are included. Add buttercream piping or a candle if you like.",""],
-      round: ["Round cake","8 inch, two layers with white buttercream between them, serves 12-16"], party: ["Rectangular cake","9×13 inch, one layer, 24 pieces"], cup: ["Cupcakes","Coated in ganache with sprinkles"],
+      round: ["Round cake","8 inch, two layers with white buttercream between them, serves 12-16"], party: ["Rectangular cake","9×13 inch, one layer, 24 pieces"], cup: ["Cupcakes","Coated with ganache"],
       count: "How many cupcakes", pcs: n => n + " cupcakes",
       chocolate: ["Chocolate cake",""], yellow: ["Yellow cake",""], funfetti: ["Funfetti cake",""],
       top: ["Top coating only","Spread over the top, the sides stay bare"], around: ["Ganache all around","Top and sides coated and smooth"], topCup: ["Top coating only","Cupcakes always get ganache on top"],
@@ -1104,7 +1104,7 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
       steps: ["צורה","טעם","ציפוי","קישוט","העוגה שלך"],
       q: ["בחרו צורה","בחרו טעם","בחרו ציפוי","בחרו קישוט","העוגה שלך"],
       h: ["כל עוגה מגיעה עם גנאש מעל וסוכריות צבעוניות.","המחיר זהה לכל הטעמים.","גנאש שוקולד מריר של קקאו ברי.","סוכריות כלולות במחיר. אפשר להוסיף זילוף קרם חמאה ונר.",""],
-      round: ["עוגה עגולה","קוטר 20 ס״מ, שתי שכבות עם שכבת קרם חמאה לבן ביניהן, 12-16 מנות"], party: ["עוגה מלבנית","עוגה בגודל 23x33 ס״מ, שכבה אחת, 24 מנות"], cup: ["קאפקייקס","בציפוי גנאש עם סוכריות צבעוניות"],
+      round: ["עוגה עגולה","קוטר 20 ס״מ, שתי שכבות עם שכבת קרם חמאה לבן ביניהן, 12-16 מנות"], party: ["עוגה מלבנית","עוגה בגודל 23x33 ס״מ, שכבה אחת, 24 מנות"], cup: ["קאפקייקס","בציפוי גנאש"],
       count: "כמה קאפקייקס", pcs: n => n + " קאפקייקס",
       chocolate: ["עוגת שוקולד",""], yellow: ["עוגת וניל חמאתית",""], funfetti: ["עוגת וניל עם סוכריות צבעוניות",""],
       top: ["ציפוי עליון בלבד","נמרח על פני העוגה, הצדדים נשארים חשופים"], around: ["גנאש מסביב","ציפוי חלק למעלה ובצדדים"], topCup: ["ציפוי עליון בלבד","בקאפקייקס תמיד יש גנאש למעלה"],
