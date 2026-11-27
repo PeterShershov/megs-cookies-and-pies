@@ -1306,7 +1306,8 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
       const r = rnd(3);
       for (let i = 0; i < 46; i++) { const q = P(.03 + r() * .94, .05 + r() * .9); o += jimmy(q[0], q[1], 2.8, r() * 180, HEARTC[Math.floor(r() * HEARTC.length)]); }
     }
-    if (st.frost) for (let r = 0; r < 4; r++) for (let c = 0; c < 6; c++) { const q = P((c + .5) / 6, (r + .5) / 4); o += rosette(q[0], q[1], 11, 6); }
+    // A small smooth swirl of buttercream on each of the 24 pieces
+    if (st.frost) for (let r = 0; r < 4; r++) for (let c = 0; c < 6; c++) { const q = P((c + .5) / 6, (r + .5) / 4); o += `<g transform="translate(${q[0].toFixed(1)} ${(q[1] + 9).toFixed(1)}) scale(1 1.04)">${swirlLocal()}</g>`; }
     if (st.cherry) for (let r = 0; r < 4; r++) for (let c = 0; c < 6; c++) { const q = P((c + .5) / 6, (r + .5) / 4); o += cherrySVG(q[0], q[1] - 1.5, 3.7); }
     const ctr = P(.5, .62);
     o += candleSVG(digits(st), ctr[0], ctr[1] + 6);
@@ -1319,35 +1320,53 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
     for (let k = 0; k < 7; k += 2) { const f = (k + .5) / 7, x1 = -15 + 30 * f, x2 = -11.5 + 23 * f; o += `<path d="M${x1 - 2} 0 L${x1 + 2} 0 L${x2 + 1.5} 19 L${x2 - 1.5} 19Z" fill="#cf3a46"/>`; }
     o += `<path d="M-17 2 Q-18 -15 0 -15 Q18 -15 17 2 Q0 7 -17 2Z" fill="${top}"/>`;
     if (fun) { const pts = spread(-14, -13.5, 14, 1, 7, 3, seed + 40).filter(([x, y]) => (x / 15) ** 2 + ((y + 6.5) / 7.8) ** 2 <= 1); o += dots(pts, seed + 2, 1.9); }
-    if (spr) o += sprinkles(0, -6, 12.5, 6, frost ? 6 : 10, seed, false, 1.55);
-    if (frost) o += swirlLocal();
-    if (cherry) o += frost ? cherrySVG(1.6, -21.6, 4.6) : cherrySVG(0, -17, 4.4);
+    if (spr && !frost) o += sprinkles(0, -6, 12.5, 6, 10, seed, false, 1.55);
+    if (frost) {
+      o += swirlLocal();
+      // Sprinkles on the ganache that shows below the swirl: larger, so they can be seen.
+      if (spr) { const pts = spread(-12.6, -4.2, 12.6, .6, 5, 2, seed).filter(([x, y]) => (x / 16.4) ** 2 + ((y + 5) / 9) ** 2 <= 1); const r = rnd(seed + 5); for (const [x, y] of pts) o += jimmy(x, y, 2.5, r() * 180, HEARTC[Math.floor(r() * HEARTC.length)]); }
+    }
+    if (cherry) o += frost ? cherrySVG(1.4, swirlEndY() - 2.6, 4.6) : cherrySVG(0, -17, 4.4);
     return o;
   }
-  // Piped swirl: a low, wide spiral of buttercream, about as wide as the top of the cupcake. The ribbon coils in and up,
-  // over a darker cream base. Drawn quarter turn by quarter turn, so each coil overlaps the one below it and gets its own outline.
-  function swirlLocal() {
-    // Two full turns. The spiral starts at the back, so the joins between turns sit behind the next coil.
-    const base = -10.2, rise = 9.4, rx0 = 15.6, ry0 = 5.4, turns = 3, start = -Math.PI / 2;
-    const at = (t) => { const th = start + t * turns * 2 * Math.PI, k = 1 - .8 * t; return [1.2 + Math.cos(th) * rx0 * k, base - rise * t + Math.sin(th) * ry0 * k]; };
-    const wid = (t) => 5.6 - 2.1 * t;
-    let o = `<path d="M-15.6 -9.2 Q-14.8 -16.8 1.2 -20.4 Q16.4 -16.8 17.2 -9.2 Q.8 -3.8 -15.6 -9.2Z" fill="${RIDGE}"/>`;
-    for (let q = 0; q < turns; q++) {
-      const t0 = q / turns, t1 = (q + 1) / turns, line = [], fill = [], back = q ? .015 : 0;
-      for (let i = 0; i <= 40; i++) line.push(at(t0 + (t1 - t0) * i / 40).map(n => n.toFixed(2)).join(","));
-      for (let i = 0; i <= 44; i++) fill.push(at(t0 - back + (t1 - t0 + back) * i / 44).map(n => n.toFixed(2)).join(","));
-      const w = wid((t0 + t1) / 2), cap = q ? "butt" : "round";
-      o += `<polyline points="${line.join(" ")}" fill="none" stroke="${CSTROKE}" stroke-width="${(w + 1.6).toFixed(2)}" stroke-linejoin="round" stroke-linecap="${cap}"/>`;
-      o += `<polyline points="${fill.join(" ")}" fill="none" stroke="${CREAM}" stroke-width="${w.toFixed(2)}" stroke-linejoin="round" stroke-linecap="${cap}"/>`;
+
+  // Piped swirl styles. turns = number of coils, ridge = star tip (fine ridges along the ribbon).
+  const SWIRL_STYLES = {
+    one:     { turns: 1, ridge: false, rise: 6.4, rx0: 11.4, ry0: 4.4, w0: 7.2, w1: 4.6, base: -12.4 },
+    two:     { turns: 2, ridge: false, rise: 8.4, rx0: 11.4, ry0: 4.4, w0: 6.4, w1: 3.8, base: -12.4 },
+    starOne: { turns: 1, ridge: true,  rise: 6.8, rx0: 11.4, ry0: 4.4, w0: 8.4, w1: 5.4, base: -12.4 },
+    starTwo: { turns: 2, ridge: true,  rise: 8.8, rx0: 11.4, ry0: 4.4, w0: 7.4, w1: 4.6, base: -12.4 }
+  };
+  const SWIRL_STYLE = "one";
+  const swirlAt = (t, S0) => { const th = -Math.PI / 2 + t * S0.turns * 2 * Math.PI, k = 1 - .78 * t; return [1.2 + Math.cos(th) * S0.rx0 * k, S0.base - S0.rise * t + Math.sin(th) * S0.ry0 * k]; };
+  const swirlEndY = (name = SWIRL_STYLE) => swirlAt(1, SWIRL_STYLES[name])[1];
+  function swirlLocal(name = SWIRL_STYLE) {
+    const S0 = SWIRL_STYLES[name], at = (t) => swirlAt(t, S0), wid = (t) => S0.w0 - (S0.w0 - S0.w1) * t;
+    const hw = S0.rx0 + 1.6, b = S0.base;
+    let o = `<path d="M${(1.2 - hw).toFixed(1)} ${b + 1.2} Q${(2.2 - hw).toFixed(1)} ${b - 5} 1.2 ${b - 7.4} Q${(hw).toFixed(1)} ${b - 5} ${(1.2 + hw).toFixed(1)} ${b + 1.2} Q1.2 ${b + 6.6} ${(1.2 - hw).toFixed(1)} ${b + 1.2}Z" fill="${RIDGE}"/>`;
+    for (let q = 0; q < S0.turns; q++) {
+      const t0 = q / S0.turns, t1 = (q + 1) / S0.turns, back = q ? .02 : 0, line = [], fill = [];
+      for (let i = 0; i <= 40; i++) line.push(at(t0 + (t1 - t0) * i / 40));
+      for (let i = 0; i <= 44; i++) fill.push(at(t0 - back + (t1 - t0 + back) * i / 44));
+      const w = wid((t0 + t1) / 2), cap = q ? "butt" : "round", pts = (a) => a.map(p => p[0].toFixed(2) + "," + p[1].toFixed(2)).join(" ");
+      o += `<polyline points="${pts(line)}" fill="none" stroke="${CSTROKE}" stroke-width="${(w + 1.6).toFixed(2)}" stroke-linejoin="round" stroke-linecap="${cap}"/>`;
+      o += `<polyline points="${pts(fill)}" fill="none" stroke="${CREAM}" stroke-width="${w.toFixed(2)}" stroke-linejoin="round" stroke-linecap="${cap}"/>`;
+      if (S0.ridge) for (const d of [-.34, -.11, .11, .34]) {   // fine ridges along the ribbon, like a star tip
+        const r = fill.map((p, i) => { const a = fill[Math.max(0, i - 1)], c = fill[Math.min(fill.length - 1, i + 1)], dx = c[0] - a[0], dy = c[1] - a[1], l = Math.hypot(dx, dy) || 1; return [p[0] - dy / l * d * w, p[1] + dx / l * d * w]; });
+        o += `<polyline points="${pts(r)}" fill="none" stroke="#cdae72" stroke-width=".62" stroke-linecap="round"/>`;
+      }
     }
     const e = at(1);
-    o += `<ellipse cx="${(e[0] + .2).toFixed(1)}" cy="${(e[1] - .6).toFixed(1)}" rx="2.7" ry="2" fill="${CREAM}" stroke="${CSTROKE}" stroke-width=".7"/>`;
+    if (S0.ridge) {
+      let star = ""; for (let i = 0; i < 12; i++) { const a = i / 12 * 6.2832, r = i % 2 ? 1.5 : 3.3; star += (i ? "L" : "M") + (e[0] + Math.cos(a) * r).toFixed(1) + " " + (e[1] - .6 + Math.sin(a) * r * .72).toFixed(1); }
+      o += `<path d="${star}Z" fill="${CREAM}" stroke="${CSTROKE}" stroke-width=".6" stroke-linejoin="round"/>`;
+    } else o += `<ellipse cx="${(e[0] + .2).toFixed(1)}" cy="${(e[1] - .6).toFixed(1)}" rx="2.7" ry="2" fill="${CREAM}" stroke="${CSTROKE}" stroke-width=".7"/>`;
     return o;
   }
   function cupSVG(st) {
     // Lay the grid out from the real size of a cupcake, so every row fits and the grid is centred.
     const n = st.cups, cols = n === 6 ? 3 : n === 12 ? 4 : 6, rows = n / cols, cw = 300 / cols, ch = 250 / rows;
-    const top = st.cherry ? (st.frost ? -37.5 : -31.5) : (st.frost ? -23 : -15), bot = 19, s = Math.min((cw - 8) / 36, (ch - 8) / (bot - top), 2.1);
+    const top = st.cherry ? (st.frost ? swirlEndY() - 18.6 : -31.5) : (st.frost ? swirlEndY() - 3.5 : -15), bot = 19, s = Math.min((cw - 8) / 36, (ch - 8) / (bot - top), 2.1);
     const mid = (top + bot) / 2, x0 = (320 - cols * cw) / 2, y0 = (270 - rows * ch) / 2;
     let o = DEFS;
     for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
