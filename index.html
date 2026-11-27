@@ -325,7 +325,7 @@ footer a { color: var(--white); }
 /* ---------- Language switch + Hebrew (right to left) ---------- */
 .langbar { display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; min-height: 56px; }
 /* The cart stays in the top corner at every scroll position, so the order is one tap away. It sits where it did in the header at the top of the page. */
-.cart-btn { position: fixed; z-index: 60; top: calc(22px + env(safe-area-inset-top, 0px)); inset-inline-end: max(16px, calc((100vw - 1080px) / 2 + 16px)); display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; color: var(--red); background: var(--white); border: 2px solid var(--red); border-radius: 999px; cursor: pointer; box-shadow: 0 2px 8px rgba(43, 28, 22, .22); }
+.cart-btn { position: fixed; z-index: 110; top: calc(22px + env(safe-area-inset-top, 0px)); inset-inline-end: max(16px, calc((100vw - 1080px) / 2 + 16px)); display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; color: var(--red); background: var(--white); border: 2px solid var(--red); border-radius: 999px; cursor: pointer; box-shadow: 0 2px 8px rgba(43, 28, 22, .22); }
 .cart-btn svg { width: 25px; height: 25px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .cart-btn:hover, .cart-btn:focus-visible { background: var(--red); color: var(--white); }
 .cart-bd { position: absolute; top: -9px; inset-inline-end: -7px; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 999px; background: var(--red); color: var(--white); border: 2px solid var(--sticker); font: 700 .8rem/18px var(--font-bar); text-align: center; }
@@ -360,15 +360,21 @@ html[lang="he"] .cb-done button { font-family: var(--font-wide); text-transform:
 .contents li .cake-end { display: flex; align-items: flex-start; gap: 8px; white-space: nowrap; }
 .cake-x { border: 0; background: transparent; color: var(--red-deep); cursor: pointer; font-size: 1.3rem; line-height: 1; padding: 0 4px; border-radius: 6px; }
 .cake-x:hover { background: rgba(196,42,48,.12); }
-.cb { margin-top: 0; }
+.cb { position: fixed; inset: 0; z-index: 100; overflow: auto; background: var(--paper); background-image: radial-gradient(rgba(94,74,63,.05) 1px, transparent 1.2px); background-size: 6px 6px; -webkit-overflow-scrolling: touch; }
+.cb[hidden] { display: none; }
+.cb-wrap { max-width: 980px; margin: 0 auto; padding: 0 16px 130px; }
+.cb-top { display: flex; align-items: center; gap: 10px; padding: 14px 0; padding-inline-end: 62px; }
+.cb-pill { font-family: var(--font-wide); font-weight: 800; font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; color: var(--red); background: transparent; border: 2px solid var(--red); border-radius: 999px; padding: 7px 18px; cursor: pointer; }
+.cb-pill:hover { background: var(--red); color: var(--white); }
+.cb-h1 { margin: 6px 0 2px; font-family: var(--font-script); color: var(--red); font-weight: 400; font-size: clamp(2.4rem, 8vw, 3.4rem); line-height: 1; }
+html[lang="he"] .cb-h1 { font-family: var(--font-wide); font-weight: 800; font-size: clamp(1.8rem, 6vw, 2.4rem); }
 .cake-art { width: 100%; aspect-ratio: 1; border-radius: 50%; background: var(--sticker); border: 4px solid var(--white); box-shadow: 0 0 0 3px var(--blue); display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .cake-art svg { width: 100%; height: auto; flex: none; }
 @media (max-width: 720px) { .cake-art { width: 62%; margin: 0 auto; } }
 .cake-open { display: flex; align-items: center; justify-content: center; width: 100%; max-width: 420px; background: var(--blue); color: var(--white); border: 0; border-radius: 999px; padding: 13px 20px; cursor: pointer; font-family: var(--font-bar); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; font-size: 1.05rem; }
 .cake-open:hover { background: #17306F; }
 .cake-count { margin-top: 8px; font-weight: 700; color: var(--red-deep); font-size: .95rem; }
-.cat-section > .cb { margin-top: 0; }
-.cb-sub { display: none; }   /* the card above the builder already says this */
+.cb-sub { color: var(--ink-soft); margin: 6px 0 18px; }
 .cb-steps { display: flex; gap: 6px; margin: 6px 0 16px; }
 .cb-step { flex: 1; text-align: center; font: 600 .7rem var(--font-wide); color: var(--ink-soft); background: none; border: 0; padding: 0; cursor: pointer; }
 .cb-step:hover b, .cb-step:focus-visible b { color: var(--red); text-decoration: underline; }
@@ -423,8 +429,8 @@ html[lang="he"] .cb-opt .t { font-family: var(--font-wide); font-weight: 800; te
 .cb-add { display: block; width: 100%; margin-top: 14px; background: var(--blue); color: var(--white); border: 0; border-radius: 999px; padding: 14px; font-family: var(--font-bar); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; font-size: 1.05rem; cursor: pointer; }
 .cb-add:hover { background: #17306F; }
 html[lang="he"] .cb-add, html[lang="he"] .cake-open { font-family: var(--font-wide); letter-spacing: 0; text-transform: none; font-weight: 800; }
-.cb-bar { position: sticky; bottom: 0; margin-top: 18px; background: var(--red); border: 3px solid var(--blue); color: var(--white); z-index: 5; }
-.cb-in { display: flex; align-items: center; gap: 12px; padding: 10px 16px; }
+.cb-bar { position: fixed; inset-inline: 0; bottom: 0; background: var(--red); border-top: 3px solid var(--blue); color: var(--white); z-index: 5; }
+.cb-in { max-width: 980px; margin: 0 auto; display: flex; align-items: center; gap: 12px; padding: 10px 16px; }
 .cb-price { font-family: var(--font-bar); font-weight: 700; font-size: 1.7rem; margin-inline-end: auto; line-height: 1; }
 .cb-price small { display: block; font: 500 .66rem var(--font-wide); opacity: .85; letter-spacing: .1em; text-transform: uppercase; }
 html[lang="he"] .cb-price small { letter-spacing: 0; text-transform: none; }
@@ -590,18 +596,20 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
 </footer>
 
 
-<div id="cb-stash" hidden>
-<div class="cb" id="cb">
-  <p class="cb-sub" id="cb-sub"></p>
-  <div class="cb-done" id="cb-done" hidden></div>
-  <div class="cb-steps" id="cb-steps"></div>
-  <div class="cb-grid"><div class="cb-stage"><div id="cb-art"></div></div><div class="cb-head" id="cb-head"></div><div class="cb-panel" id="cb-panel"></div></div>
+<div class="cb" id="cb" role="dialog" aria-modal="true" aria-labelledby="cb-title" hidden>
+  <div class="cb-wrap">
+    <div class="cb-top"><button type="button" class="cb-pill" id="cb-close"></button><button type="button" class="cb-pill" id="cb-lang"></button></div>
+    <h2 class="cb-h1" id="cb-title"></h2>
+    <p class="cb-sub" id="cb-sub"></p>
+    <div class="cb-done" id="cb-done" hidden></div>
+    <div class="cb-steps" id="cb-steps"></div>
+    <div class="cb-grid"><div class="cb-stage"><div id="cb-art"></div></div><div class="cb-head" id="cb-head"></div><div class="cb-panel" id="cb-panel"></div></div>
+  </div>
   <div class="cb-bar"><div class="cb-in">
     <div class="cb-price" id="cb-price"></div>
     <button type="button" class="cb-btn" id="cb-back"></button>
     <button type="button" class="cb-btn cb-go" id="cb-next"></button>
   </div></div>
-</div>
 </div>
 
 <script>
@@ -726,8 +734,8 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
       meta: ["מארז 100 גרם", "מכיל בוטנים", "לשמור במקום קריר ויבש (לא מקרר)"] }
   };
   const CATS = [
-    { id: "cakes", en: ["Birthday cakes", "Round, rectangular or cupcakes"], he: ["עוגות יום הולדת", "עגולה, מלבנית או קאפקייקס"] },
     { id: "pies", en: ["Pies", "9 inch, serves 8–10"], he: ["פאי", "קוטר 22 ס״מ, 8-10 מנות"] },
+    { id: "cakes", en: ["Birthday cakes", "Round, rectangular or cupcakes"], he: ["עוגות יום הולדת", "עגולה, מלבנית או קאפקייקס"] },
     { id: "cookies", en: ["Cookies", "Bags of 10 cookies, ₪50"], he: ["עוגיות", "שקיות של 10 עוגיות, ‏₪50"] },
     { id: "chocolate", en: ["Chocolate", "100 g packs, ₪35"], he: ["שוקולד", "מארזי 100 גרם, ‏₪35"] }
   ];
@@ -874,9 +882,6 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
 
   const menu = document.getElementById("menu");
   function buildMenu() {
-    // The builder lives in the Birthday cakes section. Park it while the menu is rebuilt.
-    const cbEl = document.getElementById("cb");
-    document.getElementById("cb-stash").appendChild(cbEl);
     menu.innerHTML = "";
     ITEMS.forEach(it => { if (it.img2) new Image().src = imgUrl(it.img2); });
     const secs = {};
@@ -920,7 +925,7 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
         render();
       }));
     }
-    buildCakeCard(secs.cakes, cbEl);
+    buildCakeCard(secs.cakes);
     refreshCake();
   }
 
@@ -932,26 +937,20 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
       desc: "בוחרים צורה, טעם, ציפוי וקישוט, ורואים את העוגה והמחיר תוך כדי.",
       meta: ["עוגה עגולה, עוגה מלבנית או קאפקייקס", "נשמרת עד יומיים במקום קריר"], inOrder: (n) => n === 1 ? "עוגה אחת בהזמנה" : n + " עוגות בהזמנה" }
   };
-  let cakeOpen = false;   // the builder is closed until the customer opens it
   // The card for the cakes (like a product), and the builder under it.
-  function buildCakeCard(sec, cbEl) {
+  function buildCakeCard(sec) {
     const x = CAKE_TXT[lang];
     const a = document.createElement("article");
     a.className = "item"; a.id = "item-cakes";
     a.innerHTML = `<div class="cake-art" role="img" aria-label="${CATS[0][lang][0]}">${CB.ctaArt()}</div>
       <div class="item-body">
         <div class="bar"><h3>${x.bar}</h3><span class="price">${x.from}₪${CB.minPrice}</span></div>
-        <div class="qty-row"><button type="button" class="cake-open" id="cake-open" aria-controls="cb"></button><div class="cake-count" id="cake-count" aria-live="polite"></div></div>
+        <div class="qty-row"><button type="button" class="cake-open" id="cake-open" aria-haspopup="dialog"></button><div class="cake-count" id="cake-count" aria-live="polite"></div></div>
         <p class="desc">${x.desc}</p>
         <div class="meta">${x.meta.map(m => `<span>${m}</span>`).join("")}</div>
       </div>`;
     sec.appendChild(a);
-    sec.appendChild(cbEl);
-    cbEl.hidden = !cakeOpen;
-    a.querySelector("#cake-open").addEventListener("click", () => {
-      cakeOpen = !cakeOpen; cbEl.hidden = !cakeOpen; refreshCake();
-      if (cakeOpen) cbEl.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
+    a.querySelector("#cake-open").addEventListener("click", (e) => CB.open(e.currentTarget));
   }
   const CART_LABEL = { en: "My order", he: "ההזמנה שלי" };
   function refreshCartBtn() {
@@ -961,12 +960,11 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
     btn.setAttribute("aria-label", CART_LABEL[lang] + (n ? " (" + n + ")" : ""));
     btn.title = CART_LABEL[lang];
   }
-  document.getElementById("cart-btn").addEventListener("click", () => document.getElementById("order").scrollIntoView({ behavior: "smooth", block: "start" }));
+  document.getElementById("cart-btn").addEventListener("click", () => { CB.close(false); document.getElementById("order").scrollIntoView({ behavior: "smooth", block: "start" }); });
   function refreshCake() {
     const b = document.getElementById("cake-open"); if (!b) return;
     const x = CAKE_TXT[lang];
-    b.textContent = cakeOpen ? x.close : (cakes.length ? x.more : x.open);
-    b.setAttribute("aria-expanded", cakeOpen);
+    b.textContent = cakes.length ? x.more : x.open;
     document.getElementById("cake-count").textContent = cakes.length ? x.inOrder(cakes.length) : "";
     document.getElementById("item-cakes").classList.toggle("picked", cakes.length > 0);
   }
@@ -1545,7 +1543,8 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
   function render() {
     const x = ct();
     if (S.shape === "cup") { S.coat = "top"; S.candleOn = false; }
-    $("cb-sub").textContent = x.sub;
+    $("cb-title").textContent = x.title; $("cb-sub").textContent = x.sub;
+    $("cb-close").textContent = "\u00d7 " + x.close; $("cb-lang").textContent = lang === "he" ? "English" : "עברית";
     $("cb-steps").innerHTML = visibleSteps().map(i => [x.steps[i], i]).map(([s, i]) => `<button type="button" class="cb-step ${i === S.step ? "cur" : i < 4 && stepOk(i) ? "done" : ""}" data-i="${i}"${i === S.step ? ' aria-current="step"' : ""}><i></i><b>${s}</b></button>`).join("");
     root.querySelectorAll(".cb-step").forEach(b => b.onclick = () => go(+b.dataset.i));
     $("cb-art").innerHTML = art(S); $("cb-art").style.opacity = S.shape ? "" : ".4";
@@ -1580,6 +1579,18 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
     };
   }
 
+  // The builder is its own page. It opens from the card and closes with the Close button, Esc, or when a cake is added.
+  let isOpen = false, opener = null;
+  function openSheet(from) {
+    opener = from || document.activeElement; isOpen = true;
+    root.hidden = false; root.scrollTop = 0; document.body.style.overflow = "hidden";
+    render(); $("cb-close").focus({ preventScroll: true });
+  }
+  function closeSheet(restore = true) {
+    if (!isOpen) return;
+    isOpen = false; root.hidden = true; document.body.style.overflow = "";
+    if (restore && opener && opener.focus) opener.focus({ preventScroll: true });
+  }
   // After a cake is added: a short message with a way to the order, and the builder starts again.
   function showDone() {
     const x = ct(), d = $("cb-done");
@@ -1602,13 +1613,13 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
   const priceHTML = () => { const p = price(), x = ct(); return (p.known ? shek(p.total) : "\u2014") + `<small>${S.step === 4 ? x.total : x.from}</small>`; };
   function scrollToGroup(g) {
     const el = root.querySelector(`.cb-grp[data-g="${g}"]`);
-    if (el) window.scrollTo({ top: window.scrollY + el.getBoundingClientRect().top - 90, behavior: "smooth" });
+    if (el) root.scrollTo({ top: root.scrollTop + el.getBoundingClientRect().top - 90, behavior: "smooth" });
   }
   // Show what is missing on the current step.
   function showMissing() {
     S.warn = true; render();
     if (S.step === 3) { const order = DECO_GROUPS(isCup(S.shape)), g = order.find(o => !chosen(o)); if (g === "candle" && S.candleOn === true) { const e = $("cb-err"); if (e) e.hidden = false; const inp = $("cb-cn"); if (inp) inp.focus(); } else if (g) scrollToGroup(g); }
-    else { const n = root.querySelector(".cb-need"); if (n) window.scrollTo({ top: window.scrollY + n.getBoundingClientRect().top - 120, behavior: "smooth" }); }
+    else { const n = root.querySelector(".cb-need"); if (n) root.scrollTo({ top: root.scrollTop + n.getBoundingClientRect().top - 120, behavior: "smooth" }); }
   }
   function later(from, fn) { setTimeout(() => { if (S.step === from) fn(); }, 320); }
   function afterPick(from, k, g) {
@@ -1624,12 +1635,9 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
     later(from, () => scrollToGroup(target));
   }
   // Bring the top of the builder into view when it is scrolled out of sight.
-  function toTop() {
-    const top = root.getBoundingClientRect().top;
-    if (top < 0 || top > window.innerHeight * .6) window.scrollTo({ top: window.scrollY + top - 12, behavior: "smooth" });
-  }
+  function toTop() { root.scrollTo({ top: 0 }); }
   // Add the finished cake to the order, then start a new one.
-  function addCake() { const c = finished(); S = fresh(); render(); showDone(); toTop(); if (api.onAdd) api.onAdd(c); }
+  function addCake() { const c = finished(); S = fresh(); render(); closeSheet(false); if (api.onAdd) api.onAdd(c); }
   // Go to any step. The last step needs the candle number if a candle is chosen.
   function go(i) {
     if (i === S.step) return;
@@ -1642,14 +1650,17 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
   }
   $("cb-next").onclick = () => { if (S.step === 4) { addCake(); return; } if (!stepOk(S.step)) { showMissing(); return; } go(nextStep(S.step)); };
   $("cb-back").onclick = () => go(prevStep(S.step));
+  $("cb-close").onclick = () => closeSheet();
+  $("cb-lang").onclick = () => document.getElementById("lang-toggle").click();
+  document.addEventListener("keydown", (e) => { if (isOpen && e.key === "Escape") closeSheet(); });
 
-  const api = { refresh: () => { $("cb-done").hidden = true; render(); }, art, describe, slipDetail, msgLines, onAdd: null, minPrice: BASE.cup[6], name: () => ct().cakeName, removeLabel: () => ct().remove,
+  const api = { open: openSheet, close: closeSheet, refresh: () => { $("cb-done").hidden = true; render(); }, art, describe, slipDetail, msgLines, onAdd: null, minPrice: BASE.cup[6], name: () => ct().cakeName, removeLabel: () => ct().remove,
     // Square crop of the round-cake drawing for the round tile on the menu.
     ctaArt: () => art({ shape: "round", cups: 12, flavor: "chocolate", coat: "top", spr: "on", frost: true, cherry: true, candleOn: false, candle: "" }).replace('viewBox="0 0 320 270"', 'viewBox="40 1 240 240"') };
   return api;
   })();
 
-  CB.onAdd = (c) => { cakes.push(c); render(); };
+  CB.onAdd = (c) => { cakes.push(c); render(); document.getElementById("order").scrollIntoView({ behavior: "smooth", block: "start" }); };
 
   const langBtn = document.getElementById("lang-toggle");
   // Safari reverses right-to-left text on a curved path. In Hebrew each letter is placed on the
