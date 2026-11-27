@@ -431,8 +431,23 @@ html[lang="he"] .cb-price small { letter-spacing: 0; text-transform: none; }
 .cb-btn { border: 2px solid var(--white); background: transparent; color: var(--white); border-radius: 999px; padding: 10px 22px; font-family: var(--font-bar); font-weight: 600; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; }
 html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; letter-spacing: 0; font-weight: 800; }
 .cb-btn.cb-go { background: var(--white); color: var(--red-deep); }
-.cb-btn.cb-add-go { background: var(--blue); color: var(--white); border-color: var(--white); flex: 1; max-width: 260px; }
+.cb-btn.cb-add-go { background: var(--blue); color: var(--white); border-color: var(--white); flex: 1; max-width: 260px; white-space: nowrap; }
 .cb-btn.cb-add-go:hover { background: #17306F; }
+/* A more compact bar on small phones, so the three items fit on one line without widening the page. */
+@media (max-width: 420px) {
+  .cb-in { gap: 8px; padding: 8px 10px; }
+  .cb-price { font-size: 1.4rem; }
+  .cb-btn { padding: 10px 12px; letter-spacing: .04em; font-size: .88rem; }
+  .cb-btn.cb-add-go { flex: 1 1 auto; min-width: 0; }
+}
+@media (max-width: 345px) {
+  .cb-in { gap: 6px; padding: 8px 8px; }
+  .cb-price { font-size: 1.2rem; }
+  .cb-price small { font-size: .56rem; letter-spacing: 0; }
+  .cb-btn { padding: 10px 9px; font-size: .78rem; letter-spacing: .02em; }
+  .cb-steps { gap: 4px; padding-inline-end: 46px; }
+  .cb-step { font-size: .56rem; letter-spacing: 0; }
+}
 
 @media (max-width: 720px) {
   .tags, .tags.three { grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -1085,7 +1100,7 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
       frost: ["Buttercream piping","Piped buttercream border on the top and bottom of the cake"], frostParty: ["Buttercream piping","A buttercream rosette on each of the 24 pieces"], frostCup: ["Buttercream piping","A buttercream swirl on each cupcake"],
       gCandle: "Number candle", candleNone: ["No candle",""], candleYes: ["Number candle","₪10 per digit"], which: "Which number?", perDigit: "₪10 per digit",
       incl: "Included", total: "Total", from: "Price", sumHead: ["Shape","Flavor","Coating","Sprinkles","Buttercream","Candle"],
-      next: "Next", back: "Back", add: "Add to my order", toast: "On the real site this adds the cake to the order slip and the WhatsApp message.",
+      next: "Next", back: "Back", add: "Add to order", toast: "On the real site this adds the cake to the order slip and the WhatsApp message.",
       keep: "Keeps up to 2 days in a cool place. Cupcakes are best eaten on the day they are baked.", art: "Illustration. Meg's real photos can replace these later." },
     he: { badge: "דוגמה - עדיין לא באתר", title: "בונים עוגת יום הולדת", sub: "בוחרים צורה, טעם, ציפוי וקישוט. המחיר מתעדכן תוך כדי.",
       steps: ["צורה","טעם","ציפוי","קישוט","העוגה שלך"],
