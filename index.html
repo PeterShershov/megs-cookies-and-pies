@@ -1163,6 +1163,15 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
     for (let i = 0; i < 24; i++) { const a = i / 24 * 6.2832, r = i % 2 ? 0.76 : 1; p += (i ? "L" : "M") + (x + Math.cos(a) * rx * r).toFixed(1) + " " + (y + Math.sin(a) * ry * r).toFixed(1); }
     return `<path d="${p}Z" fill="${CREAM}" stroke="${CSTROKE}" stroke-width=".7"/><circle cx="${x}" cy="${y}" r="${rx * .24}" fill="${RIDGE}"/>`;
   }
+  // A piped rosette seen from above: a ring of soft lobes around a centre. Outlines first, then the fill, so the lobes merge.
+  function bloom(x, y, rx, ry) {
+    const lobes = [];
+    for (let i = 0; i < 8; i++) { const a = i / 8 * 6.2832 + .2; lobes.push([x + Math.cos(a) * rx * .6, y + Math.sin(a) * ry * .6, rx * .42, ry * .42]); }
+    lobes.push([x, y, rx * .66, ry * .66]);
+    const draw = (extra) => lobes.map(([cx, cy, ex, ey]) => `<ellipse cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" rx="${ex.toFixed(1)}" ry="${ey.toFixed(1)}" ${extra}/>`).join("");
+    return draw(`fill="${CSTROKE}" stroke="${CSTROKE}" stroke-width="1.6"`) + draw(`fill="${CREAM}"`) +
+      `<path d="M${(x - rx * .3).toFixed(1)} ${y.toFixed(1)} Q${x.toFixed(1)} ${(y - ry * .42).toFixed(1)} ${(x + rx * .3).toFixed(1)} ${y.toFixed(1)} Q${x.toFixed(1)} ${(y + ry * .36).toFixed(1)} ${(x - rx * .3).toFixed(1)} ${y.toFixed(1)}Z" fill="${RIDGE}"/>`;
+  }
   function candleSVG(ds, cx, baseY) {
     if (!ds) return "";
     let o = "";
@@ -1199,9 +1208,22 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
     o += `<ellipse cx="160" cy="${ty}" rx="${RX}" ry="${RY}" fill="${GAN2}"/>`;
     if (st.spr === "on") o += sprinkles(160, ty, RX - 4, RY - 3, st.frost ? 26 : 38, 11, !st.frost);
     if (st.frost) {
-      const path = wavy(160, ty, RX, RY, 0.64, 0.13, 5, 160);
-      o += `<path d="${path}" fill="none" stroke="${CREAM}" stroke-width="10" stroke-linejoin="round"/>`;
-      if (st.spr === "on") o += sprinkles(160, ty, RX - 16, RY - 8, 12, 31, true, 3);
+      if (st.cherry) {
+        // With cherries: a ring of 24 piped rosettes around the top edge, a cherry on every other one (12 cherries).
+        // Back ones first, so the front ones overlap them.
+        const rr = [], rs2 = rnd(23);
+        for (let i = 0; i < 24; i++) { const a = (i + .5) / 24 * 6.2832; rr.push([160 + Math.cos(a) * RX * .84, ty + Math.sin(a) * RY * .84, i]); }
+        rr.sort((p, q) => p[1] - q[1]);
+        for (const [x, y, i] of rr) {
+          o += bloom(x, y, 11.2, 6.4);
+          if (i % 2 === 0) o += cherrySVG(x, y - 1.5, 5.3);
+          else if (st.spr === "on") for (let k = 0; k < 2; k++) o += jimmy(x + (rs2() - .5) * 10, y + (rs2() - .5) * 4.5, 2.3, rs2() * 180, HEARTC[Math.floor(rs2() * HEARTC.length)]);
+        }
+      } else {
+        const path = wavy(160, ty, RX, RY, 0.64, 0.13, 5, 160);
+        o += `<path d="${path}" fill="none" stroke="${CREAM}" stroke-width="10" stroke-linejoin="round"/>`;
+        if (st.spr === "on") o += sprinkles(160, ty, RX - 16, RY - 8, 12, 31, true, 3);
+      }
       // Shells at the base: evenly spaced along the front curve, drawn from the edges toward the middle.
       const pts = [], N = 400, t0 = .1, t1 = Math.PI - .1; let len = [0];
       for (let i = 0; i <= N; i++) { const t = t0 + (t1 - t0) * i / N; pts.push([160 + Math.cos(t) * 92, by + 2 + Math.sin(t) * 33]); if (i) len.push(len[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1])); }
@@ -1218,7 +1240,7 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
         }
       }
     }
-    if (st.cherry) {
+    if (st.cherry && !st.frost) {
       // 12 cherries evenly around the top edge, back ones first so the front ones sit on top
       const cs = [];
       for (let i = 0; i < 12; i++) { const a = (i + .5) / 12 * 6.2832; cs.push([160 + Math.cos(a) * RX * .86, ty + Math.sin(a) * RY * .86]); }
