@@ -1153,7 +1153,7 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
   const COAT = { round: 30, party: 30, cup: 0 };
   const FROST = { round: 20, party: 40, cup: { 6: 10, 12: 25, 24: 50 } };
   const CANDLE_PER_DIGIT = 10;
-  const CHERRY = { round: 25, party: 45, cup: { 6: 15, 12: 25, 24: 45 } };   // stemmed maraschino cherries: 12 on the round cake, 24 on the rectangular cake, 1 per cupcake
+  const CHERRY = { round: 25, party: 50, cup: { 6: 15, 12: 25, 24: 50 } };   // stemmed maraschino cherries: 12 on the round cake, 24 on the rectangular cake, 1 per cupcake
   const isCup = (sh) => sh === "cup";
   const digits = (st) => (st.candleOn && !isCup(st.shape)) ? (st.candle || "").replace(/\D/g, "").slice(0, 3) : "";
   const price = (st = S) => {
