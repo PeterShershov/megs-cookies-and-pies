@@ -1079,7 +1079,7 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
       gSpr: "Sprinkles", sprOn: ["Colorful sprinkles","A border of sprinkles on top"], sprOnCup: ["Colorful sprinkles","Sprinkles on the ganache"], sprOff: ["No sprinkles","Smooth ganache, no sprinkles"],
       gFrost: "Buttercream piping", frostNone: ["No piping","Ganache only"],
       frost: ["Buttercream piping","Piped buttercream border on the top and bottom of the cake"], frostParty: ["Buttercream piping","A buttercream rosette on each of the 24 pieces"], frostCup: ["Buttercream piping","A buttercream swirl on each cupcake"],
-      gCandle: "Number candle", candleNone: ["No candle",""], candleYes: ["Number candle","₪10 per digit, for example 22 = ₪20"], which: "Which number?", perDigit: "₪10 per digit",
+      gCandle: "Number candle", candleNone: ["No candle",""], candleYes: ["Number candle","₪10 per digit"], which: "Which number?", perDigit: "₪10 per digit",
       incl: "Included", total: "Total", from: "Price", sumHead: ["Shape","Flavor","Coating","Sprinkles","Buttercream","Candle"],
       next: "Next", back: "Back", add: "Add to my order", toast: "On the real site this adds the cake to the order slip and the WhatsApp message.",
       keep: "Keeps up to 2 days in a cool place. Cupcakes are best eaten on the day they are baked.", art: "Illustration. Meg's real photos can replace these later." },
@@ -1094,7 +1094,7 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
       gSpr: "סוכריות", sprOn: ["סוכריות צבעוניות","מסגרת סוכריות צבעוניות על פני העוגה"], sprOnCup: ["סוכריות צבעוניות","סוכריות צבעוניות על הגנאש"], sprOff: ["ללא סוכריות צבעוניות","גנאש חלק בלי סוכריות"],
       gFrost: "זילוף קרם חמאה", frostNone: ["ללא זילוף","גנאש בלבד"],
       frost: ["זילוף קרם חמאה","מסגרת קרם חמאה מזולפת בחלק העליון ותחתון של העוגה"], frostParty: ["זילוף קרם חמאה","ורד קרם חמאה על כל אחת מ-24 החתיכות"], frostCup: ["זילוף קרם חמאה","ספירלת קרם חמאה על כל קאפקייק"],
-      gCandle: "נר מספר", candleNone: ["ללא נר",""], candleYes: ["נר מספר","10 ₪ לכל ספרה, כך שנר 22 עולה 20 ₪"], which: "איזה מספר?", perDigit: "10 ₪ לכל ספרה",
+      gCandle: "נר מספר", candleNone: ["ללא נר",""], candleYes: ["נר מספר","10 ₪ לכל ספרה"], which: "איזה מספר?", perDigit: "10 ₪ לכל ספרה",
       incl: "כלול", total: "סה״כ", from: "מחיר", sumHead: ["צורה","טעם","ציפוי","סוכריות","זילוף","נר"],
       next: "הבא", back: "חזרה", add: "הוספה להזמנה", toast: "באתר האמיתי הכפתור יוסיף את העוגה להזמנה ולהודעת הוואטסאפ.",
       keep: "נשמרת עד יומיים במקום קריר. את הקאפקייקס מומלץ לאכול ביום האפייה.", art: "איור. אפשר להחליף בתמונות אמיתיות של העוגות." }
@@ -1490,7 +1490,7 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
         h += optCard("none", x.candleNone[0], x.candleNone[1], x.incl, S.candleOn === false, art({ ...copy(), candleOn: false }), "candle");
         h += optCard("yes", x.candleYes[0], x.candleYes[1], plus(CANDLE_PER_DIGIT * Math.max(1, digits({ ...S, candleOn: true }).length)), S.candleOn === true, art(sample), "candle");
         h += "</div>";
-        if (S.candleOn) h += `<div class="cb-candle"><label for="cb-cn">${x.which}</label><input id="cb-cn" inputmode="numeric" maxlength="3" placeholder="5" value="${S.candle}"><small>${x.perDigit}</small></div><div class="cb-error" id="cb-err" hidden>${x.errCandle}</div>`;
+        if (S.candleOn) h += `<div class="cb-candle"><label for="cb-cn">${x.which}</label><input id="cb-cn" inputmode="numeric" maxlength="3" placeholder="5" value="${S.candle}"></div><div class="cb-error" id="cb-err" hidden>${x.errCandle}</div>`;
       }
     } else {
       const p = price(), d = describe(finished(), lang), ds = digits(S);
