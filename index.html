@@ -1414,22 +1414,22 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
       const f = cup ? FROST.cup[S.cups] : FROST[S.shape];
       const ft = S.shape === "round" ? x.frost : S.shape === "party" ? x.frostParty : x.frostCup;
       const so = cup ? x.sprOnCup : x.sprOn;
-      h += `<div class="cb-grp">${x.gSpr}</div><div class="cb-opts">`;
+      h += `<div class="cb-grp" data-g="spr">${x.gSpr}</div><div class="cb-opts">`;
       h += optCard("on", so[0], so[1], x.incl, S.spr === "on", art({ ...copy(), spr: "on" }), "spr");
       h += optCard("off", x.sprOff[0], x.sprOff[1], x.incl, S.spr === "off", art({ ...copy(), spr: "off" }), "spr");
-      h += `</div><div class="cb-grp">${x.gFrost}</div><div class="cb-opts">`;
+      h += `</div><div class="cb-grp" data-g="frost">${x.gFrost}</div><div class="cb-opts">`;
       h += optCard("none", x.frostNone[0], x.frostNone[1], x.incl, !S.frost, art({ ...copy(), frost: false }), "frost");
       h += optCard("yes", ft[0], ft[1], plus(f), S.frost, art({ ...copy(), frost: true }), "frost");
       h += "</div>";
       const chf = cup ? CHERRY.cup[S.cups] : CHERRY[S.shape];
       const cht = S.shape === "round" ? x.cherryRound : S.shape === "party" ? x.cherryParty : x.cherryCup;
-      h += `<div class="cb-grp">${x.gCherry}</div><div class="cb-opts">`;
+      h += `<div class="cb-grp" data-g="cherry">${x.gCherry}</div><div class="cb-opts">`;
       h += optCard("none", x.cherryNone[0], x.cherryNone[1], x.incl, !S.cherry, art({ ...copy(), cherry: false }), "cherry");
       h += optCard("yes", cht[0], cht[1], plus(chf), S.cherry, art({ ...copy(), cherry: true }), "cherry");
       h += "</div>";
       if (!cup) {
         const sample = { ...copy(), candleOn: true, candle: S.candle || "5" };
-        h += `<div class="cb-grp">${x.gCandle}</div><div class="cb-opts">`;
+        h += `<div class="cb-grp" data-g="candle">${x.gCandle}</div><div class="cb-opts">`;
         h += optCard("none", x.candleNone[0], x.candleNone[1], x.incl, !S.candleOn, art({ ...copy(), candleOn: false }), "candle");
         h += optCard("yes", x.candleYes[0], x.candleYes[1], plus(CANDLE_PER_DIGIT * Math.max(1, digits({ ...S, candleOn: true }).length)), S.candleOn, art(sample), "candle");
         h += "</div>";
@@ -1465,10 +1465,13 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
       if (S.step === 0) S.shape = k;   // keep the other choices. Cupcakes always get the top coating and no candle (see render).
       else if (S.step === 1) S.flavor = k; else if (S.step === 2) S.coat = k;
       else if (g === "spr") S.spr = k; else if (g === "frost") S.frost = k === "yes"; else if (g === "cherry") S.cherry = k === "yes"; else if (g === "candle") S.candleOn = k === "yes";
+      const from = S.step;
       render();
+      afterPick(from, k, g);
     });
-    root.querySelectorAll(".cb-chip").forEach(b => b.onclick = () => { S.cups = +b.dataset.n; render(); });
+    root.querySelectorAll(".cb-chip").forEach(b => b.onclick = () => { S.cups = +b.dataset.n; const from = S.step; render(); later(from, () => go(1)); });
     const cn = $("cb-cn");
+    if (cn) cn.onkeydown = (e) => { if (e.key === "Enter") { e.preventDefault(); go(4); } };
     if (cn) cn.oninput = () => {
       S.candle = cn.value.replace(/\D/g, "").slice(0, 3);
       const e = $("cb-err"); if (e) e.hidden = true;
@@ -1483,6 +1486,24 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
     d.innerHTML = `<span>\u2713 ${x.added}</span><button type="button" id="cb-see">${x.seeOrder}</button>`;
     d.hidden = false;
     $("cb-see").onclick = () => document.getElementById("order").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  // Move on by itself after a pick, so nothing is missed. Wait a moment so the pick can be seen.
+  // Shape, flavor and coating go to the next step. Cupcakes wait for the count. In Decoration, each pick
+  // brings the next group into view, and the last group goes to "Your cake".
+  const DECO_GROUPS = (cup) => cup ? ["spr", "frost", "cherry"] : ["spr", "frost", "cherry", "candle"];
+  function later(from, fn) { setTimeout(() => { if (S.step === from) fn(); }, 320); }
+  function afterPick(from, k, g) {
+    if (from === 0) { if (k !== "cup") later(from, () => go(1)); return; }   // cupcakes still need the count
+    if (from <= 2) { later(from, () => go(from + 1)); return; }
+    if (from !== 3) return;
+    const order = DECO_GROUPS(isCup(S.shape)), i = order.indexOf(g);
+    if (i < 0) return;
+    if (g === "candle" && k === "yes") { const inp = $("cb-cn"); if (inp) inp.focus(); return; }   // type the number, then Enter or Next
+    if (i === order.length - 1) { later(from, () => go(4)); return; }
+    later(from, () => {
+      const next = root.querySelector(`.cb-grp[data-g="${order[i + 1]}"]`);
+      if (next) window.scrollTo({ top: window.scrollY + next.getBoundingClientRect().top - 90, behavior: "smooth" });
+    });
   }
   // Bring the top of the builder into view when it is scrolled out of sight.
   function toTop() {
