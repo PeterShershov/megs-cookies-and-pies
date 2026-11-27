@@ -323,10 +323,11 @@ footer a { color: var(--white); }
 
 
 /* ---------- Language switch + Hebrew (right to left) ---------- */
-.langbar { display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; }
-.cart-btn { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; color: var(--red); background: transparent; border: 2px solid var(--red); border-radius: 999px; cursor: pointer; }
+.langbar { display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; min-height: 56px; }
+/* The cart stays in the top corner at every scroll position, so the order is one tap away. It sits where it did in the header at the top of the page. */
+.cart-btn { position: fixed; z-index: 60; top: calc(22px + env(safe-area-inset-top, 0px)); inset-inline-end: max(16px, calc((100vw - 1080px) / 2 + 16px)); display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; color: var(--red); background: var(--white); border: 2px solid var(--red); border-radius: 999px; cursor: pointer; box-shadow: 0 2px 8px rgba(43, 28, 22, .22); }
 .cart-btn svg { width: 25px; height: 25px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.cart-btn:hover { background: var(--red); color: var(--white); }
+.cart-btn:hover, .cart-btn:focus-visible { background: var(--red); color: var(--white); }
 .cart-bd { position: absolute; top: -9px; inset-inline-end: -7px; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 999px; background: var(--red); color: var(--white); border: 2px solid var(--sticker); font: 700 .8rem/18px var(--font-bar); text-align: center; }
 .cart-btn:hover .cart-bd { background: var(--red-deep); }
 .lang-toggle {
@@ -377,17 +378,19 @@ html[lang="he"] .cb-done button { font-family: var(--font-wide); text-transform:
 .cb-step.cur i { background: var(--red-deep); }
 .cb-step.cur { color: var(--red-deep); }
 .cb-step b { display: block; font-weight: 700; }
-.cb-grid { display: grid; gap: 18px; }
-@media (min-width: 760px) { .cb-grid { grid-template-columns: 1fr 1fr; align-items: start; } .cb-stage { position: sticky; top: 12px; } }
+.cb-grid { display: grid; gap: 18px; grid-template-areas: "stage" "head" "panel"; }
+.cb-stage { grid-area: stage; } .cb-head { grid-area: head; } .cb-panel { grid-area: panel; }
+@media (min-width: 760px) { .cb-grid { grid-template-columns: 1fr 1fr; grid-template-areas: "head head" "stage panel"; align-items: start; } .cb-stage { position: sticky; top: 12px; } }
 .cb-stage { background: var(--sticker); border: 2px solid var(--red); padding: 12px; text-align: center; box-shadow: 6px 6px 0 var(--blue); }
 .cb-stage svg { width: 100%; max-width: 340px; height: auto; display: block; margin: 0 auto; }
 @media (max-width: 759px) { .cb-stage { padding: 8px 12px; } .cb-stage svg { max-width: 270px; } }
-.cb-panel h2 { margin: 0 0 4px; font-family: var(--font-bar); text-transform: uppercase; letter-spacing: .12em; color: var(--red); font-size: 1.5rem; }
-html[lang="he"] .cb-panel h2 { font-family: var(--font-wide); font-weight: 800; text-transform: none; font-size: 1.4rem; }
-.cb-hint { color: var(--ink-soft); margin: 0 0 14px; font-size: .95rem; }
+.cb-head h2 { margin: 0 0 4px; font-family: var(--font-bar); text-transform: uppercase; letter-spacing: .12em; color: var(--red); font-size: 1.5rem; }
+html[lang="he"] .cb-head h2 { font-family: var(--font-wide); font-weight: 800; text-transform: none; font-size: 1.4rem; }
+.cb-hint { color: var(--ink-soft); margin: 0 0 4px; font-size: .95rem; }
+.cb-head .cb-need { margin: 8px 0 0; }
 .cb-grp { font: 700 .85rem var(--font-bar); text-transform: uppercase; letter-spacing: .14em; color: var(--blue); margin: 20px 0 8px; border-bottom: 1px solid var(--blue); padding-bottom: 4px; }
 html[lang="he"] .cb-grp { font-family: var(--font-wide); text-transform: none; font-size: .95rem; }
-.cb-hint + .cb-grp { margin-top: 6px; }
+.cb-panel > .cb-grp:first-child { margin-top: 0; }
 .cb-opts { display: grid; gap: 12px; }
 .cb-opt { display: grid; grid-template-columns: 92px 1fr auto; gap: 12px; align-items: center; text-align: start; background: var(--white); border: 2px solid #cdbf9f; border-radius: 16px; padding: 10px 14px 10px 10px; cursor: pointer; width: 100%; font: inherit; color: inherit; }
 html[dir="rtl"] .cb-opt { padding: 10px 10px 10px 14px; }
@@ -573,7 +576,7 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
   <p class="cb-sub" id="cb-sub"></p>
   <div class="cb-done" id="cb-done" hidden></div>
   <div class="cb-steps" id="cb-steps"></div>
-  <div class="cb-grid"><div class="cb-stage"><div id="cb-art"></div></div><div class="cb-panel" id="cb-panel"></div></div>
+  <div class="cb-grid"><div class="cb-stage"><div id="cb-art"></div></div><div class="cb-head" id="cb-head"></div><div class="cb-panel" id="cb-panel"></div></div>
   <div class="cb-bar"><div class="cb-in">
     <div class="cb-price" id="cb-price"></div>
     <button type="button" class="cb-btn" id="cb-back"></button>
@@ -1425,19 +1428,24 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
       candle: c.candle ? x.candleWord + " " + c.candle : x.candleNone[0]
     };
   }
-  const slipDetail = (c) => { const d = describe(c, lang); return [d.shape, d.flavor, d.coat, d.spr].concat(c.frost ? [d.frost] : [], c.cherry ? [d.cherry] : [], c.candle ? [d.candle] : []).join(" · "); };
+  const slipDetail = (c) => { const d = describe(c, lang); return (c.shape === "cup" ? [d.shape, d.flavor, d.spr] : [d.shape, d.flavor, d.coat, d.spr]).concat(c.frost ? [d.frost] : [], c.cherry ? [d.cherry] : [], c.candle ? [d.candle] : []).join(" · "); };
   function msgLines(c) {
     const x = CT.en, d = describe(c, "en"), size = c.shape === "cup" ? "" : " (" + x.msgSize[c.shape] + ")";
-    return [`• 1 × ${x.cakeName} – ₪${c.price}`, `   Shape: ${d.shape}${size}`, `   Flavor: ${d.flavor}`, `   Coating: ${d.coat}`, `   Sprinkles: ${d.spr}`, `   Piping: ${d.frost}`, `   Cherries: ${d.cherry}`].concat(c.shape === "party" && c.cherry ? ["   Box: taller box (8-10 cm) for the cherry stems"] : [], [`   Candle: ${d.candle}`]);
+    return [`• 1 × ${x.cakeName} – ₪${c.price}`, `   Shape: ${d.shape}${size}`, `   Flavor: ${d.flavor}`, ...(c.shape === "cup" ? [] : [`   Coating: ${d.coat}`]), `   Sprinkles: ${d.spr}`, `   Piping: ${d.frost}`, `   Cherries: ${d.cherry}`].concat(c.shape === "party" && c.cherry ? ["   Box: taller box (8-10 cm) for the cherry stems"] : [], [`   Candle: ${d.candle}`]);
   }
   const finished = () => ({ shape: S.shape, cups: S.cups, flavor: S.flavor, coat: isCup(S.shape) ? "top" : S.coat, spr: S.spr, frost: S.frost, cherry: S.cherry, candle: digits(S), price: price().total });
 
   const optCard = (key, title, desc, p, on, svg, grp) =>
     `<button type="button" class="cb-opt${on ? " on" : ""}" data-g="${grp || ""}" data-k="${key}"><div>${svg}</div><div><div class="t">${title}</div>${desc ? `<div class="d">${desc}</div>` : ""}</div><div class="p">${p}</div></button>`;
 
-  function panel() {
-    const x = ct(), st = S.step, cup = isCup(S.shape); let h = `<h2>${x.q[st]}</h2><p class="cb-hint">${x.h[st]}</p>`;
+  function panelHead() {
+    const x = ct(), st = S.step;
+    let h = `<h2>${x.q[st]}</h2><p class="cb-hint">${x.h[st]}</p>`;
     if (S.warn && !stepOk(st)) h += `<p class="cb-need">${st === 0 && S.shape === "cup" ? x.needCount : st === 3 ? x.needGroups : x.needOne}</p>`;
+    return h;
+  }
+  function panel() {
+    const x = ct(), st = S.step, cup = isCup(S.shape); let h = "";
     const miss = (g) => S.warn && !chosen(g) ? " cb-miss" : "", tag = (g) => S.warn && !chosen(g) ? " \u00b7 " + x.chooseOne : "";
     if (st === 0) {
       h += '<div class="cb-opts">';
@@ -1488,7 +1496,7 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
       const p = price(), d = describe(finished(), lang), ds = digits(S);
       const row = (a, b, c) => `<div class="cb-row"><div>${b}<small>${a}</small></div><div>${c}</div></div>`;
       h += `<div class="cb-sum">` + row(x.sumHead[0], d.shape, shek(p.base)) + row(x.sumHead[1], d.flavor, x.incl) +
-        row(x.sumHead[2], d.coat, p.coat ? "+" + shek(p.coat) : x.incl) + row(x.sumHead[3], d.spr, x.incl) +
+        (cup ? "" : row(x.sumHead[2], d.coat, p.coat ? "+" + shek(p.coat) : x.incl)) + row(x.sumHead[3], d.spr, x.incl) +
         row(x.sumHead[4], d.frost, S.frost ? "+" + shek(p.f) : x.incl) + (S.cherry ? row(x.sumHead[5], d.cherry, "+" + shek(p.ch)) : "") + (ds ? row(x.sumHead[6], ds, "+" + shek(p.c)) : "") +
         `<div class="cb-tot"><span>${x.total}</span><span>${shek(p.total)}</span></div></div>`;
       h += `<button type="button" class="cb-add" id="cb-add">${x.add}</button><div class="cb-note">${x.keep}</div>`;
@@ -1500,9 +1508,10 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
     const x = ct();
     if (S.shape === "cup") { S.coat = "top"; S.candleOn = false; }
     $("cb-sub").textContent = x.sub;
-    $("cb-steps").innerHTML = x.steps.map((s, i) => `<button type="button" class="cb-step ${i === S.step ? "cur" : i < 4 && stepOk(i) ? "done" : ""}" data-i="${i}"${i === S.step ? ' aria-current="step"' : ""}><i></i><b>${s}</b></button>`).join("");
+    $("cb-steps").innerHTML = visibleSteps().map(i => [x.steps[i], i]).map(([s, i]) => `<button type="button" class="cb-step ${i === S.step ? "cur" : i < 4 && stepOk(i) ? "done" : ""}" data-i="${i}"${i === S.step ? ' aria-current="step"' : ""}><i></i><b>${s}</b></button>`).join("");
     root.querySelectorAll(".cb-step").forEach(b => b.onclick = () => go(+b.dataset.i));
     $("cb-art").innerHTML = art(S); $("cb-art").style.opacity = S.shape ? "" : ".4";
+    $("cb-head").innerHTML = panelHead();
     $("cb-panel").innerHTML = panel();
     $("cb-price").innerHTML = priceHTML();
     $("cb-back").textContent = x.back; $("cb-back").style.visibility = S.step === 0 ? "hidden" : "visible";
@@ -1547,6 +1556,10 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
   // Nothing is chosen for the customer. A step is done only when every choice in it was made on purpose.
   const chosen = (g) => g === "spr" ? S.spr != null : g === "frost" ? S.frost != null : g === "cherry" ? S.cherry != null : S.candleOn === false || (S.candleOn === true && !!digits(S));
   const stepOk = (i) => i === 0 ? (S.shape != null && (S.shape !== "cup" || S.cups != null)) : i === 1 ? S.flavor != null : i === 2 ? S.coat != null : i === 3 ? DECO_GROUPS(isCup(S.shape)).every(chosen) : true;
+  // Cupcakes always get the ganache on top, so they skip the Coating step (step 2).
+  const visibleSteps = () => isCup(S.shape) ? [0, 1, 3, 4] : [0, 1, 2, 3, 4];
+  const nextStep = (i) => visibleSteps().find(v => v > i) ?? 4;
+  const prevStep = (i) => [...visibleSteps()].reverse().find(v => v < i) ?? 0;
   const firstOpen = () => { for (let i = 0; i < 4; i++) if (!stepOk(i)) return i; return 4; };
   const priceHTML = () => { const p = price(), x = ct(); return (p.known ? shek(p.total) : "\u2014") + `<small>${S.step === 4 ? x.total : x.from}</small>`; };
   function scrollToGroup(g) {
@@ -1562,7 +1575,7 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
   function later(from, fn) { setTimeout(() => { if (S.step === from) fn(); }, 320); }
   function afterPick(from, k, g) {
     if (from === 0) { if (k !== "cup") later(from, () => go(1)); return; }   // cupcakes still need the count
-    if (from <= 2) { later(from, () => go(from + 1)); return; }
+    if (from <= 2) { later(from, () => go(nextStep(from))); return; }
     if (from !== 3) return;
     const order = DECO_GROUPS(isCup(S.shape)), i = order.indexOf(g);
     if (i < 0) return;
@@ -1587,8 +1600,8 @@ html[lang="he"] .cb-btn { font-family: var(--font-wide); text-transform: none; l
     }
     S.warn = false; S.step = i; render(); toTop();
   }
-  $("cb-next").onclick = () => { if (!stepOk(S.step)) { showMissing(); return; } go(Math.min(4, S.step + 1)); };
-  $("cb-back").onclick = () => go(Math.max(0, S.step - 1));
+  $("cb-next").onclick = () => { if (!stepOk(S.step)) { showMissing(); return; } go(nextStep(S.step)); };
+  $("cb-back").onclick = () => go(prevStep(S.step));
 
   const api = { refresh: () => { $("cb-done").hidden = true; render(); }, art, describe, slipDetail, msgLines, onAdd: null, minPrice: BASE.cup[6], name: () => ct().cakeName, removeLabel: () => ct().remove,
     // Square crop of the round-cake drawing for the round tile on the menu.
